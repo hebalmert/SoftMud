@@ -1,4 +1,4 @@
-﻿namespace Spi.CoreShared.Responses;
+﻿namespace Spix.CoreShared.Responses;
 
 public class Response
 {
