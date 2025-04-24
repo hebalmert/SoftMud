@@ -9,10 +9,12 @@ public class State
 
     public int CountryId { get; set; }
 
-    [MaxLength(100)]
-    [Required]
+    [MaxLength(100, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+    [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+    [Display(Name = "Depart/Estado")]
     public string Name { get; set; } = null!;
 
+    [Display(Name = "Ciudades")]
     public int CitiesNumber => Cities == null ? 0 : Cities.Count;
 
     //Relaciones

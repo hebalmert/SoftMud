@@ -1,4 +1,6 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Spix.Core.Entities;
 using Spix.CoreShared.Pagination;
@@ -8,6 +10,7 @@ namespace Spix.AppBack.Controllers.EntitiesV1
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/states")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
     [ApiController]
     public class StatesController : ControllerBase
     {

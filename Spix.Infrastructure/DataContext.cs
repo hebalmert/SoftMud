@@ -1,14 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Spix.Core.EntitesSoftSec;
 using Spix.Core.Entities;
 using System.Reflection;
 
 namespace Spix.Infrastructure;
 
-public class DataContext : DbContext
+public class DataContext : IdentityDbContext<User>
 {
     public DataContext(DbContextOptions options) : base(options)
     {
     }
+
+    //Manejo de UserRoles por Usuario
+
+    public DbSet<UserRoleDetails> UserRoleDetails => Set<UserRoleDetails>();
 
     //Entities
 
@@ -18,6 +24,11 @@ public class DataContext : DbContext
     public DbSet<SoftPlan> SoftPlans => Set<SoftPlan>();
     public DbSet<Manager> Managers => Set<Manager>();
     public DbSet<Corporation> Corporations => Set<Corporation>();
+
+    //EntitiesSoftSec
+
+    public DbSet<Usuario> Usuarios => Set<Usuario>();
+    public DbSet<UsuarioRole> UsuarioRoles => Set<UsuarioRole>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

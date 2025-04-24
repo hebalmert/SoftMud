@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Spi.CoreShared.Responses;
+using Spix.CoreShared.Responses;
 
 namespace Spix.AppBack.LoadCountries
 {

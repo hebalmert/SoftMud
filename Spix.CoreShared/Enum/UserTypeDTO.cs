@@ -2,11 +2,12 @@
 {
     public enum UserTypeDTO
     {
-        User = 2,
-        UserAux = 3,
-        Clients = 4,
-        Cachier = 5,
-        Technical = 6,
-        Collector = 7
+        Usuario = 2,
+        Auxiliar = 3,
+        Cliente = 4,
+        Cajero = 5,
+        Tecnico = 6,
+        Cobrador = 7,
+        Contratista = 8
     }
 }

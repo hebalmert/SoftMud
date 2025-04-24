@@ -4,15 +4,26 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using Spix.AppBack.Data;
 using Spix.Infrastructure;
-using Spix.Services.ImplemenEntities;
+using Spix.Services.ImplementEntities;
 using Spix.Services.InterfacesEntities;
-using Spix.UnitOfWork.ImplemenEntities;
+using Spix.UnitOfWork.ImplementEntities;
 using Spix.UnitOfWork.InterfacesEntities;
 using Spix.Helper.Transactions;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 using Spix.AppBack.LoadCountries;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Spix.CoreShared.ResponsesSec;
+using AppUser = Spix.Core.Entities.User;
+using Spix.Helper;
+using Spix.UnitOfWork.InterfacesSecure;
+using Spix.UnitOfWork.ImplementSecure;
+using Spix.Services.InterfacesSecure;
+using Spix.Services.ImplementSecure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,24 +92,58 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<RemoveVersionParameterFilter>();
 });
 
-// Configuración de CORS
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowSpecificOrigin", builder =>
-    {
-        builder.WithOrigins("https://localhost:7175")
-     .AllowAnyHeader()
-     .AllowAnyMethod()
-     .WithExposedHeaders(new string[] { "Totalpages", "Counting" });
-    });
-});
-
 // Configuración de Base de Datos
 builder.Services.AddDbContext<DataContext>(x =>
     x.UseSqlServer("name=DefaultConnection", option => option.MigrationsAssembly("Spix.AppBack")));
 
+//Para realizar logueo de los usuarios
+builder.Services.AddIdentity<AppUser, IdentityRole>(cfg =>
+{
+    //Agregamos Validar Correo para dar de alta al Usuario
+    cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+    cfg.SignIn.RequireConfirmedEmail = true;
+
+    cfg.User.RequireUniqueEmail = true;
+    cfg.Password.RequireDigit = false;
+    cfg.Password.RequiredUniqueChars = 0;
+    cfg.Password.RequireLowercase = false;
+    cfg.Password.RequireNonAlphanumeric = false;
+    cfg.Password.RequireUppercase = false;
+    //Sistema para bloquear por 5 minutos al usuario por intento fallido
+    cfg.Lockout.MaxFailedAccessAttempts = 3;
+    cfg.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);  //TODO: Cambiar Tiempo de Bloqueo a Usuarios
+    cfg.Lockout.AllowedForNewUsers = true;
+}).AddDefaultTokenProviders()  //Complemento Validar Correo
+  .AddEntityFrameworkStores<DataContext>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddCookie()
+    .AddJwtBearer(x => x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwtKey"]!)),
+        ClockSkew = TimeSpan.Zero
+    });
+
+//Configuracion de la Clase SendGridSetting para transportar los valores del AppSetting
+builder.Services.Configure<SendGridSettings>(builder.Configuration.GetSection("SendGrid"));
+//Configuracion de la Clase ImgSetting para transportar los valores del AppSetting
+builder.Services.Configure<ImgSetting>(builder.Configuration.GetSection("ImgSoftware"));
+//Configuracion de la Clase ImgSetting para transportar los valores del AppSetting
+builder.Services.Configure<JwtKeySetting>(options =>
+{
+    options.jwtKey = builder.Configuration.GetValue<string>("jwtKey");
+});
+
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddScoped<IApiService, ApiService>();
+builder.Services.AddScoped<IUserHelper, UserHelper>();
+builder.Services.AddScoped<IEmailHelper, EmailHelper>();
+builder.Services.AddScoped<IUtilityTools, UtilityTools>();
+builder.Services.AddScoped<IFileStorage, FileStorage>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddMemoryCache();
 
@@ -111,6 +156,23 @@ builder.Services.AddScoped<ICityUnitOfWork, CityUnitOfWork>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<ISoftPlanUnitOfWork, SoftPlanUnitOfWork>();
 builder.Services.AddScoped<ISoftPlanService, SoftPlanService>();
+builder.Services.AddScoped<ICorporationUnitOfWork, CorporationUnitOfWork>();
+builder.Services.AddScoped<ICorporationService, CorporationService>();
+builder.Services.AddScoped<IAccountUnitOfWork, AccountUnitOfWork>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+
+string? frontUrl = builder.Configuration["UrlFrontend"]; //Se tomta la UrlBlazor desde Appsetting.
+// Configuración de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+    {
+        builder.WithOrigins(frontUrl!)
+     .AllowAnyHeader()
+     .AllowAnyMethod()
+     .WithExposedHeaders(new string[] { "Totalpages", "Counting" });
+    });
+});
 
 var app = builder.Build();
 
