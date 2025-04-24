@@ -1,7 +1,6 @@
 ﻿using Spix.Core.Entities;
 using Spix.CoreShared.Pagination;
 using Spix.CoreShared.Responses;
-using System.Buffers.Text;
 
 namespace Spix.UnitOfWork.InterfacesEntities;
 

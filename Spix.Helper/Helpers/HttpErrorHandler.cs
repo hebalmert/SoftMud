@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Spix.CoreShared.Responses;
-using System.Net;
 
 namespace Spix.Helper.Helpers;
 

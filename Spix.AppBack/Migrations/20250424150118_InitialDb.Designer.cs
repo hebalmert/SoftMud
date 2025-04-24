@@ -12,7 +12,7 @@ using Spix.Infrastructure;
 namespace Spix.AppBack.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250423120332_InitialDb")]
+    [Migration("20250424150118_InitialDb")]
     partial class InitialDb
     {
         /// <inheritdoc />

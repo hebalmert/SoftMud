@@ -2,10 +2,11 @@
 using Spix.CoreShared.Pagination;
 using Spix.CoreShared.Responses;
 using Spix.Services.InterfacesEntities;
+using Spix.UnitOfWork.InterfacesEntities;
 
 namespace Spix.UnitOfWork.ImplementEntities;
 
-public class ManagerUnitOfWork : IManagerService
+public class ManagerUnitOfWork : IManagerUnitOfWork
 {
     private readonly IManagerService _managerService;
 

@@ -158,6 +158,8 @@ builder.Services.AddScoped<ISoftPlanUnitOfWork, SoftPlanUnitOfWork>();
 builder.Services.AddScoped<ISoftPlanService, SoftPlanService>();
 builder.Services.AddScoped<ICorporationUnitOfWork, CorporationUnitOfWork>();
 builder.Services.AddScoped<ICorporationService, CorporationService>();
+builder.Services.AddScoped<IManagerUnitOfWork, ManagerUnitOfWork>();
+builder.Services.AddScoped<IManagerService, ManagerService>();
 builder.Services.AddScoped<IAccountUnitOfWork, AccountUnitOfWork>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 

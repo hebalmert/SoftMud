@@ -13,10 +13,11 @@ using Spix.Helper.Extensions;
 using Spix.Helper.Helpers;
 using Spix.Helper.Transactions;
 using Spix.Infrastructure;
+using Spix.Services.InterfacesEntities;
 
 namespace Spix.Services.ImplementEntities;
 
-public class ManagerService
+public class ManagerService : IManagerService
 {
     private readonly DataContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -132,9 +133,9 @@ public class ManagerService
                     guid = modelo.Imagen;
                 }
                 var imageId = Convert.FromBase64String(modelo.ImgBase64);
-                modelo.Imagen = await _fileStorage.UploadImage(imageId, _imgOption.ImgManager!, guid);
+                NewModelo.Imagen = await _fileStorage.UploadImage(imageId, _imgOption.ImgManager!, guid);
             }
-            _context.Managers.Update(modelo);
+            _context.Managers.Update(NewModelo);
             await _transactionManager.SaveChangesAsync();
 
             User UserCurrent = await _userHelper.GetUserAsync(modelo.UserName);
@@ -242,13 +243,63 @@ public class ManagerService
         }
     }
 
+    public async Task<ActionResponse<bool>> DeleteAsync(int id)
+    {
+        await _transactionManager.BeginTransactionAsync();
+        try
+        {
+            var DataRemove = await _context.Managers.FindAsync(id);
+            if (DataRemove == null)
+            {
+                return new ActionResponse<bool>
+                {
+                    WasSuccess = false,
+                    Message = "Problemas para Enconstrar el Registro Indicado"
+                };
+            }
+            var user = await _userHelper.GetUserAsync(DataRemove.UserName);
+            var RemoveRoleDetail = await _context.UserRoleDetails.Where(x => x.UserId == user.Id).ToListAsync();
+            if (RemoveRoleDetail != null)
+            {
+                _context.UserRoleDetails.RemoveRange(RemoveRoleDetail!);
+            }
+            await _userHelper.DeleteUser(DataRemove.UserName);
+
+            _context.Managers.Remove(DataRemove);
+
+            if (DataRemove.Imagen is not null)
+            {
+                var response = _fileStorage.DeleteImage(_imgOption.ImgManager!, DataRemove.Imagen);
+                if (!response)
+                {
+                    return new ActionResponse<bool>
+                    {
+                        WasSuccess = false,
+                        Message = "Se Elimino el Registro pero Sin la Imagen"
+                    };
+                }
+            }
+
+            await _transactionManager.SaveChangesAsync();
+            await _transactionManager.CommitTransactionAsync();
+
+            return new ActionResponse<bool>
+            {
+                WasSuccess = true,
+                Result = true
+            };
+        }
+        catch (Exception ex)
+        {
+            await _transactionManager.RollbackTransactionAsync();
+            return await _httpErrorHandler.HandleErrorAsync<bool>(ex); // ✅ Manejo de errores automático
+        }
+    }
+
     private async Task<Response> AcivateUser(Manager manager, string frontUrl)
     {
         User user = await _userHelper.AddUserUsuarioAsync(manager.FirstName, manager.LastName, manager.UserName,
             manager.PhoneNumber, manager.Address, manager.Job, manager.CorporationId, manager.Imagen!, "Manager", manager.Active, manager.UserType);
-
-        // Obtener el esquema de la solicitud HTTP
-        string scheme = _httpContextAccessor.HttpContext?.Request.Scheme ?? "https";
 
         //Envio de Correo con Token de seguridad para Verificar el correo
         string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
