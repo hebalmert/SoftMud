@@ -2,29 +2,29 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Spix.Core.Entities;
+using Spix.Core.EntitiesData;
 using Spix.CoreShared.Pagination;
-using Spix.UnitOfWork.InterfacesEntities;
+using Spix.UnitOfWork.InterfacesEntitiesData;
 
-namespace Spix.AppBack.Controllers.EntitiesV1;
+namespace Spix.AppBack.Controllers.EntitiesDataV1;
 
 [ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/softplans")]
+[Route("api/v{version:apiVersion}/chaintypes")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
 [ApiController]
 public class ChainTypesController : ControllerBase
 {
-    private readonly ISoftPlanUnitOfWork _softPlanUnitOfWork;
+    private readonly IChainTypesUnitOfWork _chainTypesUnitOfWork;
 
-    public ChainTypesController(ISoftPlanUnitOfWork softPlanUnitOfWork)
+    public ChainTypesController(IChainTypesUnitOfWork chainTypesUnitOfWork)
     {
-        _softPlanUnitOfWork = softPlanUnitOfWork;
+        _chainTypesUnitOfWork = chainTypesUnitOfWork;
     }
 
     [HttpGet("loadCombo")]
-    public async Task<ActionResult<IEnumerable<State>>> GetComboAsync()
+    public async Task<ActionResult<IEnumerable<ChainType>>> GetComboAsync()
     {
-        var response = await _softPlanUnitOfWork.ComboAsync();
+        var response = await _chainTypesUnitOfWork.ComboAsync();
         if (!response.WasSuccess)
         {
             return BadRequest(response.Message);
@@ -33,9 +33,9 @@ public class ChainTypesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<SoftPlan>>> GetAll([FromQuery] PaginationDTO pagination)
+    public async Task<ActionResult<IEnumerable<ChainType>>> GetAll([FromQuery] PaginationDTO pagination)
     {
-        var response = await _softPlanUnitOfWork.GetAsync(pagination);
+        var response = await _chainTypesUnitOfWork.GetAsync(pagination);
         if (!response.WasSuccess)
         {
             return BadRequest(response.Message);
@@ -46,7 +46,7 @@ public class ChainTypesController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAsync(int id)
     {
-        var response = await _softPlanUnitOfWork.GetAsync(id);
+        var response = await _chainTypesUnitOfWork.GetAsync(id);
         if (response.WasSuccess)
         {
             return Ok(response.Result);
@@ -55,9 +55,9 @@ public class ChainTypesController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<ActionResult<State>> PutAsync(SoftPlan modelo)
+    public async Task<ActionResult<ChainType>> PutAsync(ChainType modelo)
     {
-        var response = await _softPlanUnitOfWork.UpdateAsync(modelo);
+        var response = await _chainTypesUnitOfWork.UpdateAsync(modelo);
         if (response.WasSuccess)
         {
             return Ok(response.Result);
@@ -66,9 +66,9 @@ public class ChainTypesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<State>> PostAsync(SoftPlan modelo)
+    public async Task<ActionResult<ChainType>> PostAsync(ChainType modelo)
     {
-        var response = await _softPlanUnitOfWork.AddAsync(modelo);
+        var response = await _chainTypesUnitOfWork.AddAsync(modelo);
         if (response.WasSuccess)
         {
             return Ok(response.Result);
@@ -79,7 +79,7 @@ public class ChainTypesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult<bool>> DeleteAsync(int id)
     {
-        var response = await _softPlanUnitOfWork.DeleteAsync(id);
+        var response = await _chainTypesUnitOfWork.DeleteAsync(id);
         if (response.WasSuccess)
         {
             return Ok(response.Result);

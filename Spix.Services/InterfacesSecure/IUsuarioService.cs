@@ -1,5 +1,4 @@
 ﻿using Spix.Core.EntitesSoftSec;
-using Spix.Core.Entities;
 using Spix.CoreShared.Pagination;
 using Spix.CoreShared.Responses;
 

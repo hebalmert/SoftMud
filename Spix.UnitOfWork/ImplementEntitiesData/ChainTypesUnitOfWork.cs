@@ -1,0 +1,29 @@
+﻿using Spix.Core.EntitiesData;
+using Spix.CoreShared.Pagination;
+using Spix.CoreShared.Responses;
+using Spix.Services.InterfacesEntitiesData;
+using Spix.UnitOfWork.InterfacesEntitiesData;
+
+namespace Spix.UnitOfWork.ImplementEntitiesData;
+
+internal class ChainTypesUnitOfWork : IChainTypesUnitOfWork
+{
+    private readonly IChainTypesService _chainTypesService;
+
+    public ChainTypesUnitOfWork(IChainTypesService chainTypesService)
+    {
+        _chainTypesService = chainTypesService;
+    }
+
+    public async Task<ActionResponse<IEnumerable<ChainType>>> ComboAsync() => await _chainTypesService.ComboAsync();
+
+    public async Task<ActionResponse<IEnumerable<ChainType>>> GetAsync(PaginationDTO pagination) => await _chainTypesService.GetAsync(pagination);
+
+    public async Task<ActionResponse<ChainType>> GetAsync(int id) => await _chainTypesService.GetAsync(id);
+
+    public async Task<ActionResponse<ChainType>> UpdateAsync(ChainType modelo) => await _chainTypesService.UpdateAsync(modelo);
+
+    public async Task<ActionResponse<ChainType>> AddAsync(ChainType modelo) => await _chainTypesService.AddAsync(modelo);
+
+    public async Task<ActionResponse<bool>> DeleteAsync(int id) => await _chainTypesService.DeleteAsync(id);
+}

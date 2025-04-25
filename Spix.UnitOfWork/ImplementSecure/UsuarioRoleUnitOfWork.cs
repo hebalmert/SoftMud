@@ -3,10 +3,11 @@ using Spix.CoreShared.Enum;
 using Spix.CoreShared.Pagination;
 using Spix.CoreShared.Responses;
 using Spix.Services.InterfacesSecure;
+using Spix.UnitOfWork.InterfacesSecure;
 
 namespace Spix.UnitOfWork.ImplementSecure;
 
-public class UsuarioRoleUnitOfWork
+public class UsuarioRoleUnitOfWork : IUsuarioRoleUnitOfWork
 {
     private readonly IUsuarioRoleService _usuarioRoleService;
 

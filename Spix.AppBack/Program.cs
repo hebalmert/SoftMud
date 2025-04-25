@@ -162,6 +162,10 @@ builder.Services.AddScoped<IManagerUnitOfWork, ManagerUnitOfWork>();
 builder.Services.AddScoped<IManagerService, ManagerService>();
 builder.Services.AddScoped<IAccountUnitOfWork, AccountUnitOfWork>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUsuarioUnitOfWork, UsuarioUnitOfWork>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IUsuarioRoleUnitOfWork, UsuarioRoleUnitOfWork>();
+builder.Services.AddScoped<IUsuarioRoleService, UsuarioRoleService>();
 
 string? frontUrl = builder.Configuration["UrlFrontend"]; //Se tomta la UrlBlazor desde Appsetting.
 // Configuración de CORS

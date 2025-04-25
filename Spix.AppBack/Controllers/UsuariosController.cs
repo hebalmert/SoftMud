@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Spix.Core.EntitesSoftSec;
-using Spix.Core.Entities;
 using Spix.CoreShared.Pagination;
 using Spix.UnitOfWork.InterfacesSecure;
 using System.Security.Claims;

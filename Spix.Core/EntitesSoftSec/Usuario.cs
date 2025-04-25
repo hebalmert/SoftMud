@@ -59,8 +59,8 @@ public class Usuario
     //TODO: Pending to put the correct paths
     [Display(Name = "Foto")]
     public string ImageFullPath => Photo == string.Empty || Photo == null
-    ? $"https://localhost:7204/Images/NoImage.png"
-    : $"https://localhost:7204/Images/ImgUsuarios/{Photo}";
+    ? $"https://localhost:7224/Images/NoImage.png"
+    : $"https://localhost:7224/Images/ImgUsuarios/{Photo}";
 
     //? $"https://spi.nexxtplanet.net/Images/NoImage.png"
     //: $"https://spi.nexxtplanet.net/Images/ImgUsuarios/{Photo}";

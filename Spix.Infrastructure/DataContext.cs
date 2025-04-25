@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Spix.Core.EntitesSoftSec;
 using Spix.Core.Entities;
+using Spix.Core.EntitiesData;
 using System.Reflection;
 
 namespace Spix.Infrastructure;
@@ -24,6 +25,22 @@ public class DataContext : IdentityDbContext<User>
     public DbSet<SoftPlan> SoftPlans => Set<SoftPlan>();
     public DbSet<Manager> Managers => Set<Manager>();
     public DbSet<Corporation> Corporations => Set<Corporation>();
+
+    //EntitiesData
+
+    public DbSet<FrecuencyType> FrecuencyTypes => Set<FrecuencyType>();
+
+    public DbSet<Frecuency> Frecuencies => Set<Frecuency>();
+
+    public DbSet<Operation> Operations => Set<Operation>();
+
+    public DbSet<Channel> Channels => Set<Channel>();
+
+    public DbSet<Security> Securities => Set<Security>();
+
+    public DbSet<HotSpotType> HotSpotTypes => Set<HotSpotType>();
+
+    public DbSet<ChainType> ChainTypes => Set<ChainType>();
 
     //EntitiesSoftSec
 
