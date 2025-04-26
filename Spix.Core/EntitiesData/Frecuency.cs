@@ -7,8 +7,6 @@ public class Frecuency
     [Key]
     public int FrecuencyId { get; set; }
 
-    [Range(1, double.MaxValue, ErrorMessage = "Debe Seleccionar un {0}")]
-    [Required(ErrorMessage = "El {0} es Obligatorio")]
     [Display(Name = "Tipo Frecuencia")]
     public int FrecuencyTypeId { get; set; }
 

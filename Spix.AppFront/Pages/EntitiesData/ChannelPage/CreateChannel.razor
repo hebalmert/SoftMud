@@ -1,0 +1,18 @@
+﻿@page "/channels/create"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (Channel is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormChannel Channel="Channel"
+                          OnSubmit="Create"
+                          ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+

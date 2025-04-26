@@ -1,0 +1,17 @@
+﻿@page "/frecuencytypes/create"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (FrecuencyType is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormFrecuencyType FrecuencyType="FrecuencyType"
+                             OnSubmit="Create"
+                             ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}

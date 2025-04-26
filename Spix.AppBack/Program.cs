@@ -24,6 +24,10 @@ using Spix.UnitOfWork.InterfacesSecure;
 using Spix.UnitOfWork.ImplementSecure;
 using Spix.Services.InterfacesSecure;
 using Spix.Services.ImplementSecure;
+using Spix.UnitOfWork.InterfacesEntitiesData;
+using Spix.UnitOfWork.ImplementEntitiesData;
+using Spix.Services.InterfacesEntitiesData;
+using Spix.Services.ImplementEntitiesData;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -148,6 +152,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddMemoryCache();
 
 builder.Services.AddScoped<ITransactionManager, TransactionManager>();
+//Entities
 builder.Services.AddScoped<ICountriesUnitOfWork, CountriesUnitOfWork>();
 builder.Services.AddScoped<ICountriesService, CountriesService>();
 builder.Services.AddScoped<IStatesUnitOfWork, StatesUnitOfWork>();
@@ -160,6 +165,22 @@ builder.Services.AddScoped<ICorporationUnitOfWork, CorporationUnitOfWork>();
 builder.Services.AddScoped<ICorporationService, CorporationService>();
 builder.Services.AddScoped<IManagerUnitOfWork, ManagerUnitOfWork>();
 builder.Services.AddScoped<IManagerService, ManagerService>();
+//EntitiesData
+builder.Services.AddScoped<IChainTypesUnitOfWork, ChainTypesUnitOfWork>();
+builder.Services.AddScoped<IChainTypesService, ChainTypesService>();
+builder.Services.AddScoped<IChannelUnitOfWork, ChannelUnitOfWork>();
+builder.Services.AddScoped<IChannelService, ChannelService>();
+builder.Services.AddScoped<IFrecuencyUnitOfWork, FrecuencyUnitOfWork>();
+builder.Services.AddScoped<IFrecuencyService, FrecuencyService>();
+builder.Services.AddScoped<IFrecuencyTypeUnitOfWork, FrecuencyTypeUnitOfWork>();
+builder.Services.AddScoped<IFrecuencyTypeService, FrecuencyTypeService>();
+builder.Services.AddScoped<IHotSpotTypeUnitOfWork, HotSpotTypeUnitOfWork>();
+builder.Services.AddScoped<IHotSpotTypeService, HotSpotTypeService>();
+builder.Services.AddScoped<IOperationUnitOfWork, OperationUnitOfWork>();
+builder.Services.AddScoped<IOperationService, OperationService>();
+builder.Services.AddScoped<ISecurityUnitOfWork, SecurityUnitOfWork>();
+builder.Services.AddScoped<ISecurityService, SecurityService>();
+//EntitiesSecurities Software
 builder.Services.AddScoped<IAccountUnitOfWork, AccountUnitOfWork>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IUsuarioUnitOfWork, UsuarioUnitOfWork>();

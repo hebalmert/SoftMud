@@ -1,0 +1,19 @@
+﻿@page "/securities/edit/{Id:int}"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (Security is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormSecurity Security="Security"
+                          OnSubmit="Edit"
+                          ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+
+

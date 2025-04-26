@@ -6,7 +6,7 @@ using Spix.UnitOfWork.InterfacesEntitiesData;
 
 namespace Spix.UnitOfWork.ImplementEntitiesData;
 
-internal class ChainTypesUnitOfWork : IChainTypesUnitOfWork
+public class ChainTypesUnitOfWork : IChainTypesUnitOfWork
 {
     private readonly IChainTypesService _chainTypesService;
 

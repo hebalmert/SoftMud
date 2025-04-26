@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Spix.Core.Entities;
 using Spix.Core.EntitiesData;
 using Spix.CoreShared.Pagination;
 using Spix.CoreShared.Responses;
@@ -11,14 +12,14 @@ using Spix.Services.InterfacesEntitiesData;
 
 namespace Spix.Services.ImplementEntitiesData;
 
-public class ChannelService : IChannelService
+public class OperationService : IOperationService
 {
     private readonly DataContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ITransactionManager _transactionManager;
     private readonly HttpErrorHandler _httpErrorHandler;
 
-    public ChannelService(DataContext context, IHttpContextAccessor httpContextAccessor,
+    public OperationService(DataContext context, IHttpContextAccessor httpContextAccessor,
         ITransactionManager transactionManager)
     {
         _context = context;
@@ -27,13 +28,13 @@ public class ChannelService : IChannelService
         _httpErrorHandler = new HttpErrorHandler();
     }
 
-    public async Task<ActionResponse<IEnumerable<Channel>>> ComboAsync()
+    public async Task<ActionResponse<IEnumerable<Operation>>> ComboAsync()
     {
         try
         {
-            var ListModel = await _context.Channels.Where(x => x.Active).ToListAsync();
+            var ListModel = await _context.Operations.Where(x => x.Active).ToListAsync();
 
-            return new ActionResponse<IEnumerable<Channel>>
+            return new ActionResponse<IEnumerable<Operation>>
             {
                 WasSuccess = true,
                 Result = ListModel
@@ -41,25 +42,25 @@ public class ChannelService : IChannelService
         }
         catch (Exception ex)
         {
-            return await _httpErrorHandler.HandleErrorAsync<IEnumerable<Channel>>(ex); // ✅ Manejo de errores automático
+            return await _httpErrorHandler.HandleErrorAsync<IEnumerable<Operation>>(ex); // ✅ Manejo de errores automático
         }
     }
 
-    public async Task<ActionResponse<IEnumerable<Channel>>> GetAsync(PaginationDTO pagination)
+    public async Task<ActionResponse<IEnumerable<Operation>>> GetAsync(PaginationDTO pagination)
     {
         try
         {
-            var queryable = _context.Channels.AsQueryable();
+            var queryable = _context.Operations.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(pagination.Filter))
             {
-                queryable = queryable.Where(x => x.ChannelName!.ToLower().Contains(pagination.Filter.ToLower()));
+                queryable = queryable.Where(x => x.OperationName!.ToLower().Contains(pagination.Filter.ToLower()));
             }
 
             await _httpContextAccessor.HttpContext!.InsertParameterPagination(queryable, pagination.RecordsNumber);
-            var modelo = await queryable.OrderBy(x => x.ChannelName).Paginate(pagination).ToListAsync();
+            var modelo = await queryable.OrderBy(x => x.OperationName).Paginate(pagination).ToListAsync();
 
-            return new ActionResponse<IEnumerable<Channel>>
+            return new ActionResponse<IEnumerable<Operation>>
             {
                 WasSuccess = true,
                 Result = modelo
@@ -67,25 +68,25 @@ public class ChannelService : IChannelService
         }
         catch (Exception ex)
         {
-            return await _httpErrorHandler.HandleErrorAsync<IEnumerable<Channel>>(ex); // ✅ Manejo de errores automático
+            return await _httpErrorHandler.HandleErrorAsync<IEnumerable<Operation>>(ex); // ✅ Manejo de errores automático
         }
     }
 
-    public async Task<ActionResponse<Channel>> GetAsync(int id)
+    public async Task<ActionResponse<Operation>> GetAsync(int id)
     {
         try
         {
-            var modelo = await _context.Channels.FindAsync(id);
+            var modelo = await _context.Operations.FindAsync(id);
             if (modelo == null)
             {
-                return new ActionResponse<Channel>
+                return new ActionResponse<Operation>
                 {
                     WasSuccess = false,
                     Message = "Problemas para Enconstrar el Registro Indicado"
                 };
             }
 
-            return new ActionResponse<Channel>
+            return new ActionResponse<Operation>
             {
                 WasSuccess = true,
                 Result = modelo
@@ -93,22 +94,22 @@ public class ChannelService : IChannelService
         }
         catch (Exception ex)
         {
-            return await _httpErrorHandler.HandleErrorAsync<Channel>(ex); // ✅ Manejo de errores automático
+            return await _httpErrorHandler.HandleErrorAsync<Operation>(ex); // ✅ Manejo de errores automático
         }
     }
 
-    public async Task<ActionResponse<Channel>> UpdateAsync(Channel modelo)
+    public async Task<ActionResponse<Operation>> UpdateAsync(Operation modelo)
     {
         await _transactionManager.BeginTransactionAsync();
 
         try
         {
-            _context.Channels.Update(modelo);
+            _context.Operations.Update(modelo);
 
             await _transactionManager.SaveChangesAsync();
             await _transactionManager.CommitTransactionAsync();
 
-            return new ActionResponse<Channel>
+            return new ActionResponse<Operation>
             {
                 WasSuccess = true,
                 Result = modelo
@@ -117,20 +118,20 @@ public class ChannelService : IChannelService
         catch (Exception ex)
         {
             await _transactionManager.RollbackTransactionAsync();
-            return await _httpErrorHandler.HandleErrorAsync<Channel>(ex); // ✅ Manejo de errores automático
+            return await _httpErrorHandler.HandleErrorAsync<Operation>(ex); // ✅ Manejo de errores automático
         }
     }
 
-    public async Task<ActionResponse<Channel>> AddAsync(Channel modelo)
+    public async Task<ActionResponse<Operation>> AddAsync(Operation modelo)
     {
         await _transactionManager.BeginTransactionAsync();
         try
         {
-            _context.Channels.Add(modelo);
+            _context.Operations.Add(modelo);
             await _transactionManager.SaveChangesAsync();
             await _transactionManager.CommitTransactionAsync();
 
-            return new ActionResponse<Channel>
+            return new ActionResponse<Operation>
             {
                 WasSuccess = true,
                 Result = modelo
@@ -139,7 +140,7 @@ public class ChannelService : IChannelService
         catch (Exception ex)
         {
             await _transactionManager.RollbackTransactionAsync();
-            return await _httpErrorHandler.HandleErrorAsync<Channel>(ex); // ✅ Manejo de errores automático
+            return await _httpErrorHandler.HandleErrorAsync<Operation>(ex); // ✅ Manejo de errores automático
         }
     }
 
@@ -148,7 +149,7 @@ public class ChannelService : IChannelService
         await _transactionManager.BeginTransactionAsync();
         try
         {
-            var DataRemove = await _context.Channels.FindAsync(id);
+            var DataRemove = await _context.Operations.FindAsync(id);
             if (DataRemove == null)
             {
                 return new ActionResponse<bool>
@@ -158,7 +159,7 @@ public class ChannelService : IChannelService
                 };
             }
 
-            _context.Channels.Remove(DataRemove);
+            _context.Operations.Remove(DataRemove);
 
             await _transactionManager.SaveChangesAsync();
             await _transactionManager.CommitTransactionAsync();

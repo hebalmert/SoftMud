@@ -1,0 +1,19 @@
+﻿@page "/chaintypes/edit/{Id:int}"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (ChainType is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormChainType ChainType="ChainType"
+                          OnSubmit="Edit"
+                          ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+
+

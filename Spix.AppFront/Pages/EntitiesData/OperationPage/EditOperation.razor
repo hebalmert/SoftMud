@@ -1,0 +1,19 @@
+﻿@page "/operations/edit/{Id:int}"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (Operation is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormOperation Operation="Operation"
+                          OnSubmit="Edit"
+                          ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+
+

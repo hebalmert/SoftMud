@@ -32,7 +32,7 @@ public class SoftPlanService : ISoftPlanService
     {
         try
         {
-            var ListModel = await _context.SoftPlans.ToListAsync();
+            var ListModel = await _context.SoftPlans.Where(x => x.Active).ToListAsync();
 
             return new ActionResponse<IEnumerable<SoftPlan>>
             {

@@ -1,0 +1,19 @@
+﻿@page "/channels/edit/{Id:int}"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (Channel is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormChannel Channel="Channel"
+                          OnSubmit="Edit"
+                          ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+
+

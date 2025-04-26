@@ -1,0 +1,18 @@
+﻿@page "/hotspots/create"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (HotSpotType is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormHotSpotType HotSpotType="HotSpotType"
+                          OnSubmit="Create"
+                          ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+

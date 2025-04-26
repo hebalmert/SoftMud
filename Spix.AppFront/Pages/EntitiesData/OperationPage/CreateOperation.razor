@@ -1,0 +1,18 @@
+﻿@page "/operations/create"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (Operation is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormOperation Operation="Operation"
+                          OnSubmit="Create"
+                          ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+

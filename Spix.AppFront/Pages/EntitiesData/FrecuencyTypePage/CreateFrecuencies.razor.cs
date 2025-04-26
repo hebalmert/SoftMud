@@ -1,0 +1,40 @@
+using CurrieTechnologies.Razor.SweetAlert2;
+using Microsoft.AspNetCore.Components;
+using Spix.AppFront.Helpers;
+using Spix.Core.EntitiesData;
+using Spix.HttpServices;
+
+namespace Spix.AppFront.Pages.EntitiesData.FrecuencyTypePage;
+
+public partial class CreateFrecuencies
+{
+    [Inject] private IRepository _repository { get; set; } = null!;
+    [Inject] private NavigationManager _navigationManager { get; set; } = null!;
+    [Inject] private SweetAlertService _sweetAlert { get; set; } = null!;
+    [Inject] private HttpResponseHandler _responseHandler { get; set; } = null!;
+
+    private Frecuency Frecuency = new();
+
+    private string BaseUrl = "/api/v1/frecuencies";
+    private string BaseView = "/frecuencytypes/details";
+
+    [Parameter] public int Id { get; set; }  //FrecuencyTypeId
+
+    private async Task Create()
+    {
+        Frecuency.FrecuencyTypeId = Id;
+        var responseHttp = await _repository.PostAsync($"{BaseUrl}", Frecuency);
+        bool errorHandler = await _responseHandler.HandleErrorAsync(responseHttp);
+        if (errorHandler)
+        {
+            _navigationManager.NavigateTo($"/frecuencytypes");
+            return;
+        }
+        _navigationManager.NavigateTo($"{BaseView}/{Id}");
+    }
+
+    private void Return()
+    {
+        _navigationManager.NavigateTo($"{BaseView}/{Id}");
+    }
+}

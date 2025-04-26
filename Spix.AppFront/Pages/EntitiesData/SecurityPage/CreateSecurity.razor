@@ -1,0 +1,18 @@
+﻿@page "/securities/create"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (Security is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormSecurity Security="Security"
+                          OnSubmit="Create"
+                          ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+

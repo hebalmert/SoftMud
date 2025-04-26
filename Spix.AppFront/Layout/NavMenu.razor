@@ -2,6 +2,16 @@
     <MudNavLink Href="/" Icon="@Icons.Material.Rounded.Home" IconColor="Color.Surface">INICIO</MudNavLink>
     <AuthorizeView Roles="Admin">
         <Authorized>
+            <MudNavGroup Title="Config General" Icon="@Icons.Material.Filled.Settings" IconColor="Color.Surface" Expanded="false">
+                <MudNavLink Href="/chaintypes" Icon="@Icons.Material.Filled.Checklist" IconColor="Color.Info">Tipo Chain</MudNavLink>
+                <MudNavLink Href="/channels" Icon="@Icons.Material.Filled.Checklist" IconColor="Color.Info">Tipo Canales</MudNavLink>
+                <MudNavLink Href="/hotspots" Icon="@Icons.Material.Filled.Checklist" IconColor="Color.Info">Tipo HotSpot</MudNavLink>
+                <MudDivider/>
+                <MudNavLink Href="/operations" Icon="@Icons.Material.Filled.Checklist" IconColor="Color.Info">Operacion Wireless</MudNavLink>
+                <MudNavLink Href="/securities" Icon="@Icons.Material.Filled.Checklist" IconColor="Color.Info">Seguridad Wireless</MudNavLink>
+                <MudNavLink Href="/frecuencytypes" Icon="@Icons.Material.Filled.Checklist" IconColor="Color.Info">Typo Frecuencia</MudNavLink>
+            </MudNavGroup>
+            <MudDivider/>
             <MudNavGroup Title="Control Sistema" Icon="@Icons.Material.Filled.Settings" IconColor="Color.Surface" Expanded="false">
                 <MudNavLink Href="/softplans" Icon="@Icons.Material.Filled.Checklist" IconColor="Color.Info">Planes</MudNavLink>
                 <MudNavLink Href="/corporations" Icon="@Icons.Material.Filled.Checklist" IconColor="Color.Info">Corporacion</MudNavLink>

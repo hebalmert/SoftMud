@@ -1,0 +1,17 @@
+﻿@page "/frecuencies/Editfrecuencies/{Id:int}"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (Frecuency is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormFrecuencies Frecuency="Frecuency"
+                             OnSubmit="Edit"
+                             ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}

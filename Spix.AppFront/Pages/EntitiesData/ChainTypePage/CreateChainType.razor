@@ -1,0 +1,18 @@
+﻿@page "/chaintypes/create"
+@attribute [Authorize(Roles = "Admin")]
+
+@if (ChainType is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormChainType ChainType="ChainType"
+                          OnSubmit="Create"
+                          ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+
