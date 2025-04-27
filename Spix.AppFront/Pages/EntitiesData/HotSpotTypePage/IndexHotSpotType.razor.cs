@@ -19,7 +19,7 @@ public partial class IndexHotSpotType
 
     private int CurrentPage = 1;  //Pagina seleccionada
     private int TotalPages;      //Cantidad total de paginas
-    private int PageSize = 2;  //Cantidad de registros por pagina
+    private int PageSize = 15;  //Cantidad de registros por pagina
 
     private const string baseUrl = "api/v1/hotspots";
     public List<HotSpotType>? hotSpotTypes { get; set; }

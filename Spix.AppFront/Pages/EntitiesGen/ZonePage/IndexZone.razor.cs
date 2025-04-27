@@ -2,12 +2,12 @@ using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Spix.AppFront.Helpers;
-using Spix.Core.EntitiesData;
+using Spix.Core.EntitiesGen;
 using Spix.HttpServices;
 
-namespace Spix.AppFront.Pages.EntitiesData.SecurityPage;
+namespace Spix.AppFront.Pages.EntitiesGen.ZonePage;
 
-public partial class IndexSecurity
+public partial class IndexZone
 {
     [Inject] private IRepository _repository { get; set; } = null!;
     [Inject] private NavigationManager _navigationManager { get; set; } = null!;
@@ -21,8 +21,8 @@ public partial class IndexSecurity
     private int TotalPages;      //Cantidad total de paginas
     private int PageSize = 15;  //Cantidad de registros por pagina
 
-    private const string baseUrl = "api/v1/securities";
-    public List<Security>? Securities { get; set; }
+    private const string baseUrl = "api/v1/zones";
+    public List<Zone>? Zones { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -48,7 +48,7 @@ public partial class IndexSecurity
         {
             url += $"&filter={Filter}";
         }
-        var responseHttp = await _repository.GetAsync<List<Security>>(url);
+        var responseHttp = await _repository.GetAsync<List<Zone>>(url);
         // Centralizamos el manejo de errores
         bool errorHandled = await _responseHandler.HandleErrorAsync(responseHttp);
         if (errorHandled)
@@ -57,11 +57,11 @@ public partial class IndexSecurity
             return;
         }
 
-        Securities = responseHttp.Response;
+        Zones = responseHttp.Response;
         TotalPages = int.Parse(responseHttp.HttpResponseMessage.Headers.GetValues("Totalpages").FirstOrDefault()!);
     }
 
-    private async Task ShowModalAsync(int id = 0, bool isEdit = false)
+    private async Task ShowModalAsync(Guid? id = null, bool isEdit = false)
     {
         var options = new DialogOptions() { CloseOnEscapeKey = true, CloseButton = true };
         IDialogReference? dialog;
@@ -71,11 +71,11 @@ public partial class IndexSecurity
             {
                 { "Id", id }
             };
-            dialog = await _dialogService.ShowAsync<EditSecurity>($"Editar Seguridad", parameters, options);
+            dialog = await _dialogService.ShowAsync<EditZone>($"Editar Zona", parameters, options);
         }
         else
         {
-            dialog = await _dialogService.ShowAsync<CreateSecurity>($"Nuevo Seguridad", options);
+            dialog = await _dialogService.ShowAsync<CreateZone>($"Nueva Zona", options);
         }
 
         var result = await dialog.Result;
@@ -85,7 +85,7 @@ public partial class IndexSecurity
         }
     }
 
-    private async Task DeleteAsync(int id)
+    private async Task DeleteAsync(Guid id)
     {
         var result = await _sweetAlert.FireAsync(new SweetAlertOptions
         {

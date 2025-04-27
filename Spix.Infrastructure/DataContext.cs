@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Spix.Core.EntitesSoftSec;
 using Spix.Core.Entities;
 using Spix.Core.EntitiesData;
+using Spix.Core.EntitiesGen;
 using System.Reflection;
 
 namespace Spix.Infrastructure;
@@ -41,6 +42,9 @@ public class DataContext : IdentityDbContext<User>
     public DbSet<HotSpotType> HotSpotTypes => Set<HotSpotType>();
 
     public DbSet<ChainType> ChainTypes => Set<ChainType>();
+
+    //EntitiesGen
+    public DbSet<Zone> Zones => Set<Zone>();
 
     //EntitiesSoftSec
 

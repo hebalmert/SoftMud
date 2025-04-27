@@ -28,6 +28,10 @@ using Spix.UnitOfWork.InterfacesEntitiesData;
 using Spix.UnitOfWork.ImplementEntitiesData;
 using Spix.Services.InterfacesEntitiesData;
 using Spix.Services.ImplementEntitiesData;
+using Spix.UnitOfWork.InterfacesEntitiesGen;
+using Spix.UnitOfWork.ImplementEntitiesGen;
+using Spix.Services.InterfacesEntitiesGen;
+using Spix.Services.ImplementEntitiesGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -187,6 +191,9 @@ builder.Services.AddScoped<IUsuarioUnitOfWork, UsuarioUnitOfWork>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IUsuarioRoleUnitOfWork, UsuarioRoleUnitOfWork>();
 builder.Services.AddScoped<IUsuarioRoleService, UsuarioRoleService>();
+//EntitiesGen
+builder.Services.AddScoped<IZoneUnitOfWork, ZoneUnitOfWork>();
+builder.Services.AddScoped<IZoneService, ZoneService>();
 
 string? frontUrl = builder.Configuration["UrlFrontend"]; //Se tomta la UrlBlazor desde Appsetting.
 // Configuración de CORS

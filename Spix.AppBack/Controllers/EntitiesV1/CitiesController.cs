@@ -10,7 +10,7 @@ namespace Spix.AppBack.Controllers.EntitiesV1;
 
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/cities")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Usuario")]
 [ApiController]
 public class CitiesController : ControllerBase
 {

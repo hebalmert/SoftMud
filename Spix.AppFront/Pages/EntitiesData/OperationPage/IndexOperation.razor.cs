@@ -1,5 +1,4 @@
 using CurrieTechnologies.Razor.SweetAlert2;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Spix.AppFront.Helpers;
@@ -20,7 +19,7 @@ public partial class IndexOperation
 
     private int CurrentPage = 1;  //Pagina seleccionada
     private int TotalPages;      //Cantidad total de paginas
-    private int PageSize = 2;  //Cantidad de registros por pagina
+    private int PageSize = 15;  //Cantidad de registros por pagina
 
     private const string baseUrl = "api/v1/operations";
     public List<Operation>? Operations { get; set; }

@@ -28,7 +28,10 @@ namespace Spix.AppBack.Controllers
         public async Task<ActionResult<IEnumerable<Usuario>>> GetAll([FromQuery] PaginationDTO pagination)
         {
             string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
-
+            if (email == null)
+            {
+                return BadRequest("Erro en el sistema de Usuarios");
+            }
             var response = await _usuarioUnitOfWork.GetAsync(pagination, email);
             if (!response.WasSuccess)
             {
@@ -63,6 +66,10 @@ namespace Spix.AppBack.Controllers
         public async Task<ActionResult<Usuario>> PostAsync(Usuario modelo)
         {
             string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+            if (email == null)
+            {
+                return BadRequest("Erro en el sistema de Usuarios");
+            }
 
             var response = await _usuarioUnitOfWork.AddAsync(modelo, _configuration["UrlFrontend"]!, email);
             if (response.WasSuccess)

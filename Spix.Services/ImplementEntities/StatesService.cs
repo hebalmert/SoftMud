@@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Spix.Core.Entities;
 using Spix.CoreShared.Pagination;
 using Spix.CoreShared.Responses;
+using Spix.Helper;
 using Spix.Helper.Extensions;
 using Spix.Helper.Helpers;
 using Spix.Helper.Transactions;
@@ -20,6 +21,7 @@ public class StatesService : IStatesService
     private readonly ITransactionManager _transactionManager;
     private readonly HttpErrorHandler _httpErrorHandler;
     private readonly IMemoryCache _cache;
+    private readonly IUserHelper _userHelper;
 
     // 🔹 Variables centralizadas para nombres de caché
 
@@ -28,12 +30,13 @@ public class StatesService : IStatesService
     private readonly string _cacheModelo;
 
     public StatesService(DataContext context, IHttpContextAccessor httpContextAccessor,
-        ITransactionManager transactionManager, IMemoryCache cache)
+        ITransactionManager transactionManager, IMemoryCache cache, IUserHelper userHelper)
     {
         _context = context;
         _httpContextAccessor = httpContextAccessor;
         _transactionManager = transactionManager;
         _cache = cache;
+        _userHelper = userHelper;
         _httpErrorHandler = new HttpErrorHandler();
         // ✅ Inicialización de claves de caché en el constructor
 
@@ -67,21 +70,21 @@ public class StatesService : IStatesService
         _cache.Remove(_cacheComboList);
     }
 
-    public async Task<ActionResponse<IEnumerable<State>>> ComboAsync(int id)
+    public async Task<ActionResponse<IEnumerable<State>>> ComboAsync(string email)
     {
-        // Verificar si los países ya están en el caché
-        string cacheKey = $"{_cacheComboList}";
-        if (_cache.TryGetValue(cacheKey, out IEnumerable<State>? cachedModelo))
-        {
-            return new ActionResponse<IEnumerable<State>> { WasSuccess = true, Result = cachedModelo };
-        }
-
         try
         {
-            var ListModel = await _context.States.Where(x => x.CountryId == id).ToListAsync();
-
-            // Guardar los datos en caché con una expiración de 10 minutos
-            _cache.Set(cacheKey, ListModel, TimeSpan.FromDays(1));
+            var usuario = await _userHelper.GetUserAsync(email);
+            if (usuario.CorporationId == null || usuario.CorporationId == 0)
+            {
+                return new ActionResponse<IEnumerable<State>>
+                {
+                    WasSuccess = false,
+                    Message = "Error en el sistema de Usuario para conseguir el Estado"
+                };
+            }
+            var corporation = await _context.Corporations.FirstOrDefaultAsync(x => x.CorporationId == usuario.CorporationId);
+            var ListModel = await _context.States.Where(x => x.CountryId == corporation!.CountryId).ToListAsync();
 
             return new ActionResponse<IEnumerable<State>>
             {

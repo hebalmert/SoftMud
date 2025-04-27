@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using Spix.Core.Entities;
 using Spix.CoreShared.Pagination;
 using Spix.UnitOfWork.InterfacesEntities;
+using System.Security.Claims;
 
 namespace Spix.AppBack.Controllers.EntitiesV1
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/states")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Usuario")]
     [ApiController]
     public class StatesController : ControllerBase
     {
@@ -21,10 +22,16 @@ namespace Spix.AppBack.Controllers.EntitiesV1
             _statesUnitOfWork = statesUnitOfWork;
         }
 
-        [HttpGet("loadCombo/{id:int}")]
-        public async Task<ActionResult<IEnumerable<State>>> GetComboAsync(int id)
+        [HttpGet("loadCombo")]  //Combo filtado por Pais en base a User.CountryId
+        public async Task<ActionResult<IEnumerable<State>>> GetComboAsync()
         {
-            var response = await _statesUnitOfWork.ComboAsync(id);
+            string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+            if (email == null)
+            {
+                return BadRequest("Erro en el sistema de Usuarios");
+            }
+
+            var response = await _statesUnitOfWork.ComboAsync(email);
             if (!response.WasSuccess)
             {
                 return BadRequest(response.Message);

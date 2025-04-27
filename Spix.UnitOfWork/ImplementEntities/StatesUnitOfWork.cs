@@ -15,7 +15,7 @@ public class StatesUnitOfWork : IStatesUnitOfWork
         _statesService = statesService;
     }
 
-    public async Task<ActionResponse<IEnumerable<State>>> ComboAsync(int id) => await _statesService.ComboAsync(id);
+    public async Task<ActionResponse<IEnumerable<State>>> ComboAsync(string email) => await _statesService.ComboAsync(email);
 
     public async Task<ActionResponse<IEnumerable<State>>> GetAsync(PaginationDTO pagination) => await _statesService.GetAsync(pagination);
 

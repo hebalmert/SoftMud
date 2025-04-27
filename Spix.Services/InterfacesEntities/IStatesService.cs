@@ -6,7 +6,7 @@ namespace Spix.Services.InterfacesEntities;
 
 public interface IStatesService
 {
-    Task<ActionResponse<IEnumerable<State>>> ComboAsync(int id);
+    Task<ActionResponse<IEnumerable<State>>> ComboAsync(string email);
 
     Task<ActionResponse<IEnumerable<State>>> GetAsync(PaginationDTO pagination);
 

@@ -2,8 +2,6 @@ using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Spix.AppFront.Helpers;
-using Spix.AppFront.Pages.Entities.SoftPlanPage;
-using Spix.Core.Entities;
 using Spix.Core.EntitiesData;
 using Spix.HttpServices;
 
@@ -21,7 +19,7 @@ public partial class IndexChainType
 
     private int CurrentPage = 1;  //Pagina seleccionada
     private int TotalPages;      //Cantidad total de paginas
-    private int PageSize = 2;  //Cantidad de registros por pagina
+    private int PageSize = 15;  //Cantidad de registros por pagina
 
     private const string baseUrl = "api/v1/chaintypes";
     public List<ChainType>? ChainTypes { get; set; }

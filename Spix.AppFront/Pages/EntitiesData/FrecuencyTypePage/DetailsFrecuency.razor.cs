@@ -2,10 +2,8 @@ using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Spix.AppFront.Helpers;
-using Spix.Core.EntitesSoftSec;
 using Spix.Core.EntitiesData;
 using Spix.HttpServices;
-using System.Collections.Generic;
 
 namespace Spix.AppFront.Pages.EntitiesData.FrecuencyTypePage;
 
