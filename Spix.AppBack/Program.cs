@@ -198,6 +198,12 @@ builder.Services.AddScoped<IMarkUnitOfWork, MarkUnitOfWork>();
 builder.Services.AddScoped<IMarkService, MarkService>();
 builder.Services.AddScoped<IMarkModelUnitOfWork, MarkModelUnitOfWork>();
 builder.Services.AddScoped<IMarkModelService, MarkModelService>();
+builder.Services.AddScoped<ITaxUnitOfWork, TaxUnitOfWork>();
+builder.Services.AddScoped<ITaxService, TaxService>();
+builder.Services.AddScoped<IProductCategoryUnitOfWork, ProductCategoryUnitOfWork>();
+builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
+builder.Services.AddScoped<IProductUnitOfWork, ProductUnitOfWork>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 string? frontUrl = builder.Configuration["UrlFrontend"]; //Se tomta la UrlBlazor desde Appsetting.
 // Configuración de CORS

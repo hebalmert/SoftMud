@@ -42,6 +42,9 @@ public class DataContext : IdentityDbContext<User>
     public DbSet<Zone> Zones => Set<Zone>();
     public DbSet<Mark> Marks => Set<Mark>();
     public DbSet<MarkModel> MarkModels => Set<MarkModel>();
+    public DbSet<Tax> Taxes => Set<Tax>();
+    public DbSet<ProductCategory> ProductCategories => Set<ProductCategory>();
+    public DbSet<Product> Products => Set<Product>();
 
     //EntitiesSoftSec
 
