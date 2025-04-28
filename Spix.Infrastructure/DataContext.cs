@@ -30,21 +30,18 @@ public class DataContext : IdentityDbContext<User>
     //EntitiesData
 
     public DbSet<FrecuencyType> FrecuencyTypes => Set<FrecuencyType>();
-
     public DbSet<Frecuency> Frecuencies => Set<Frecuency>();
-
     public DbSet<Operation> Operations => Set<Operation>();
-
     public DbSet<Channel> Channels => Set<Channel>();
-
     public DbSet<Security> Securities => Set<Security>();
-
     public DbSet<HotSpotType> HotSpotTypes => Set<HotSpotType>();
-
     public DbSet<ChainType> ChainTypes => Set<ChainType>();
 
     //EntitiesGen
+
     public DbSet<Zone> Zones => Set<Zone>();
+    public DbSet<Mark> Marks => Set<Mark>();
+    public DbSet<MarkModel> MarkModels => Set<MarkModel>();
 
     //EntitiesSoftSec
 

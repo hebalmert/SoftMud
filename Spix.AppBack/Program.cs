@@ -194,6 +194,10 @@ builder.Services.AddScoped<IUsuarioRoleService, UsuarioRoleService>();
 //EntitiesGen
 builder.Services.AddScoped<IZoneUnitOfWork, ZoneUnitOfWork>();
 builder.Services.AddScoped<IZoneService, ZoneService>();
+builder.Services.AddScoped<IMarkUnitOfWork, MarkUnitOfWork>();
+builder.Services.AddScoped<IMarkService, MarkService>();
+builder.Services.AddScoped<IMarkModelUnitOfWork, MarkModelUnitOfWork>();
+builder.Services.AddScoped<IMarkModelService, MarkModelService>();
 
 string? frontUrl = builder.Configuration["UrlFrontend"]; //Se tomta la UrlBlazor desde Appsetting.
 // Configuración de CORS
