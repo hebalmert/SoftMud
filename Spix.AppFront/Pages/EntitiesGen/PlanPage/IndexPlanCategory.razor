@@ -1,11 +1,11 @@
-﻿@page "/productcategories"
+﻿@page "/plancategories"
 @attribute [Authorize(Roles = "Usuario")]
 
 <MudCardContent>
     <div class="shadow-lg mb-5">
         <MudCard Outlined="true">
             <MudCardContent>
-                <h3>Categoria Productos</h3>
+                <h3>Categoria Planes</h3>
 
                 <div class="col-sm-12">
                     <div class="row align-items-center">
@@ -15,7 +15,7 @@
                                        EndIcon="@Icons.Material.Filled.AddCircle"
                                        Color="Color.Dark" style="width:130px"
                                        OnClick="@(()=> ShowModalAsync())">
-                                Producto
+                                Categoria
                             </MudButton>
                         </div>
                         <!-- Columna para el filtro -->
@@ -28,7 +28,7 @@
                 <hr style="height:2px;border:none;color:#333;background-color:#333;" />
                 <div class="row">
                     <div class="col-md-12 table-responsive">
-                        <GenericList MyList="ProductCategories">
+                        <GenericList MyList="PlanCategories">
                             <Body>
                                 <MudSimpleTable Dense="true" Hover="true" Striped="true" Style="overflow-x: auto;">
                                     <thead>
@@ -42,14 +42,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var item in ProductCategories!)
+                                        @foreach (var item in PlanCategories!)
                                         {
                                             <tr>
                                                 <td>
-                                                    @item.Name
+                                                    @item.PlanCategoryName
                                                 </td>
                                                 <td>
-                                                    @item.ProductsNumer
+                                                    @item.PlanesNumer
                                                 </td>
                                                 <td>
                                                     <MudCheckBox @bind-Value="@item.Active" ReadOnly="true"></MudCheckBox>
@@ -58,12 +58,12 @@
                                                     <MudFab Size="Size.Small"
                                                             EndIcon="@Icons.Material.Filled.Edit"
                                                             Color="Color.Dark"
-                                                            OnClick="@(()=> ShowModalAsync(item.ProductCategoryId, true))">
+                                                            OnClick="@(()=> ShowModalAsync(item.PlanCategoryId, true))">
                                                     </MudFab>
                                                 </td>
                                                 <td style="width:1px; padding-left:1px; padding-right:4px;">
                                                     <MudFab Size="Size.Small"
-                                                            Href="@($"/products/details/{item.ProductCategoryId}")"
+                                                            Href="@($"/plans/details/{item.PlanCategoryId}")"
                                                             StartIcon="@Icons.Material.Filled.ManageAccounts"
                                                             Color="Color.Dark">
                                                     </MudFab>
@@ -72,7 +72,7 @@
                                                     <MudFab Size="Size.Small"
                                                             EndIcon="@Icons.Material.Filled.Delete"
                                                             Color="Color.Error"
-                                                            OnClick="@(()=> DeleteAsync(item.ProductCategoryId))">
+                                                            OnClick="@(()=> DeleteAsync(item.PlanCategoryId))">
                                                     </MudFab>
                                                 </td>
                                             </tr>

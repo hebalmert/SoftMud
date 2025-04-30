@@ -45,7 +45,10 @@ public class DataContext : IdentityDbContext<User>
     public DbSet<Tax> Taxes => Set<Tax>();
     public DbSet<ProductCategory> ProductCategories => Set<ProductCategory>();
     public DbSet<Product> Products => Set<Product>();
-
+    public DbSet<ServiceCategory> ServiceCategories => Set<ServiceCategory>();
+    public DbSet<ServiceClient> ServiceClients => Set<ServiceClient>();
+    public DbSet<PlanCategory> PlanCategories => Set<PlanCategory>();
+    public DbSet<Plan> Plans => Set<Plan>();
     //EntitiesSoftSec
 
     public DbSet<Usuario> Usuarios => Set<Usuario>();

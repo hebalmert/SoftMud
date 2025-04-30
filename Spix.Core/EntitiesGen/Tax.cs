@@ -29,4 +29,8 @@ public class Tax
     public Corporation? Corporation { get; set; }
 
     public ICollection<Product>? Products { get; set; }
+
+    public ICollection<ServiceClient>? ServiceClients { get; set; }
+
+    public ICollection<Plan>? Plans { get; set; }
 }

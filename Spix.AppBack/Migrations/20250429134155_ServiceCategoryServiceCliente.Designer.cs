@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Spix.Infrastructure;
 
@@ -11,9 +12,11 @@ using Spix.Infrastructure;
 namespace Spix.AppBack.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250429134155_ServiceCategoryServiceCliente")]
+    partial class ServiceCategoryServiceCliente
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -851,88 +854,6 @@ namespace Spix.AppBack.Migrations
                     b.ToTable("MarkModels");
                 });
 
-            modelBuilder.Entity("Spix.Core.EntitiesGen.Plan", b =>
-                {
-                    b.Property<Guid>("PlanId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("CorporationId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("PlanCategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PlanName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("SpeedDown")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpeedDownType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpeedUp")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpeedUpType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TasaReuso")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("TaxId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("PlanId");
-
-                    b.HasIndex("PlanCategoryId");
-
-                    b.HasIndex("PlanId");
-
-                    b.HasIndex("TaxId");
-
-                    b.HasIndex("CorporationId", "PlanName");
-
-                    b.ToTable("Plans");
-                });
-
-            modelBuilder.Entity("Spix.Core.EntitiesGen.PlanCategory", b =>
-                {
-                    b.Property<Guid>("PlanCategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("CorporationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PlanCategoryName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("PlanCategoryId");
-
-                    b.HasIndex("CorporationId");
-
-                    b.HasIndex("PlanCategoryName", "CorporationId")
-                        .IsUnique();
-
-                    b.ToTable("PlanCategories");
-                });
-
             modelBuilder.Entity("Spix.Core.EntitiesGen.Product", b =>
                 {
                     b.Property<Guid>("ProductId")
@@ -1341,44 +1262,6 @@ namespace Spix.AppBack.Migrations
                     b.Navigation("Mark");
                 });
 
-            modelBuilder.Entity("Spix.Core.EntitiesGen.Plan", b =>
-                {
-                    b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
-                        .WithMany()
-                        .HasForeignKey("CorporationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Spix.Core.EntitiesGen.PlanCategory", "PlanCategory")
-                        .WithMany("Plans")
-                        .HasForeignKey("PlanCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Spix.Core.EntitiesGen.Tax", "Tax")
-                        .WithMany("Plans")
-                        .HasForeignKey("TaxId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Corporation");
-
-                    b.Navigation("PlanCategory");
-
-                    b.Navigation("Tax");
-                });
-
-            modelBuilder.Entity("Spix.Core.EntitiesGen.PlanCategory", b =>
-                {
-                    b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
-                        .WithMany()
-                        .HasForeignKey("CorporationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Corporation");
-                });
-
             modelBuilder.Entity("Spix.Core.EntitiesGen.Product", b =>
                 {
                     b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
@@ -1546,11 +1429,6 @@ namespace Spix.AppBack.Migrations
                     b.Navigation("MarkModels");
                 });
 
-            modelBuilder.Entity("Spix.Core.EntitiesGen.PlanCategory", b =>
-                {
-                    b.Navigation("Plans");
-                });
-
             modelBuilder.Entity("Spix.Core.EntitiesGen.ProductCategory", b =>
                 {
                     b.Navigation("Products");
@@ -1563,8 +1441,6 @@ namespace Spix.AppBack.Migrations
 
             modelBuilder.Entity("Spix.Core.EntitiesGen.Tax", b =>
                 {
-                    b.Navigation("Plans");
-
                     b.Navigation("Products");
 
                     b.Navigation("ServiceClients");

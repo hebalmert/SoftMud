@@ -204,6 +204,14 @@ builder.Services.AddScoped<IProductCategoryUnitOfWork, ProductCategoryUnitOfWork
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 builder.Services.AddScoped<IProductUnitOfWork, ProductUnitOfWork>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IServiceCategoryUnitOfWork, ServiceCategoryUnitOfWork>();
+builder.Services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
+builder.Services.AddScoped<IServiceClientUnitOfWork, ServiceClientUnitOfWork>();
+builder.Services.AddScoped<IServiceClientService, ServiceClientService>();
+builder.Services.AddScoped<IPlanCategoryUnitOfWork, PlanCategoryUnitOfWork>();
+builder.Services.AddScoped<IPlanCategoryService, PlanCategoryService>();
+builder.Services.AddScoped<IPlanUnitOfWork, PlanUnitOfWork>();
+builder.Services.AddScoped<IPlanService, PlanService>();
 
 string? frontUrl = builder.Configuration["UrlFrontend"]; //Se tomta la UrlBlazor desde Appsetting.
 // Configuración de CORS
