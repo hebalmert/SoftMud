@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Spix.Core.Entities;
+using Spix.Core.EntitiesNet;
 
 namespace Spix.Core.EntitiesGen;
 
@@ -29,4 +30,6 @@ public class MarkModel
     public Corporation? Corporation { get; set; }
 
     public Mark? Mark { get; set; }
+
+    public ICollection<Node>? Nodes { get; set; }
 }

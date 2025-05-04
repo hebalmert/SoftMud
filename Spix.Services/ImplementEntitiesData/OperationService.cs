@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Spix.Core.Entities;
 using Spix.Core.EntitiesData;
 using Spix.CoreShared.Pagination;
 using Spix.CoreShared.Responses;

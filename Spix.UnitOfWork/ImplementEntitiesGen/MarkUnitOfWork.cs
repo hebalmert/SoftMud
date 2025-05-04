@@ -15,6 +15,8 @@ public class MarkUnitOfWork : IMarkUnitOfWork
         _markService = markService;
     }
 
+    public async Task<ActionResponse<IEnumerable<Mark>>> ComboAsync(string email) => await _markService.ComboAsync(email);
+
     public async Task<ActionResponse<IEnumerable<Mark>>> GetAsync(PaginationDTO pagination, string email) => await _markService.GetAsync(pagination, email);
 
     public async Task<ActionResponse<Mark>> GetAsync(Guid id) => await _markService.GetAsync(id);

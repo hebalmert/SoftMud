@@ -1,0 +1,255 @@
+﻿<EditForm Model="Node" OnValidSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+    <MudGrid>
+
+        <MudItem xs="12">
+            <MudTextField Label="@GetDisplayName(() => Node.NodesName)"
+                          @bind-Value="@Node.NodesName"
+                          For="@(() => Node.NodesName)"
+                          Class="mb-4" />
+        </MudItem>
+        <MudItem xs="6">
+            @if (Operations is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="Operation" Class="mb-4"
+                           Label="--- Operacion ---"
+                           Value="SelectedOperation"
+                           ValueChanged="OperationChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.OperationName}")">
+                    @foreach (var item in Operations!)
+                    {
+                        <MudSelectItem Value="item">@item.OperationName</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            @if (Marks is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="Mark" Class="mb-4"
+                           Label="--- Marca ---"
+                           Value="SelectedMark"
+                           ValueChanged="MarkChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.MarkName}")">
+                    @foreach (var item in Marks!)
+                    {
+                        <MudSelectItem Value="item">@item.MarkName</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            <MudTextField Label="@GetDisplayName(() => Node.Usuario)"
+                          @bind-Value="@Node.Usuario"
+                          For="@(() => Node.Usuario)"
+                          Class="mb-4" />
+            @if (Channels is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="Channel" Class="mb-4"
+                           Label="--- Ancho Canal ---"
+                           Value="SelectedChannel"
+                           ValueChanged="ChannelChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.ChannelName}")">
+                    @foreach (var item in Channels!)
+                    {
+                        <MudSelectItem Value="item">@item.ChannelName</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            @if (FrecuencyTypes is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="FrecuencyType" Class="mb-4"
+                           Label="--- Tipo Frecuencia ---"
+                           Value="SelectedFrecuencyType"
+                           ValueChanged="FrecuencyTypeChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.TypeName}")">
+                    @foreach (var item in FrecuencyTypes!)
+                    {
+                        <MudSelectItem Value="item">@item.TypeName</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            @if (Securities is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="Security" Class="mb-4"
+                           Label="--- Seguridad ---"
+                           Value="SelectedSecurity"
+                           ValueChanged="SecurityChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.SecurityName}")">
+                    @foreach (var item in Securities!)
+                    {
+                        <MudSelectItem Value="item">@item.SecurityName</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+        </MudItem>
+        <MudItem xs="6">
+            @if (IpNetworks is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="IpNetwork" Class="mb-4"
+                           Label="--- Ip Network ---"
+                           Value="SelectedIpnetwork"
+                           ValueChanged="IpNetworkChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.Ip}")">
+                    @foreach (var item in IpNetworks!)
+                    {
+                        <MudSelectItem Value="item">@item.Ip</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            @if (MarkModels is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="MarkModel" Class="mb-4"
+                           Label="--- Modelo ---"
+                           Value="SelectedMarkModel"
+                           ValueChanged="MarkModelChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.MarkModelName}")">
+                    @foreach (var item in MarkModels!)
+                    {
+                        <MudSelectItem Value="item">@item.MarkModelName</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            <MudTextField Label="@GetDisplayName(() => Node.Clave)"
+                          @bind-Value="@Node.Clave"
+                          For="@(() => Node.Clave)"
+                          Class="mb-4" />
+            <MudTextField Label="@GetDisplayName(() => Node.Mac)"
+                          @bind-Value="@Node.Mac"
+                          For="@(() => Node.Mac)"
+                          Class="mb-4" />
+            @if (Frecuencies is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="Frecuency" Class="mb-4"
+                           Label="--- Frecuencia ---"
+                           Value="SelectedFrecuency"
+                           ValueChanged="FrecuencyChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.FrecuencyName}")">
+                    @foreach (var item in Frecuencies!)
+                    {
+                        <MudSelectItem Value="item">@item.FrecuencyName</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            <MudTextField Label="@GetDisplayName(() => Node.FraseSeguridad)"
+                          @bind-Value="@Node.FraseSeguridad"
+                          For="@(() => Node.FraseSeguridad)"
+                          Class="mb-4" />
+        </MudItem>
+    </MudGrid>
+    <MudGrid>
+        <MudItem xs="12">
+            <br />
+            <div style="border-top: 2px solid ; margin: auto;"></div>
+            <br />
+        </MudItem>
+    </MudGrid>
+    <MudGrid>
+        <MudItem xs="6">
+            @if (States is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="State" Class="mb-4"
+                           Label="--- Estado/Departamento ---"
+                           Value="SelectedSate"
+                           ValueChanged="StateChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.Name}")">
+                    @foreach (var item in States!)
+                    {
+                        <MudSelectItem Value="item">@item.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            @if (Zones is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="Zone" Class="mb-4"
+                           Label="--- Zonas ---"
+                           Value="SelectedZone"
+                           ValueChanged="ZoneChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.ZoneName}")">
+                    @foreach (var item in Zones!)
+                    {
+                        <MudSelectItem Value="item">@item.ZoneName</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+        </MudItem>
+        <MudItem xs="6">
+            @if (Cities is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="City" Class="mb-4"
+                           Label="--- Ciudad ---"
+                           Value="SelectedCity"
+                           ValueChanged="CityChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.Name}")">
+                    @foreach (var item in Cities!)
+                    {
+                        <MudSelectItem Value="item">@item.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+
+            <MudCheckBox Label="@GetDisplayName(() => Node.Active)"
+                         @bind-Value="@Node.Active"
+                         For="@(() => Node.Active)"
+                         Class="mb-4" />
+
+        </MudItem>
+    </MudGrid>
+
+
+    <br />
+    <div class="mb-4" style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
+        <MudButton Variant="Variant.Filled"
+                   StartIcon="@Icons.Material.Filled.ArrowBack"
+                   Color="Color.Surface"
+                   OnClick="ReturnAction">
+            Volver
+        </MudButton>
+        <MudButton Variant="Variant.Filled"
+                   StartIcon="@Icons.Material.Filled.Save"
+                   Color="Color.Dark"
+                   ButtonType="ButtonType.Submit">
+            Guardar
+        </MudButton>
+    </div>
+</EditForm>

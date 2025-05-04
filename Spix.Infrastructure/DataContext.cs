@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Spix.Core.EntitiesNet;
 using Spix.Core.EntitesSoftSec;
 using Spix.Core.Entities;
 using Spix.Core.EntitiesData;
@@ -49,6 +50,13 @@ public class DataContext : IdentityDbContext<User>
     public DbSet<ServiceClient> ServiceClients => Set<ServiceClient>();
     public DbSet<PlanCategory> PlanCategories => Set<PlanCategory>();
     public DbSet<Plan> Plans => Set<Plan>();
+
+    //EntitiesNet
+
+    public DbSet<IpNetwork> IpNetworks => Set<IpNetwork>();
+    public DbSet<IpNet> IpNets => Set<IpNet>();
+    public DbSet<Node> Nodes => Set<Node>();
+
     //EntitiesSoftSec
 
     public DbSet<Usuario> Usuarios => Set<Usuario>();

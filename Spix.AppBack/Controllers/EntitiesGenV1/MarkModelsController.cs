@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Spix.Core.EntitiesGen;
 using Spix.CoreShared.Pagination;
+using Spix.UnitOfWork.ImplementEntitiesGen;
 using Spix.UnitOfWork.InterfacesEntitiesGen;
 using System.Security.Claims;
 
@@ -20,6 +21,23 @@ public class MarkModelsController : ControllerBase
     public MarkModelsController(IMarkModelUnitOfWork markModelUnitOfWork)
     {
         _markModelUnitOfWork = markModelUnitOfWork;
+    }
+
+    [HttpGet("loadCombo/{id}")]  //MarkId
+    public async Task<ActionResult<IEnumerable<Zone>>> GetComboAsync(Guid id)
+    {
+        string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+        if (email == null)
+        {
+            return BadRequest("Erro en el sistema de Usuarios");
+        }
+
+        var response = await _markModelUnitOfWork.ComboAsync(email, id);
+        if (!response.WasSuccess)
+        {
+            return BadRequest(response.Message);
+        }
+        return Ok(response.Result);
     }
 
     [HttpGet]

@@ -22,6 +22,23 @@ public class MarksController : ControllerBase
         _markUnitOfWork = markUnitOfWork;
     }
 
+    [HttpGet("loadCombo")]
+    public async Task<ActionResult<IEnumerable<Mark>>> GetComboAsync(int id)
+    {
+        string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+        if (email == null)
+        {
+            return BadRequest("Erro en el sistema de Usuarios");
+        }
+
+        var response = await _markUnitOfWork.ComboAsync(email);
+        if (!response.WasSuccess)
+        {
+            return BadRequest(response.Message);
+        }
+        return Ok(response.Result);
+    }
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Mark>>> GetAll([FromQuery] PaginationDTO pagination)
     {

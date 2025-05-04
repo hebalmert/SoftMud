@@ -30,6 +30,35 @@ public class MarkModelService : IMarkModelService
         _httpErrorHandler = new HttpErrorHandler();
     }
 
+    public async Task<ActionResponse<IEnumerable<MarkModel>>> ComboAsync(string email, Guid id)
+    {
+        try
+        {
+            var user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                return new ActionResponse<IEnumerable<MarkModel>>
+                {
+                    WasSuccess = false,
+                    Message = "Problemas de Validacion de Usuario"
+                };
+            }
+            var ListModel = await _context.MarkModels
+                .Where(x => x.Active && x.CorporationId == user.CorporationId && x.MarkId == id)
+                .ToListAsync();
+
+            return new ActionResponse<IEnumerable<MarkModel>>
+            {
+                WasSuccess = true,
+                Result = ListModel
+            };
+        }
+        catch (Exception ex)
+        {
+            return await _httpErrorHandler.HandleErrorAsync<IEnumerable<MarkModel>>(ex); // ✅ Manejo de errores automático
+        }
+    }
+
     public async Task<ActionResponse<IEnumerable<MarkModel>>> GetAsync(PaginationDTO pagination, string email)
     {
         try

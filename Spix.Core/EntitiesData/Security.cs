@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Spix.Core.EntitiesNet;
+using System.ComponentModel.DataAnnotations;
 
 namespace Spix.Core.EntitiesData;
 
@@ -14,4 +15,8 @@ public class Security
 
     [Display(Name = "Activo")]
     public bool Active { get; set; }
+
+    //Relaciones
+
+    public ICollection<Node>? Nodes { get; set; }
 }

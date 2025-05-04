@@ -1,37 +1,26 @@
 using Asp.Versioning;
+using Mapster;
+using MapsterMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Spix.AppBack.Data;
-using Spix.Infrastructure;
-using Spix.Services.ImplementEntities;
-using Spix.Services.InterfacesEntities;
-using Spix.UnitOfWork.ImplementEntities;
-using Spix.UnitOfWork.InterfacesEntities;
+using Spix.AppBack.LoadCountries;
+using Spix.AppBack.ProgramConfig;
+using Spix.CoreShared.ResponsesSec;
+using Spix.Helper;
+using Spix.Helper.FunctionSoft;
+using Spix.Helper.Mappings;
 using Spix.Helper.Transactions;
+using Spix.Infrastructure;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Diagnostics;
-using System.Text.Json.Serialization;
-using Spix.AppBack.LoadCountries;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Spix.CoreShared.ResponsesSec;
+using System.Text.Json.Serialization;
 using AppUser = Spix.Core.Entities.User;
-using Spix.Helper;
-using Spix.UnitOfWork.InterfacesSecure;
-using Spix.UnitOfWork.ImplementSecure;
-using Spix.Services.InterfacesSecure;
-using Spix.Services.ImplementSecure;
-using Spix.UnitOfWork.InterfacesEntitiesData;
-using Spix.UnitOfWork.ImplementEntitiesData;
-using Spix.Services.InterfacesEntitiesData;
-using Spix.Services.ImplementEntitiesData;
-using Spix.UnitOfWork.InterfacesEntitiesGen;
-using Spix.UnitOfWork.ImplementEntitiesGen;
-using Spix.Services.InterfacesEntitiesGen;
-using Spix.Services.ImplementEntitiesGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -152,66 +141,20 @@ builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<IEmailHelper, EmailHelper>();
 builder.Services.AddScoped<IUtilityTools, UtilityTools>();
 builder.Services.AddScoped<IFileStorage, FileStorage>();
+builder.Services.AddScoped<IIpControl, IpControl>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddMemoryCache();
 
 builder.Services.AddScoped<ITransactionManager, TransactionManager>();
-//Entities
-builder.Services.AddScoped<ICountriesUnitOfWork, CountriesUnitOfWork>();
-builder.Services.AddScoped<ICountriesService, CountriesService>();
-builder.Services.AddScoped<IStatesUnitOfWork, StatesUnitOfWork>();
-builder.Services.AddScoped<IStatesService, StatesService>();
-builder.Services.AddScoped<ICityUnitOfWork, CityUnitOfWork>();
-builder.Services.AddScoped<ICityService, CityService>();
-builder.Services.AddScoped<ISoftPlanUnitOfWork, SoftPlanUnitOfWork>();
-builder.Services.AddScoped<ISoftPlanService, SoftPlanService>();
-builder.Services.AddScoped<ICorporationUnitOfWork, CorporationUnitOfWork>();
-builder.Services.AddScoped<ICorporationService, CorporationService>();
-builder.Services.AddScoped<IManagerUnitOfWork, ManagerUnitOfWork>();
-builder.Services.AddScoped<IManagerService, ManagerService>();
-//EntitiesData
-builder.Services.AddScoped<IChainTypesUnitOfWork, ChainTypesUnitOfWork>();
-builder.Services.AddScoped<IChainTypesService, ChainTypesService>();
-builder.Services.AddScoped<IChannelUnitOfWork, ChannelUnitOfWork>();
-builder.Services.AddScoped<IChannelService, ChannelService>();
-builder.Services.AddScoped<IFrecuencyUnitOfWork, FrecuencyUnitOfWork>();
-builder.Services.AddScoped<IFrecuencyService, FrecuencyService>();
-builder.Services.AddScoped<IFrecuencyTypeUnitOfWork, FrecuencyTypeUnitOfWork>();
-builder.Services.AddScoped<IFrecuencyTypeService, FrecuencyTypeService>();
-builder.Services.AddScoped<IHotSpotTypeUnitOfWork, HotSpotTypeUnitOfWork>();
-builder.Services.AddScoped<IHotSpotTypeService, HotSpotTypeService>();
-builder.Services.AddScoped<IOperationUnitOfWork, OperationUnitOfWork>();
-builder.Services.AddScoped<IOperationService, OperationService>();
-builder.Services.AddScoped<ISecurityUnitOfWork, SecurityUnitOfWork>();
-builder.Services.AddScoped<ISecurityService, SecurityService>();
-//EntitiesSecurities Software
-builder.Services.AddScoped<IAccountUnitOfWork, AccountUnitOfWork>();
-builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IUsuarioUnitOfWork, UsuarioUnitOfWork>();
-builder.Services.AddScoped<IUsuarioService, UsuarioService>();
-builder.Services.AddScoped<IUsuarioRoleUnitOfWork, UsuarioRoleUnitOfWork>();
-builder.Services.AddScoped<IUsuarioRoleService, UsuarioRoleService>();
-//EntitiesGen
-builder.Services.AddScoped<IZoneUnitOfWork, ZoneUnitOfWork>();
-builder.Services.AddScoped<IZoneService, ZoneService>();
-builder.Services.AddScoped<IMarkUnitOfWork, MarkUnitOfWork>();
-builder.Services.AddScoped<IMarkService, MarkService>();
-builder.Services.AddScoped<IMarkModelUnitOfWork, MarkModelUnitOfWork>();
-builder.Services.AddScoped<IMarkModelService, MarkModelService>();
-builder.Services.AddScoped<ITaxUnitOfWork, TaxUnitOfWork>();
-builder.Services.AddScoped<ITaxService, TaxService>();
-builder.Services.AddScoped<IProductCategoryUnitOfWork, ProductCategoryUnitOfWork>();
-builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
-builder.Services.AddScoped<IProductUnitOfWork, ProductUnitOfWork>();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IServiceCategoryUnitOfWork, ServiceCategoryUnitOfWork>();
-builder.Services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
-builder.Services.AddScoped<IServiceClientUnitOfWork, ServiceClientUnitOfWork>();
-builder.Services.AddScoped<IServiceClientService, ServiceClientService>();
-builder.Services.AddScoped<IPlanCategoryUnitOfWork, PlanCategoryUnitOfWork>();
-builder.Services.AddScoped<IPlanCategoryService, PlanCategoryService>();
-builder.Services.AddScoped<IPlanUnitOfWork, PlanUnitOfWork>();
-builder.Services.AddScoped<IPlanService, PlanService>();
+
+// Registrar configuración global
+MapsterConfig.RegisterMappings();
+builder.Services.AddSingleton(TypeAdapterConfig.GlobalSettings);
+builder.Services.AddScoped<IMapper, ServiceMapper>();
+builder.Services.AddScoped<IMapperService, MapperService>(); //
+
+// Llamas a la clase para registrar los servicios
+ServiceRegistration.AddUnitOfWorkAndServices(builder.Services);
 
 string? frontUrl = builder.Configuration["UrlFrontend"]; //Se tomta la UrlBlazor desde Appsetting.
 // Configuración de CORS

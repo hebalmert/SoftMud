@@ -15,7 +15,7 @@ public class ZoneUnitOfWork : IZoneUnitOfWork
         _zoneService = zoneService;
     }
 
-    public async Task<ActionResponse<IEnumerable<Zone>>> ComboAsync(string email) => await _zoneService.ComboAsync(email);
+    public async Task<ActionResponse<IEnumerable<Zone>>> ComboAsync(string email, int id) => await _zoneService.ComboAsync(email, id);
 
     public async Task<ActionResponse<IEnumerable<Zone>>> GetAsync(PaginationDTO pagination, string email) => await _zoneService.GetAsync(pagination, email);
 

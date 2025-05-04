@@ -1148,6 +1148,170 @@ namespace Spix.AppBack.Migrations
                     b.ToTable("Zones");
                 });
 
+            modelBuilder.Entity("Spix.Core.EntitiesNet.IpNet", b =>
+                {
+                    b.Property<Guid>("IpNetId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Assigned")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("CorporationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<bool>("Excluded")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Ip")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("IpNetId");
+
+                    b.HasIndex("CorporationId");
+
+                    b.HasIndex("Ip", "CorporationId")
+                        .IsUnique();
+
+                    b.ToTable("IpNets");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesNet.IpNetwork", b =>
+                {
+                    b.Property<Guid>("IpNetworkId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Assigned")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("CorporationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<bool>("Excluded")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Ip")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("IpNetworkId");
+
+                    b.HasIndex("CorporationId");
+
+                    b.HasIndex("Ip", "CorporationId")
+                        .IsUnique();
+
+                    b.ToTable("IpNetworks");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesNet.Node", b =>
+                {
+                    b.Property<Guid>("NodeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ChannelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Clave")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<int>("CorporationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FraseSeguridad")
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<int?>("FrecuencyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FrecuencyTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("IpNetworkId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Mac")
+                        .HasMaxLength(17)
+                        .HasColumnType("nvarchar(17)");
+
+                    b.Property<Guid>("MarkId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MarkModelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NodesName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("OperationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SecurityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Usuario")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<Guid>("ZoneId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("NodeId");
+
+                    b.HasIndex("ChannelId");
+
+                    b.HasIndex("CorporationId");
+
+                    b.HasIndex("FrecuencyId");
+
+                    b.HasIndex("FrecuencyTypeId");
+
+                    b.HasIndex("IpNetworkId");
+
+                    b.HasIndex("MarkId");
+
+                    b.HasIndex("MarkModelId");
+
+                    b.HasIndex("OperationId");
+
+                    b.HasIndex("SecurityId");
+
+                    b.HasIndex("ZoneId");
+
+                    b.HasIndex("NodesName", "CorporationId", "OperationId")
+                        .IsUnique();
+
+                    b.ToTable("Nodes");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1493,6 +1657,107 @@ namespace Spix.AppBack.Migrations
                     b.Navigation("state");
                 });
 
+            modelBuilder.Entity("Spix.Core.EntitiesNet.IpNet", b =>
+                {
+                    b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
+                        .WithMany()
+                        .HasForeignKey("CorporationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Corporation");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesNet.IpNetwork", b =>
+                {
+                    b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
+                        .WithMany()
+                        .HasForeignKey("CorporationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Corporation");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesNet.Node", b =>
+                {
+                    b.HasOne("Spix.Core.EntitiesData.Channel", "Channel")
+                        .WithMany("Nodes")
+                        .HasForeignKey("ChannelId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
+                        .WithMany()
+                        .HasForeignKey("CorporationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesData.Frecuency", "Frecuency")
+                        .WithMany("Nodes")
+                        .HasForeignKey("FrecuencyId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Spix.Core.EntitiesData.FrecuencyType", "FrecuencyType")
+                        .WithMany("Nodes")
+                        .HasForeignKey("FrecuencyTypeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Spix.Core.EntitiesNet.IpNetwork", "IpNetwork")
+                        .WithMany("Nodes")
+                        .HasForeignKey("IpNetworkId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesGen.Mark", "Mark")
+                        .WithMany("Nodes")
+                        .HasForeignKey("MarkId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesGen.MarkModel", "MarkModel")
+                        .WithMany("Nodes")
+                        .HasForeignKey("MarkModelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesData.Operation", "Operation")
+                        .WithMany("Nodes")
+                        .HasForeignKey("OperationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesData.Security", "Security")
+                        .WithMany("Nodes")
+                        .HasForeignKey("SecurityId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Spix.Core.EntitiesGen.Zone", "Zone")
+                        .WithMany("Nodes")
+                        .HasForeignKey("ZoneId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Channel");
+
+                    b.Navigation("Corporation");
+
+                    b.Navigation("Frecuency");
+
+                    b.Navigation("FrecuencyType");
+
+                    b.Navigation("IpNetwork");
+
+                    b.Navigation("Mark");
+
+                    b.Navigation("MarkModel");
+
+                    b.Navigation("Operation");
+
+                    b.Navigation("Security");
+
+                    b.Navigation("Zone");
+                });
+
             modelBuilder.Entity("Spix.Core.EntitesSoftSec.Usuario", b =>
                 {
                     b.Navigation("UsuarioRoles");
@@ -1536,14 +1801,43 @@ namespace Spix.AppBack.Migrations
                     b.Navigation("UserRoleDetails");
                 });
 
+            modelBuilder.Entity("Spix.Core.EntitiesData.Channel", b =>
+                {
+                    b.Navigation("Nodes");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesData.Frecuency", b =>
+                {
+                    b.Navigation("Nodes");
+                });
+
             modelBuilder.Entity("Spix.Core.EntitiesData.FrecuencyType", b =>
                 {
                     b.Navigation("Frecuencies");
+
+                    b.Navigation("Nodes");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesData.Operation", b =>
+                {
+                    b.Navigation("Nodes");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesData.Security", b =>
+                {
+                    b.Navigation("Nodes");
                 });
 
             modelBuilder.Entity("Spix.Core.EntitiesGen.Mark", b =>
                 {
                     b.Navigation("MarkModels");
+
+                    b.Navigation("Nodes");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesGen.MarkModel", b =>
+                {
+                    b.Navigation("Nodes");
                 });
 
             modelBuilder.Entity("Spix.Core.EntitiesGen.PlanCategory", b =>
@@ -1568,6 +1862,16 @@ namespace Spix.AppBack.Migrations
                     b.Navigation("Products");
 
                     b.Navigation("ServiceClients");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesGen.Zone", b =>
+                {
+                    b.Navigation("Nodes");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesNet.IpNetwork", b =>
+                {
+                    b.Navigation("Nodes");
                 });
 #pragma warning restore 612, 618
         }

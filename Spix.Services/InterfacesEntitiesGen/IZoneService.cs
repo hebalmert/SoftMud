@@ -6,7 +6,7 @@ namespace Spix.Services.InterfacesEntitiesGen;
 
 public interface IZoneService
 {
-    Task<ActionResponse<IEnumerable<Zone>>> ComboAsync(string email);
+    Task<ActionResponse<IEnumerable<Zone>>> ComboAsync(string email, int id);
 
     Task<ActionResponse<IEnumerable<Zone>>> GetAsync(PaginationDTO pagination, string email);
 

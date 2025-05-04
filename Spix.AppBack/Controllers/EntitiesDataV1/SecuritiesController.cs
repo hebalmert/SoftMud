@@ -10,7 +10,7 @@ namespace Spix.AppBack.Controllers.EntitiesDataV1;
 
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/securities")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin, Usuario")]
 [ApiController]
 public class SecuritiesController : ControllerBase
 {
@@ -32,6 +32,7 @@ public class SecuritiesController : ControllerBase
         return Ok(response.Result);
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Security>>> GetAll([FromQuery] PaginationDTO pagination)
     {
@@ -43,6 +44,7 @@ public class SecuritiesController : ControllerBase
         return Ok(response.Result);
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAsync(int id)
     {
@@ -54,6 +56,7 @@ public class SecuritiesController : ControllerBase
         return NotFound(response.Message);
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
     [HttpPut]
     public async Task<ActionResult<Security>> PutAsync(Security modelo)
     {
@@ -65,6 +68,7 @@ public class SecuritiesController : ControllerBase
         return NotFound(response.Message);
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<Security>> PostAsync(Security modelo)
     {
@@ -76,6 +80,7 @@ public class SecuritiesController : ControllerBase
         return NotFound(response.Message);
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<ActionResult<bool>> DeleteAsync(int id)
     {

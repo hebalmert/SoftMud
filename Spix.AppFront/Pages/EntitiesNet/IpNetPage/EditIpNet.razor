@@ -1,0 +1,19 @@
+﻿@page "/ipnets/edit/{Id}"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (IpNet is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormIpNet IpNet="IpNet"
+                      OnSubmit="Edit"
+                      ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+
+

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Spix.Core.EntitiesNet;
+using System.ComponentModel.DataAnnotations;
 
 namespace Spix.Core.EntitiesData;
 
@@ -21,4 +22,6 @@ public class FrecuencyType
 
     //Relaciones
     public ICollection<Frecuency>? Frecuencies { get; set; }
+
+    public ICollection<Node>? Nodes { get; set; }
 }

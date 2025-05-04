@@ -1,0 +1,18 @@
+﻿@page "/ipnetworks/create"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (IpNetwork is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormIpNetwork IpNetwork="IpNetwork"
+                      OnSubmit="Create"
+                      ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+

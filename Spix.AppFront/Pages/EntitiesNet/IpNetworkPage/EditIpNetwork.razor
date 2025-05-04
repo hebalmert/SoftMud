@@ -1,0 +1,19 @@
+﻿@page "/ipnetworks/edit/{Id}"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (IpNetwork is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormIpNetwork IpNetwork="IpNetwork"
+                      OnSubmit="Edit"
+                      ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+
+

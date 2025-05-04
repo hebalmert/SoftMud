@@ -6,6 +6,8 @@ namespace Spix.UnitOfWork.InterfacesEntitiesGen;
 
 public interface IMarkModelUnitOfWork
 {
+    Task<ActionResponse<IEnumerable<MarkModel>>> ComboAsync(string email, Guid id);
+
     Task<ActionResponse<IEnumerable<MarkModel>>> GetAsync(PaginationDTO pagination, string email);
 
     Task<ActionResponse<MarkModel>> GetAsync(Guid id);

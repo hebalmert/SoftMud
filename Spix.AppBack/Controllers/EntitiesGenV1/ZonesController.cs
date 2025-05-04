@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Spix.Core.EntitiesData;
 using Spix.Core.EntitiesGen;
 using Spix.CoreShared.Pagination;
 using Spix.UnitOfWork.InterfacesEntitiesGen;
@@ -23,8 +22,8 @@ public class ZonesController : ControllerBase
         _zoneUnitOfWork = zoneUnitOfWork;
     }
 
-    [HttpGet("loadCombo/{id:int}")]  //CorporationId
-    public async Task<ActionResult<IEnumerable<Zone>>> GetComboAsync()
+    [HttpGet("loadCombo/{id:int}")]  //StateId
+    public async Task<ActionResult<IEnumerable<Zone>>> GetComboAsync(int id)
     {
         string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
         if (email == null)
@@ -32,7 +31,7 @@ public class ZonesController : ControllerBase
             return BadRequest("Erro en el sistema de Usuarios");
         }
 
-        var response = await _zoneUnitOfWork.ComboAsync(email);
+        var response = await _zoneUnitOfWork.ComboAsync(email, id);
         if (!response.WasSuccess)
         {
             return BadRequest(response.Message);

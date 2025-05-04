@@ -1,0 +1,20 @@
+﻿@page "/nodes/edit/{Id}"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (Node is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormNode Node="Node"
+                      IsEditControl="true"
+                      OnSubmit="Edit"
+                      ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+
+

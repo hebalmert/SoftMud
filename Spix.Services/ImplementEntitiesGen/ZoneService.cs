@@ -30,7 +30,7 @@ public class ZoneService : IZoneService
         _httpErrorHandler = new HttpErrorHandler();
     }
 
-    public async Task<ActionResponse<IEnumerable<Zone>>> ComboAsync(string email)
+    public async Task<ActionResponse<IEnumerable<Zone>>> ComboAsync(string email, int id)
     {
         try
         {
@@ -43,7 +43,9 @@ public class ZoneService : IZoneService
                     Message = "Problemas de Validacion de Usuario"
                 };
             }
-            var ListModel = await _context.Zones.Where(x => x.Active && x.CorporationId == user.CorporationId).ToListAsync();
+            var ListModel = await _context.Zones
+                .Where(x => x.Active && x.CorporationId == user.CorporationId && x.CityId == id)
+                .ToListAsync();
 
             return new ActionResponse<IEnumerable<Zone>>
             {
