@@ -90,12 +90,16 @@ public class AccountService : IAccountService
 
                 switch (user.UserFrom)
                 {
+                    case "Client":
+                        imgUsuario = user.PhotoUser != null ? $"{BaseUrl}/ImgClient/{user.PhotoUser}" : ImagenDefault;
+                        break;
+
                     case "Manager":
-                        imgUsuario = user.PhotoUser != null ? $"{BaseUrl}ImgManager/{user.PhotoUser}" : ImagenDefault;
+                        imgUsuario = user.PhotoUser != null ? $"{BaseUrl}/ImgManager/{user.PhotoUser}" : ImagenDefault;
                         break;
 
                     case "UsuarioSoftware":
-                        imgUsuario = user.PhotoUser != null ? $"{BaseUrl}ImgUsuarios/{user.PhotoUser}" : ImagenDefault;
+                        imgUsuario = user.PhotoUser != null ? $"{BaseUrl}/ImgUsuarios/{user.PhotoUser}" : ImagenDefault;
                         break;
                 }
             }

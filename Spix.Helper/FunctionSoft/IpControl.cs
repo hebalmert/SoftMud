@@ -59,6 +59,30 @@ public class IpControl : IIpControl
         };
     }
 
+    //id=IpNetwork   IdNode = modelo.NodeId para verificar si hubo cambio de IP
+    public async Task<ActionResponse<IpNetwork>> SelectIpWhenUpdateServer(Guid id, Guid IdServer, string Descrip, IDbContextTransaction transaction)
+    {
+        var CurrentIpNetwork = await _context.Servers.AsNoTracking().FirstOrDefaultAsync(x => x.ServerId == IdServer);
+        if (CurrentIpNetwork!.IpNetworkId != id)
+        {
+            var currenIp = await _context.IpNetworks.FindAsync(CurrentIpNetwork.IpNetworkId);
+            currenIp!.Assigned = false;
+            currenIp.Description = "";
+            _context.Update(currenIp);
+
+            var upIp = await _context.IpNetworks.FindAsync(id);
+            upIp!.Assigned = true;
+            upIp.Description = Descrip;
+            _context.Update(upIp);
+        }
+        await _context.SaveChangesAsync();
+
+        return new ActionResponse<IpNetwork>
+        {
+            WasSuccess = true
+        };
+    }
+
     public async Task<ActionResponse<IpNetwork>> SelectIpToDelete(Guid id, IDbContextTransaction transaction)
     {
         var ip = await _context.IpNetworks.FirstOrDefaultAsync(c => c.IpNetworkId == id);

@@ -6,6 +6,7 @@ using Spix.Core.Entities;
 using Spix.Core.EntitiesData;
 using Spix.Core.EntitiesGen;
 using System.Reflection;
+using Spix.Core.EntitiesOper;
 
 namespace Spix.Infrastructure;
 
@@ -40,6 +41,7 @@ public class DataContext : IdentityDbContext<User>
 
     //EntitiesGen
 
+    public DbSet<DocumentType> DocumentTypes => Set<DocumentType>();
     public DbSet<Zone> Zones => Set<Zone>();
     public DbSet<Mark> Marks => Set<Mark>();
     public DbSet<MarkModel> MarkModels => Set<MarkModel>();
@@ -56,6 +58,11 @@ public class DataContext : IdentityDbContext<User>
     public DbSet<IpNetwork> IpNetworks => Set<IpNetwork>();
     public DbSet<IpNet> IpNets => Set<IpNet>();
     public DbSet<Node> Nodes => Set<Node>();
+    public DbSet<Server> Servers => Set<Server>();
+
+    //EntitiesOper
+
+    public DbSet<Client> Clients => Set<Client>();
 
     //EntitiesSoftSec
 

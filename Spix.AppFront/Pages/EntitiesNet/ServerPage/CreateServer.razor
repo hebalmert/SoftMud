@@ -1,0 +1,19 @@
+﻿@page "/servers/create"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (Server is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog Style="width: 80vw;">
+        <DialogContent>
+            <FormServer Server="Server"
+                      IsEditControl="false"
+                      OnSubmit="Create"
+                      ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+

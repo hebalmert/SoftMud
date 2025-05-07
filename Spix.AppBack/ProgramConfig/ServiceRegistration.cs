@@ -18,6 +18,11 @@ using Spix.UnitOfWork.InterfaceEntitiesNet;
 using Spix.UnitOfWork.ImplementEntitiesNet;
 using Spix.Services.InterfaceEntitiesNet;
 using Spix.Services.ImplementEntitiesNet;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Spix.UnitOfWork.InterfacesOper;
+using Spix.UnitOfWork.ImplementOper;
+using Spix.Services.InterfacesOper;
+using Spix.Services.ImplementOper;
 
 namespace Spix.AppBack.ProgramConfig;
 
@@ -61,6 +66,8 @@ public static class ServiceRegistration
         services.AddScoped<IUsuarioRoleUnitOfWork, UsuarioRoleUnitOfWork>();
         services.AddScoped<IUsuarioRoleService, UsuarioRoleService>();
         //EntitiesGen
+        services.AddScoped<IDocumentTypeUnitOfWork, DocumentTypeUnitOfWork>();
+        services.AddScoped<IDocumentTypeService, DocumentTypeService>();
         services.AddScoped<IZoneUnitOfWork, ZoneUnitOfWork>();
         services.AddScoped<IZoneService, ZoneService>();
         services.AddScoped<IMarkUnitOfWork, MarkUnitOfWork>();
@@ -88,5 +95,10 @@ public static class ServiceRegistration
         services.AddScoped<IIpNetService, IpNetService>();
         services.AddScoped<INodeUnitOfWork, NodeUnitOfWork>();
         services.AddScoped<INodeService, NodeService>();
+        services.AddScoped<IServerUnitOfWork, ServerUnitOfWork>();
+        services.AddScoped<IServerService, ServerService>();
+        //EntitiesOper
+        services.AddScoped<IClientUnitOfWork, ClientUnitOfWork>();
+        services.AddScoped<IClientService, ClientService>();
     }
 }

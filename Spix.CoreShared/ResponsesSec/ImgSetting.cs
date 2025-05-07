@@ -14,5 +14,7 @@ public class ImgSetting
 
     public string ImgNoImage { get; set; } = null!;
 
+    public string ImgNoPicture { get; set; } = null!;
+
     public string ImgBaseUrl { get; set; } = null!;
 }

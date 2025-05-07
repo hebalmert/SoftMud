@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using Spix.Core.EntitiesNet;
+using Spix.Core.EntitiesOper;
 
 namespace Spix.Helper.Mappings;
 
@@ -20,5 +21,16 @@ public static class MapsterConfig
             .Ignore(dest => dest.Frecuency!)
             .Ignore(dest => dest.Channel!)
             .Ignore(dest => dest.Security!);
+
+        config.NewConfig<Server, Server>()
+            .Ignore(dest => dest.Corporation!)
+            .Ignore(dest => dest.IpNetwork!)
+            .Ignore(dest => dest.Mark!)
+            .Ignore(dest => dest.MarkModel!)
+            .Ignore(dest => dest.Zone!);
+
+        config.NewConfig<Client, Client>()
+            .Ignore(dest => dest.Corporation!)
+            .Ignore(dest => dest.DocumentType!);
     }
 }

@@ -1,0 +1,18 @@
+﻿@page "/clients/create"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (Client is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormClient Client="Client"
+                             IsEditControl="false"
+                             OnSubmit="Create"
+                             ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}

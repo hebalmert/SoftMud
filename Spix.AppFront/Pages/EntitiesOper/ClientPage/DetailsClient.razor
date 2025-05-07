@@ -1,0 +1,98 @@
+﻿@page "/clients/details/{Id:guid}"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (Client is null)
+{
+    <Loading />
+}
+else
+{
+    ﻿<MudDialog>
+        <DialogContent>
+            <MudGrid>
+                <MudItem xs="12" Class="d-flex justify-center align-center">
+                    <MudImage Src="@Client!.ImageFullPath" Width="90" Height="60" />
+                </MudItem>
+
+                <!-- Primera columna con los campos de texto -->
+                <MudItem xs="6">
+                    <MudTextField Label="@GetDisplayName(() => Client!.FirstName)"
+                                  @bind-Value="@Client!.FirstName"
+                                  For="@(() => Client!.FirstName)"
+                                  Class="mb-4" ReadOnly="true" />
+                    <!-- Contenedor para unir Document y DocumentType -->
+                    <div style="display: flex; gap: 10px; align-items: center;">
+
+                        <MudTextField Label="@GetDisplayName(() => Client.Document)"
+                                      @bind-Value="@Client.Document"
+                                      For="@(() => Client.Document)"
+                                      Class="mb-4" Style="flex: 1;" ReadOnly="true" />
+
+
+                        <MudTextField Label="@GetDisplayName(() => Client.DocumentType!.DocumentName)"
+                                      @bind-Value="@Client.DocumentType!.DocumentName"
+                                      For="@(() => Client.DocumentType!.DocumentName)"
+                                      Class="mb-4" ReadOnly="true" />
+                    </div>
+
+                </MudItem>
+
+                <!-- Segunda columna con la imagen -->
+                <MudItem xs="6">
+                    <MudTextField Label="@GetDisplayName(() => Client.LastName)"
+                                  @bind-Value="@Client.LastName"
+                                  For="@(() => Client.LastName)"
+                                  Class="mb-4" ReadOnly="true" />
+                    <!-- Contenedor para unir Document y DocumentType -->
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <MudTextField Label="País"
+                                      @bind-Value="@Client.CodeCountry"
+                                      For="@(() => Client.CodeCountry)"
+                                      Class="mb-4"
+                                      Style="flex: 1;"
+                                      ReadOnly="true" />
+
+                        <MudTextField Label="Área"
+                                      @bind-Value="@Client.CodeNumber"
+                                      For="@(() => Client.CodeNumber)"
+                                      Class="mb-4"
+                                      Style="flex: 1;"
+                                      ReadOnly="true" />
+
+                        <MudTextField Label="Teléfono"
+                                      @bind-Value="@Client.PhoneNumber"
+                                      For="@(() => Client.PhoneNumber)"
+                                      Class="mb-4"
+                                      Style="flex: 2;"
+                                      ReadOnly="true" />
+                    </div>
+
+                </MudItem>
+                <MudItem xs="12" Class="align-content-center; align-items-center">
+                    <MudTextField Label="@GetDisplayName(() => Client.Address)"
+                                  @bind-Value="@Client.Address"
+                                  For="@(() => Client.Address)"
+                                  Class="mb-4" ReadOnly="true" />
+                </MudItem>
+                <!-- Primera columna con los campos de texto -->
+                <MudItem xs="6">
+                    <MudCheckBox Label="@GetDisplayName(() => Client.Active)"
+                                 @bind-Value="@Client.Active"
+                                 For="@(() => Client.Active)"
+                                 Class="mb-4" ReadOnly="true" />
+                </MudItem>
+
+                <!-- Segunda columna con la imagen -->
+                <MudItem xs="6">
+                    <MudTextField Label="@GetDisplayName(() => Client.UserName)"
+                                  @bind-Value="@Client.UserName"
+                                  For="@(() => Client.UserName)"
+                                  Class="mb-4" ReadOnly="true" />
+                </MudItem>
+                <br />
+            </MudGrid>
+        </DialogContent>
+    </MudDialog>
+}
+
+

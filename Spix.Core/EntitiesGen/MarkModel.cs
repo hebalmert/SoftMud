@@ -32,4 +32,6 @@ public class MarkModel
     public Mark? Mark { get; set; }
 
     public ICollection<Node>? Nodes { get; set; }
+
+    public ICollection<Server>? Servers { get; set; }
 }

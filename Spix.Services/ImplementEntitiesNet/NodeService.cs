@@ -51,7 +51,8 @@ public class NodeService : INodeService
                 };
             }
 
-            var queryable = _context.Nodes.Where(x => x.CorporationId == user.CorporationId).AsQueryable();
+            var queryable = _context.Nodes.Include(x => x.IpNetwork).Include(x => x.Zone)
+                .Where(x => x.CorporationId == user.CorporationId).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(pagination.Filter))
             {

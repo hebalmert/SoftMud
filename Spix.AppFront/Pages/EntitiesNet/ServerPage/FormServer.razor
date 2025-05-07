@@ -1,0 +1,176 @@
+﻿<EditForm Model="Server" OnValidSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+    <MudGrid>
+
+        <MudItem xs="12">
+            <MudTextField Label="@GetDisplayName(() => Server.ServerName)"
+                          @bind-Value="@Server.ServerName"
+                          For="@(() => Server.ServerName)"
+                          Class="mb-4" />
+        </MudItem>
+        <MudItem xs="6">
+            @if (IpNetworks is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="IpNetwork" Class="mb-4"
+                           Label="--- Ip Network ---"
+                           Value="SelectedIpnetwork"
+                           ValueChanged="IpNetworkChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.Ip}")">
+                    @foreach (var item in IpNetworks!)
+                    {
+                        <MudSelectItem Value="item">@item.Ip</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            @if (Marks is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="Mark" Class="mb-4"
+                           Label="--- Marca ---"
+                           Value="SelectedMark"
+                           ValueChanged="MarkChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.MarkName}")">
+                    @foreach (var item in Marks!)
+                    {
+                        <MudSelectItem Value="item">@item.MarkName</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            <MudTextField Label="@GetDisplayName(() => Server.Usuario)"
+                          @bind-Value="@Server.Usuario"
+                          For="@(() => Server.Usuario)"
+                          Class="mb-4" />
+            <MudTextField Label="@GetDisplayName(() => Server.Clave)"
+                          @bind-Value="@Server.Clave"
+                          For="@(() => Server.Clave)"
+                          Class="mb-4" />
+        </MudItem>
+        <MudItem xs="6">
+            <MudTextField Label="@GetDisplayName(() => Server.WanName)"
+                          @bind-Value="@Server.WanName"
+                          For="@(() => Server.WanName)"
+                          Class="mb-4" />
+            @if (MarkModels is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="MarkModel" Class="mb-4"
+                           Label="--- Modelo ---"
+                           Value="SelectedMarkModel"
+                           ValueChanged="MarkModelChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.MarkModelName}")">
+                    @foreach (var item in MarkModels!)
+                    {
+                        <MudSelectItem Value="item">@item.MarkModelName</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            <MudTextField Label="@GetDisplayName(() => Server.ApiPort)"
+                          @bind-Value="@Server.ApiPort"
+                          For="@(() => Server.ApiPort)"
+                          Class="mb-4" />
+
+            <MudTextField Label="@GetDisplayName(() => Server.ClaveConfirm)"
+                          @bind-Value="@Server.ClaveConfirm"
+                          For="@(() => Server.ClaveConfirm)"
+                          Class="mb-4" />
+
+        </MudItem>
+    </MudGrid>
+    <MudGrid>
+        <MudItem xs="12">
+            <br />
+            <div style="border-top: 2px solid ; margin: auto;"></div>
+            <br />
+        </MudItem>
+    </MudGrid>
+    <MudGrid>
+        <MudItem xs="6">
+            @if (States is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="State" Class="mb-4"
+                           Label="--- Estado/Departamento ---"
+                           Value="SelectedSate"
+                           ValueChanged="StateChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.Name}")">
+                    @foreach (var item in States!)
+                    {
+                        <MudSelectItem Value="item">@item.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            @if (Zones is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="Zone" Class="mb-4"
+                           Label="--- Zonas ---"
+                           Value="SelectedZone"
+                           ValueChanged="ZoneChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.ZoneName}")">
+                    @foreach (var item in Zones!)
+                    {
+                        <MudSelectItem Value="item">@item.ZoneName</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+        </MudItem>
+        <MudItem xs="6">
+            @if (Cities is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="City" Class="mb-4"
+                           Label="--- Ciudad ---"
+                           Value="SelectedCity"
+                           ValueChanged="CityChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.Name}")">
+                    @foreach (var item in Cities!)
+                    {
+                        <MudSelectItem Value="item">@item.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+
+            <MudCheckBox Label="@GetDisplayName(() => Server.Active)"
+                         @bind-Value="@Server.Active"
+                         For="@(() => Server.Active)"
+                         Class="mb-4" />
+
+        </MudItem>
+    </MudGrid>
+
+
+    <br />
+    <div class="mb-4" style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
+        <MudButton Variant="Variant.Filled"
+                   StartIcon="@Icons.Material.Filled.ArrowBack"
+                   Color="Color.Surface"
+                   OnClick="ReturnAction">
+            Volver
+        </MudButton>
+        <MudButton Variant="Variant.Filled"
+                   StartIcon="@Icons.Material.Filled.Save"
+                   Color="Color.Dark"
+                   ButtonType="ButtonType.Submit">
+            Guardar
+        </MudButton>
+    </div>
+</EditForm>

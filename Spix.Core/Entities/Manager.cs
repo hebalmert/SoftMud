@@ -65,7 +65,7 @@ public class Manager
 
     //TODO: Cambio de ruta para Imagenes
     public string ImageFullPath => Imagen == string.Empty || Imagen == null
-        ? $"https://localhost:7224/Images/NoImage.png"
+        ? $"https://localhost:7224/Images/NoPicture.png"
         : $"https://localhost:7224/Images/ImgManager/{Imagen}";
 
     [NotMapped]
