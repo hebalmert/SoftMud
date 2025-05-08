@@ -133,7 +133,7 @@ namespace Spix.Services.ImplementOper
                         guid = modelo.Photo;
                     }
                     var imageId = Convert.FromBase64String(modelo.ImgBase64);
-                    NewModelo.Photo = await _fileStorage.UploadImage(imageId, _imgOption.ImgManager!, guid);
+                    NewModelo.Photo = await _fileStorage.UploadImage(imageId, _imgOption.ImgClient!, guid);
                 }
                 _context.Clients.Update(NewModelo);
                 await _transactionManager.SaveChangesAsync();

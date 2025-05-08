@@ -28,4 +28,6 @@ public class DocumentType
     public Corporation? Corporation { get; set; }
 
     public ICollection<Client>? Clients { get; set; }
+
+    public ICollection<Contractor>? Contractors { get; set; }
 }

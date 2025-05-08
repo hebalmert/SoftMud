@@ -1,0 +1,18 @@
+﻿@page "/contractor/create"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (Contractor is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormContractor Contractor="Contractor"
+                             IsEditControl="false"
+                             OnSubmit="Create"
+                             ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}

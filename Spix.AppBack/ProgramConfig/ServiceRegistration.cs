@@ -100,5 +100,7 @@ public static class ServiceRegistration
         //EntitiesOper
         services.AddScoped<IClientUnitOfWork, ClientUnitOfWork>();
         services.AddScoped<IClientService, ClientService>();
+        services.AddScoped<IContractorUnitOfWork, ContractorUnitOfWork>();
+        services.AddScoped<IContractorService, ContractorService>();
     }
 }

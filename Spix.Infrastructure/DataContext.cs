@@ -62,6 +62,7 @@ public class DataContext : IdentityDbContext<User>
 
     //EntitiesOper
 
+    public DbSet<Contractor> Contractors => Set<Contractor>();
     public DbSet<Client> Clients => Set<Client>();
 
     //EntitiesSoftSec

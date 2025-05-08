@@ -32,5 +32,9 @@ public static class MapsterConfig
         config.NewConfig<Client, Client>()
             .Ignore(dest => dest.Corporation!)
             .Ignore(dest => dest.DocumentType!);
+
+        config.NewConfig<Contractor, Contractor>()
+            .Ignore(dest => dest.Corporation!)
+            .Ignore(dest => dest.DocumentType!);
     }
 }

@@ -90,6 +90,10 @@ public class AccountService : IAccountService
 
                 switch (user.UserFrom)
                 {
+                    case "Contractor":
+                        imgUsuario = user.PhotoUser != null ? $"{BaseUrl}/ImgContractor/{user.PhotoUser}" : ImagenDefault;
+                        break;
+
                     case "Client":
                         imgUsuario = user.PhotoUser != null ? $"{BaseUrl}/ImgClient/{user.PhotoUser}" : ImagenDefault;
                         break;

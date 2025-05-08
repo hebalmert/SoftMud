@@ -4,6 +4,8 @@ public class ImgSetting
 {
     public string ImgCorporation { get; set; } = null!;
 
+    public string ImgContractor { get; set; } = null!;
+
     public string ImgManager { get; set; } = null!;
 
     public string ImgUsuario { get; set; } = null!;

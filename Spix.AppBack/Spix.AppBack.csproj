@@ -39,6 +39,7 @@
     <Folder Include="wwwroot\Images\ImgManager\" />
     <Folder Include="wwwroot\Images\ImgUsuarios\" />
     <Folder Include="wwwroot\Images\ImgClient\" />
+    <Folder Include="wwwroot\Images\ImgContractor\" />
   </ItemGroup>
 
   <ItemGroup>
