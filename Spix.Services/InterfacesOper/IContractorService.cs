@@ -6,6 +6,8 @@ namespace Spix.Services.InterfacesOper;
 
 public interface IContractorService
 {
+    Task<ActionResponse<IEnumerable<Contractor>>> ComboAsync(string email);
+
     Task<ActionResponse<IEnumerable<Contractor>>> GetAsync(PaginationDTO pagination, string email);
 
     Task<ActionResponse<Contractor>> GetAsync(Guid id);

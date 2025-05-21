@@ -15,6 +15,8 @@ public class ServiceClientUnitOfWork : IServiceClientUnitOfWork
         _serviceClientService = serviceClientService;
     }
 
+    public async Task<ActionResponse<IEnumerable<ServiceClient>>> ComboAsync(string email, Guid id) => await _serviceClientService.ComboAsync(email, id);
+
     public async Task<ActionResponse<IEnumerable<ServiceClient>>> GetAsync(PaginationDTO pagination, string email) => await _serviceClientService.GetAsync(pagination, email);
 
     public async Task<ActionResponse<ServiceClient>> GetAsync(Guid id) => await _serviceClientService.GetAsync(id);

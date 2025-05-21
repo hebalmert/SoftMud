@@ -1,0 +1,21 @@
+﻿@page "/contractclients/edit/{Id}"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (ContractClient is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormContractClient ContractClient="ContractClient"
+                      PrecesarAction="ProcesarAction"
+                      IsEditControl="true"
+                      OnSubmit="Edit"
+                      ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+
+

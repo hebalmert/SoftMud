@@ -1,4 +1,5 @@
 ﻿using Spix.Core.Entities;
+using Spix.Core.EntitiesContratos;
 using System.ComponentModel.DataAnnotations;
 
 namespace Spix.Core.EntitiesGen;
@@ -26,4 +27,6 @@ public class ServiceCategory
     public Corporation? Corporation { get; set; }
 
     public ICollection<ServiceClient>? ServiceClients { get; set; }
+
+    public ICollection<ContractClient>? ContractClients { get; set; }
 }

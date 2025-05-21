@@ -15,6 +15,8 @@ public class ClientUnitOfWork : IClientUnitOfWork
         _clientService = clientService;
     }
 
+    public async Task<ActionResponse<IEnumerable<Client>>> ComboAsync(string email) => await _clientService.ComboAsync(email);
+
     public async Task<ActionResponse<IEnumerable<Client>>> GetAsync(PaginationDTO pagination, string email) => await _clientService.GetAsync(pagination, email);
 
     public async Task<ActionResponse<Client>> GetAsync(Guid id) => await _clientService.GetAsync(id);

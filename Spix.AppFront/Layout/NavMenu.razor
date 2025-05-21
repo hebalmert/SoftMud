@@ -21,11 +21,13 @@
     </AuthorizeView>
     <AuthorizeView Roles="Usuario">
         <Authorized>
-            <MudNavGroup Title="General" Icon="@Icons.Material.Filled.Settings" IconColor="Color.Surface" Expanded="false">
+            <MudNavGroup Title="Configuracion" Icon="@Icons.Material.Filled.Settings" IconColor="Color.Surface" Expanded="false">
                 <MudNavLink Href="/documenttypes" Icon="@Icons.Material.Filled.Security" IconColor="Color.Info">Tipo Documento</MudNavLink>
                 <MudNavLink Href="/taxes" Icon="@Icons.Material.Filled.Security" IconColor="Color.Info">Impuestos</MudNavLink>
+                <MudNavLink Href="/registers" Icon="@Icons.Material.Filled.Security" IconColor="Color.Info">Registros</MudNavLink>
                 <MudNavLink Href="/contractor" Icon="@Icons.Material.Filled.Security" IconColor="Color.Info">Contratistas</MudNavLink>
-                <MudDivider />
+            </MudNavGroup>
+            <MudNavGroup Title="General" Icon="@Icons.Material.Filled.Settings" IconColor="Color.Surface" Expanded="false">
                 <MudNavLink Href="/zones" Icon="@Icons.Material.Filled.Security" IconColor="Color.Info">Zonas</MudNavLink>
                 <MudNavLink Href="/marks" Icon="@Icons.Material.Filled.Security" IconColor="Color.Info">Marca Modelo</MudNavLink>
                 <MudDivider/>         
@@ -41,6 +43,10 @@
             </MudNavGroup>
             <MudNavGroup Title="Operaciones" Icon="@Icons.Material.Filled.Settings" IconColor="Color.Surface" Expanded="false">
                 <MudNavLink Href="/clients" Icon="@Icons.Material.Filled.Security" IconColor="Color.Info">Clientes</MudNavLink>
+            </MudNavGroup>
+            <MudNavGroup Title="Contratos" Icon="@Icons.Material.Filled.Settings" IconColor="Color.Surface" Expanded="false">
+                <MudNavLink Href="/contractclients" Icon="@Icons.Material.Filled.Security" IconColor="Color.Info">Nuevo Contrato</MudNavLink>
+                <MudNavLink Href="/contractcControl" Icon="@Icons.Material.Filled.Security" IconColor="Color.Info">Control Contrato</MudNavLink>
             </MudNavGroup>
             <MudNavGroup Title="Seguridad Usuario" Icon="@Icons.Material.Filled.Settings" IconColor="Color.Surface" Expanded="false">
                 <MudNavLink Href="/usuarios" Icon="@Icons.Material.Filled.Security" IconColor="Color.Info">Usuarios</MudNavLink>

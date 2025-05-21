@@ -1,4 +1,5 @@
 ﻿using Spix.Core.Entities;
+using Spix.Core.EntitiesContratos;
 using Spix.Core.EntitiesNet;
 using System.ComponentModel.DataAnnotations;
 
@@ -37,4 +38,6 @@ public class Zone
     public ICollection<Node>? Nodes { get; set; }
 
     public ICollection<Server>? Servers { get; set; }
+
+    public ICollection<ContractClient>? ContractClients { get; set; }
 }

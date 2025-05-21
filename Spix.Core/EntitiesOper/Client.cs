@@ -1,4 +1,5 @@
 ﻿using Spix.Core.Entities;
+using Spix.Core.EntitiesContratos;
 using Spix.Core.EntitiesGen;
 using Spix.CoreShared.Enum;
 using System.ComponentModel.DataAnnotations;
@@ -86,4 +87,6 @@ public class Client
     public Corporation? Corporation { get; set; }
 
     public DocumentType? DocumentType { get; set; }
+
+    public ICollection<ContractClient>? ContractClients { get; set; }
 }

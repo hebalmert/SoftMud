@@ -22,6 +22,23 @@ public class ServiceClientsController : ControllerBase
         _serviceClientUnitOfWork = serviceClientUnitOfWork;
     }
 
+    [HttpGet("loadCombo/{id}")]  //ServiceCategoryId
+    public async Task<ActionResult<IEnumerable<ServiceClient>>> GetComboAsync(Guid id)
+    {
+        string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+        if (email == null)
+        {
+            return BadRequest("Erro en el sistema de Usuarios");
+        }
+
+        var response = await _serviceClientUnitOfWork.ComboAsync(email, id);
+        if (!response.WasSuccess)
+        {
+            return BadRequest(response.Message);
+        }
+        return Ok(response.Result);
+    }
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ServiceClient>>> GetAll([FromQuery] PaginationDTO pagination)
     {

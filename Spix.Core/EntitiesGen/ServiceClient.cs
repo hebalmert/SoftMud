@@ -1,5 +1,5 @@
 ﻿using Spix.Core.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
+using Spix.Core.EntitiesContratos;
 using System.ComponentModel.DataAnnotations;
 
 namespace Spix.Core.EntitiesGen;
@@ -47,4 +47,6 @@ public class ServiceClient
     public ServiceCategory? ServiceCategory { get; set; }
 
     public Tax? Tax { get; set; }
+
+    public ICollection<ContractClient>? ContractClients { get; set; }
 }

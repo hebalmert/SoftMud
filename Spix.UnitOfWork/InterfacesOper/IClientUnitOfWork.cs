@@ -6,6 +6,8 @@ namespace Spix.UnitOfWork.InterfacesOper;
 
 public interface IClientUnitOfWork
 {
+    Task<ActionResponse<IEnumerable<Client>>> ComboAsync(string email);
+
     Task<ActionResponse<IEnumerable<Client>>> GetAsync(PaginationDTO pagination, string email);
 
     Task<ActionResponse<Client>> GetAsync(Guid id);

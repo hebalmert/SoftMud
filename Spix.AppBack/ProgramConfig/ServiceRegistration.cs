@@ -1,28 +1,31 @@
-﻿using Spix.Services.ImplementEntities;
-using Spix.Services.InterfacesEntities;
-using Spix.UnitOfWork.ImplementEntities;
-using Spix.UnitOfWork.InterfacesEntities;
-using Spix.UnitOfWork.InterfacesSecure;
-using Spix.UnitOfWork.ImplementSecure;
-using Spix.Services.InterfacesSecure;
-using Spix.Services.ImplementSecure;
-using Spix.UnitOfWork.InterfacesEntitiesData;
-using Spix.UnitOfWork.ImplementEntitiesData;
-using Spix.Services.InterfacesEntitiesData;
+﻿using Spix.Services.ImplementContratos;
+using Spix.Services.ImplementEntities;
 using Spix.Services.ImplementEntitiesData;
-using Spix.UnitOfWork.InterfacesEntitiesGen;
-using Spix.UnitOfWork.ImplementEntitiesGen;
-using Spix.Services.InterfacesEntitiesGen;
 using Spix.Services.ImplementEntitiesGen;
-using Spix.UnitOfWork.InterfaceEntitiesNet;
-using Spix.UnitOfWork.ImplementEntitiesNet;
-using Spix.Services.InterfaceEntitiesNet;
 using Spix.Services.ImplementEntitiesNet;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using Spix.UnitOfWork.InterfacesOper;
-using Spix.UnitOfWork.ImplementOper;
-using Spix.Services.InterfacesOper;
 using Spix.Services.ImplementOper;
+using Spix.Services.ImplementSecure;
+using Spix.Services.InterfaceEntitiesNet;
+using Spix.Services.InterfacesContratos;
+using Spix.Services.InterfacesEntities;
+using Spix.Services.InterfacesEntitiesData;
+using Spix.Services.InterfacesEntitiesGen;
+using Spix.Services.InterfacesOper;
+using Spix.Services.InterfacesSecure;
+using Spix.UnitOfWork.ImplementContratos;
+using Spix.UnitOfWork.ImplementEntities;
+using Spix.UnitOfWork.ImplementEntitiesData;
+using Spix.UnitOfWork.ImplementEntitiesGen;
+using Spix.UnitOfWork.ImplementEntitiesNet;
+using Spix.UnitOfWork.ImplementOper;
+using Spix.UnitOfWork.ImplementSecure;
+using Spix.UnitOfWork.InterfaceContratos;
+using Spix.UnitOfWork.InterfaceEntitiesNet;
+using Spix.UnitOfWork.InterfacesEntities;
+using Spix.UnitOfWork.InterfacesEntitiesData;
+using Spix.UnitOfWork.InterfacesEntitiesGen;
+using Spix.UnitOfWork.InterfacesOper;
+using Spix.UnitOfWork.InterfacesSecure;
 
 namespace Spix.AppBack.ProgramConfig;
 
@@ -68,6 +71,8 @@ public static class ServiceRegistration
         //EntitiesGen
         services.AddScoped<IDocumentTypeUnitOfWork, DocumentTypeUnitOfWork>();
         services.AddScoped<IDocumentTypeService, DocumentTypeService>();
+        services.AddScoped<IRegisterUnitOfWork, RegisterUnitOfWork>();
+        services.AddScoped<IRegisterService, RegisterService>();
         services.AddScoped<IZoneUnitOfWork, ZoneUnitOfWork>();
         services.AddScoped<IZoneService, ZoneService>();
         services.AddScoped<IMarkUnitOfWork, MarkUnitOfWork>();
@@ -102,5 +107,7 @@ public static class ServiceRegistration
         services.AddScoped<IClientService, ClientService>();
         services.AddScoped<IContractorUnitOfWork, ContractorUnitOfWork>();
         services.AddScoped<IContractorService, ContractorService>();
+        services.AddScoped<IContractClientUnitOfWork, ContractClientUnitOfWork>();
+        services.AddScoped<IContractClientService, ContractClientService>();
     }
 }

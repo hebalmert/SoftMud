@@ -30,6 +30,35 @@ public class ServiceCategoryService : IServiceCategoryService
         _httpErrorHandler = new HttpErrorHandler();
     }
 
+    public async Task<ActionResponse<IEnumerable<ServiceCategory>>> ComboAsync(string email)
+    {
+        try
+        {
+            var user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                return new ActionResponse<IEnumerable<ServiceCategory>>
+                {
+                    WasSuccess = false,
+                    Message = "Problemas de Validacion de Usuario"
+                };
+            }
+            var ListModel = await _context.ServiceCategories
+                .Where(x => x.Active && x.CorporationId == user.CorporationId)
+                .ToListAsync();
+
+            return new ActionResponse<IEnumerable<ServiceCategory>>
+            {
+                WasSuccess = true,
+                Result = ListModel
+            };
+        }
+        catch (Exception ex)
+        {
+            return await _httpErrorHandler.HandleErrorAsync<IEnumerable<ServiceCategory>>(ex); // ✅ Manejo de errores automático
+        }
+    }
+
     public async Task<ActionResponse<IEnumerable<ServiceCategory>>> GetAsync(PaginationDTO pagination, string email)
     {
         try

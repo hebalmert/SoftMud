@@ -15,6 +15,8 @@ public class ContractorUnitOfWork : IContractorUnitOfWork
         _contractorService = contractorService;
     }
 
+    public async Task<ActionResponse<IEnumerable<Contractor>>> ComboAsync(string email) => await _contractorService.ComboAsync(email);
+
     public async Task<ActionResponse<IEnumerable<Contractor>>> GetAsync(PaginationDTO pagination, string email) => await _contractorService.GetAsync(pagination, email);
 
     public async Task<ActionResponse<Contractor>> GetAsync(Guid id) => await _contractorService.GetAsync(id);

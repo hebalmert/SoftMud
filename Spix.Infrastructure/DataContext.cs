@@ -7,6 +7,7 @@ using Spix.Core.EntitiesData;
 using Spix.Core.EntitiesGen;
 using System.Reflection;
 using Spix.Core.EntitiesOper;
+using Spix.Core.EntitiesContratos;
 
 namespace Spix.Infrastructure;
 
@@ -41,6 +42,7 @@ public class DataContext : IdentityDbContext<User>
 
     //EntitiesGen
 
+    public DbSet<Register> Registers => Set<Register>();
     public DbSet<DocumentType> DocumentTypes => Set<DocumentType>();
     public DbSet<Zone> Zones => Set<Zone>();
     public DbSet<Mark> Marks => Set<Mark>();
@@ -64,6 +66,7 @@ public class DataContext : IdentityDbContext<User>
 
     public DbSet<Contractor> Contractors => Set<Contractor>();
     public DbSet<Client> Clients => Set<Client>();
+    public DbSet<ContractClient> ContractClients => Set<ContractClient>();
 
     //EntitiesSoftSec
 

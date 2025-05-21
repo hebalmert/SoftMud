@@ -46,6 +46,33 @@ namespace Spix.Services.ImplementOper
             _httpErrorHandler = new HttpErrorHandler();
         }
 
+        public async Task<ActionResponse<IEnumerable<Client>>> ComboAsync(string email)
+        {
+            try
+            {
+                var user = await _userHelper.GetUserAsync(email);
+                if (user == null)
+                {
+                    return new ActionResponse<IEnumerable<Client>>
+                    {
+                        WasSuccess = false,
+                        Message = "Problemas de Validacion de Usuario"
+                    };
+                }
+                var ListModel = await _context.Clients.Where(x => x.Active && x.CorporationId == user.CorporationId).ToListAsync();
+
+                return new ActionResponse<IEnumerable<Client>>
+                {
+                    WasSuccess = true,
+                    Result = ListModel
+                };
+            }
+            catch (Exception ex)
+            {
+                return await _httpErrorHandler.HandleErrorAsync<IEnumerable<Client>>(ex); // ✅ Manejo de errores automático
+            }
+        }
+
         public async Task<ActionResponse<IEnumerable<Client>>> GetAsync(PaginationDTO pagination, string email)
         {
             try
@@ -194,7 +221,7 @@ namespace Spix.Services.ImplementOper
                 {
                     return new ActionResponse<Client>
                     {
-                        WasSuccess = true,
+                        WasSuccess = false,
                         Message = "El Correo ingresado ya se encuentra reservado, debe cambiarlo."
                     };
                 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Spix.Core.EntitiesGen;
 using Spix.Core.EntitiesOper;
 using Spix.CoreShared.Pagination;
 using Spix.UnitOfWork.InterfacesOper;
@@ -22,6 +23,23 @@ namespace Spix.AppBack.Controllers.EntitiesV1
         {
             _contractorUnitOfWork = contractorUnitOfWork;
             _configuration = configuration;
+        }
+
+        [HttpGet("loadCombo")]
+        public async Task<ActionResult<IEnumerable<Zone>>> GetComboAsync(int id)
+        {
+            string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+            if (email == null)
+            {
+                return BadRequest("Erro en el sistema de Usuarios");
+            }
+
+            var response = await _contractorUnitOfWork.ComboAsync(email);
+            if (!response.WasSuccess)
+            {
+                return BadRequest(response.Message);
+            }
+            return Ok(response.Result);
         }
 
         [HttpGet]

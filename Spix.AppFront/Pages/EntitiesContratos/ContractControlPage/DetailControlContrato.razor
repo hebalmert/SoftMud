@@ -1,0 +1,369 @@
+﻿@page "/contractcControl/detailControlContrato/{Id:guid}"
+@attribute [Authorize(Roles = "Usuario")]
+
+<MudContainer Class="mt-5">
+    <MudGrid>
+        <MudItem xs="12">
+            <MudCard Style="border-radius:30px;" Elevation="6">
+                <MudCardHeader>
+                    <MudGrid>
+                        <MudItem xs="4">
+                            <h2>Detalle Contrato</h2>
+                        </MudItem>
+                        <MudItem xs="8" Style="display:flex; justify-content:flex-end;">
+                            <MudButton Variant="Variant.Filled"
+                                       StartIcon="@Icons.Material.Filled.ArrowBack"
+                                       Color="Color.Surface"
+                                       Style="border-radius:20px">
+                                Volver
+                            </MudButton>
+                            <MudButton Variant="Variant.Filled"
+                                       StartIcon="@Icons.Material.Filled.ArrowBack"
+                                       Color="Color.Surface"
+                                       Style="border-radius:20px">
+                                Volver
+                            </MudButton>
+                            <MudButton Variant="Variant.Filled"
+                                       StartIcon="@Icons.Material.Filled.ArrowBack"
+                                       Color="Color.Surface"
+                                       Style="border-radius:20px">
+                                Volver
+                            </MudButton>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudGrid Class="mb-3">
+                        <MudItem xs="4">
+                            <MudPaper Class="d-flex align-items-center p-2" Elevation="3">
+                                <MudText Typo="Typo.subtitle2" Class="me-2">
+                                    Fecha
+                                </MudText>
+                                <MudText Typo="Typo.body1">
+                                    ConBing
+                                </MudText>
+                            </MudPaper>
+                        </MudItem>
+
+                        <MudItem xs="4">
+                            <MudPaper Class="d-flex align-items-center p-2" Elevation="3">
+                                <MudText Typo="Typo.subtitle2" Class="me-2">
+                                    Contrato#
+                                </MudText>
+                                <MudText Typo="Typo.body1" Class="fw-bold">
+                                    ConBing
+                                </MudText>
+                            </MudPaper>
+                        </MudItem>
+
+                        <MudItem xs="4">
+                            <MudPaper Class="d-flex align-items-center p-2" Elevation="3">
+                                <MudText Typo="Typo.subtitle2" Class="me-2">
+                                    Contratista
+                                </MudText>
+                                <MudText Typo="Typo.body1">
+                                    ConBing
+                                </MudText>
+                            </MudPaper>
+                        </MudItem>
+                    </MudGrid>
+                    <MudGrid Class="mb-3">
+                        <MudItem xs="12">
+                            <div style="border-top: 2px solid;"></div>
+                        </MudItem>
+                    </MudGrid>
+                    <MudGrid Class="mb-1">
+                        <MudItem xs="6">
+                            <MudPaper Class="d-flex align-items-center p-2" Elevation="3">
+                                <MudText Typo="Typo.subtitle2" Class="me-2">
+                                    Cliente
+                                </MudText>
+                                <MudText Typo="Typo.body1">
+                                    NOmbreCLiente
+                                </MudText>
+                            </MudPaper>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudPaper Class="d-flex align-items-center p-2" Elevation="3">
+                                <MudText Typo="Typo.subtitle2" Class="me-2">
+                                    Documento
+                                </MudText>
+                                <MudText Typo="Typo.body1" Class="me-2">
+                                    TipoDocu
+                                </MudText>
+                            </MudPaper>
+                        </MudItem>
+                    </MudGrid>
+
+                    <MudGrid Class="mb-1">
+                        <MudItem xs="6">
+                            <MudPaper Class="d-flex align-items-center p-2" Elevation="3">
+                                <MudText Typo="Typo.subtitle2" Class="me-2">
+                                    Telefono
+                                </MudText>
+                                <MudText Typo="Typo.body1">
+                                    Numero
+                                </MudText>
+                            </MudPaper>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudPaper Class="d-flex align-items-center p-2" Elevation="3">
+                                <MudText Typo="Typo.subtitle2" Class="me-2">
+                                    Correo
+                                </MudText>
+                                <MudText Typo="Typo.body1">
+                                    email
+                                </MudText>
+                            </MudPaper>
+                        </MudItem>
+                    </MudGrid>
+                    <MudGrid Class="mb-1">
+                        <MudItem xs="12">
+                            <MudPaper Class="d-flex align-items-center p-2" Elevation="3">
+                                <MudText Typo="Typo.subtitle2" Class="me-2">
+                                    Direccion
+                                </MudText>
+                                <MudText Typo="Typo.body1">
+                                    Direccion
+                                </MudText>
+                            </MudPaper>
+                        </MudItem>
+                    </MudGrid>
+
+                    <MudGrid Class="mb-3">
+                        <MudItem xs="6">
+                            <MudPaper Class="d-flex align-items-center p-2" Elevation="3">
+                                <MudText Typo="Typo.subtitle2" Class="me-2">
+                                    Ciudad
+                                </MudText>
+                                <MudText Typo="Typo.body1">
+                                    NombreCiudad
+                                </MudText>
+                            </MudPaper>
+                        </MudItem>
+
+                        <MudItem xs="6">
+                            <MudPaper Class="d-flex align-items-center p-2" Elevation="3">
+                                <MudText Typo="Typo.subtitle2" Class="me-2">
+                                    Zona
+                                </MudText>
+                                <MudText Typo="Typo.body1">
+                                    NombreZona
+                                </MudText>
+                            </MudPaper>
+                        </MudItem>
+                    </MudGrid>
+
+                    <MudGrid Class="mb-3">
+                        <MudItem xs="12">
+                            <div style="border-top: 2px solid;"></div>
+                        </MudItem>
+                    </MudGrid>
+
+                    <MudGrid Class="align-items-stretch">
+                        <MudItem xs="4" Class="text-center">
+                            <MudPaper Class="d-flex align-items-center p-2 justify-content-center" Style="height:80%;" Elevation="3">
+                                <MudSwitch Label="@GetDisplayName(() => model.EquipoEmpres)"
+                                           @bind-Value="@model.EquipoEmpres"
+                                           For="@(() => model.EquipoEmpres)"
+                                           Class="mb-4"
+                                           ThumbIcon="@(model.EquipoEmpres == true ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
+                                           ThumbIconColor="@(model.EquipoEmpres == true ? Color.Success : Color.Error)" />
+                            </MudPaper>
+                        </MudItem>
+
+                        <MudItem xs="4" Class="text-center">
+                            <MudPaper Class="d-flex align-items-center p-2 justify-content-center" Style="height:80%;" Elevation="3">
+                                <MudSwitch Label="@GetDisplayName(() => model.EnvoiceClient)"
+                                           @bind-Value="@model.EnvoiceClient"
+                                           For="@(() => model.EnvoiceClient)"
+                                           Class="mb-4"
+                                           ThumbIcon="@(model.EnvoiceClient == true ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
+                                           ThumbIconColor="@(model.EnvoiceClient == true ? Color.Success : Color.Error)" />
+                            </MudPaper>
+                        </MudItem>
+
+                        <MudItem xs="4" Class="text-center">
+                            <MudPaper Class="d-flex align-items-center p-2 justify-content-center" Style="height:80%;" Elevation="3">
+                                <MudText Typo="Typo.body1">
+                                    @switch (model.StateType.ToString())
+                                    {
+                                        case "Procesando":
+                                            <strong style="color : orangered">@model.StateType</strong>
+                                            break;
+                                        case "Activo":
+                                            <strong style="color : forestgreen">@model.StateType</strong>
+                                            break;
+                                    }
+                                </MudText>
+                            </MudPaper>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+
+    <MudGrid Class="mt-2">
+        <MudItem xs="12">
+            <MudCard Style="border-radius:30px;" Elevation="6">
+                <MudCardContent>
+                    <MudGrid>
+                        <MudItem xs="4">
+                            <MudCard Style="border-radius:30px;" Elevation="6">
+                                <MudCardHeader>
+                                    <div style="display: flex; flex-direction: column; width: 100%;">
+                                        <div style="display: flex; align-items: center;">
+                                            <MudIcon Icon="@Icons.Material.Filled.Lan" Color="Color.Success" Style="font-size: 20px; margin-right: 8px;" />
+                                            <MudText Typo="Typo.subtitle1" Class="fw-bold">
+                                                IP Cliente
+                                            </MudText>
+                                        </div>
+                                        <div style="border-top: 2px solid; margin-top: 4px; width: 100%;"></div>
+                                    </div>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    jola
+                                </MudCardContent>
+                                <MudCardActions></MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                        <MudItem xs="4">
+                            <MudCard Style="border-radius:30px;" Elevation="6">
+                                <MudCardHeader>
+                                    <div style="display: flex; flex-direction: column; width: 100%;">
+                                        <div style="display: flex; align-items: center;">
+                                            <MudIcon Icon="@Icons.Material.Filled.Router" Color="Color.Success" Style="font-size: 20px; margin-right: 8px;" />
+                                            <MudText Typo="Typo.subtitle1" Class="fw-bold">
+                                                Mac Equipos
+                                            </MudText>
+                                        </div>
+                                        <div style="border-top: 2px solid; margin-top: 4px; width: 100%;"></div>
+                                    </div>
+
+                                </MudCardHeader>
+                                <MudCardContent>
+
+                                </MudCardContent>
+                                <MudCardActions></MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                        <MudItem xs="4">
+                            <MudCard Style="border-radius:30px;" Elevation="6">
+                                <MudCardHeader>
+                                    <div style="display: flex; flex-direction: column; width: 100%;">
+                                        <div style="display: flex; align-items: center;">
+                                            <MudIcon Icon="@Icons.Material.Filled.Dns" Color="Color.Success" Style="font-size: 20px; margin-right: 8px;" />
+                                            <MudText Typo="Typo.subtitle1" Class="fw-bold">
+                                                GateWay
+                                            </MudText>
+                                        </div>
+                                        <div style="border-top: 2px solid; margin-top: 4px; width: 100%;"></div>
+                                    </div>
+
+                                </MudCardHeader>
+                                <MudCardContent>
+
+                                </MudCardContent>
+                                <MudCardActions></MudCardActions>
+                            </MudCard>
+                        </MudItem>
+
+                        <MudItem xs="6">
+                            <MudCard Style="border-radius:30px;" Elevation="6">
+                                <MudCardHeader>
+                                    <div style="display: flex; flex-direction: column; width: 100%;">
+                                        <div style="display: flex; align-items: center;">
+                                            <MudIcon Icon="@Icons.Material.Filled.Person" Color="Color.Success" Style="font-size: 20px; margin-right: 8px;" />
+                                            <MudText Typo="Typo.subtitle1" Class="fw-bold">
+                                                Plan Cliente
+                                            </MudText>
+                                        </div>
+                                        <div style="border-top: 2px solid; margin-top: 4px; width: 100%;"></div>
+                                    </div>
+
+                                </MudCardHeader>
+                                <MudCardContent>
+
+                                </MudCardContent>
+                                <MudCardActions></MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudCard Style="border-radius:30px;" Elevation="6">
+                                <MudCardHeader>
+                                    <div style="display: flex; flex-direction: column; width: 100%;">
+                                        <div style="display: flex; align-items: center;">
+                                            <MudIcon Icon="@Icons.Material.Filled.SyncAlt" Color="Color.Success" Style="font-size: 20px; margin-right: 8px;" />
+                                            <MudText Typo="Typo.subtitle1" Class="fw-bold">
+                                                Nodo Acceso
+                                            </MudText>
+                                        </div>
+                                        <div style="border-top: 2px solid; margin-top: 4px; width: 100%;"></div>
+                                    </div>
+
+                                </MudCardHeader>
+                                <MudCardContent>
+
+                                </MudCardContent>
+                                <MudCardActions></MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+    <MudGrid Class="mt-2">
+        <MudItem xs="12">
+            <MudCard Style="border-radius:30px;" Elevation="6">
+                <MudCardContent>
+                    <MudGrid>
+                        <MudItem xs="12">
+                            <MudCard Style="border-radius:30px;" Elevation="6">
+                                <MudCardHeader>
+                                    <div style="display: flex; flex-direction: column; width: 100%;">
+                                        <div style="display: flex; align-items: center;">
+                                            <MudIcon Icon="@Icons.Material.Filled.ShutterSpeed" Color="Color.Success" Style="font-size: 20px; margin-right: 8px;" />
+                                            <MudText Typo="Typo.subtitle1" Class="fw-bold">
+                                                Queses Velocidad
+                                            </MudText>
+                                        </div>
+                                        <div style="border-top: 2px solid; margin-top: 4px; width: 100%;"></div>
+                                    </div>
+
+                                </MudCardHeader>
+                                <MudCardContent>
+
+                                </MudCardContent>
+                                <MudCardActions></MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                        <MudItem xs="12">
+                            <MudCard Style="border-radius:30px;" Elevation="6">
+                                <MudCardHeader>
+                                    <div style="display: flex; flex-direction: column; width: 100%;">
+                                        <div style="display: flex; align-items: center;">
+                                            <MudIcon Icon="@Icons.Material.Filled.VpnLock" Color="Color.Success" Style="font-size: 20px; margin-right: 8px;" />
+                                            <MudText Typo="Typo.subtitle1" Class="fw-bold">
+                                                IpBinding Acceso
+                                            </MudText>
+                                        </div>
+                                        <div style="border-top: 2px solid; margin-top: 4px; width: 100%;"></div>
+                                    </div>
+
+                                </MudCardHeader>
+                                <MudCardContent>
+
+                                </MudCardContent>
+                                <MudCardActions></MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+</MudContainer>

@@ -1,0 +1,19 @@
+﻿@page "/contractclients/create"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (ContractClient is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog Style="width: 90vw;">
+        <DialogContent>
+            <FormContractClient ContractClient="ContractClient"
+                      IsEditControl="false"
+                      OnSubmit="Create"
+                      ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+

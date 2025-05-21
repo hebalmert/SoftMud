@@ -1,0 +1,240 @@
+﻿<EditForm Model="ContractClient" OnValidSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+    <MudGrid>
+        <MudItem xs="6">
+            @if (Contractors is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="Contractor" Class="mb-4"
+                           Label="--- Contratista ---"
+                           Value="SelectedContractor"
+                           ValueChanged="ContractorChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.FullName}")">
+                    @foreach (var item in Contractors!)
+                    {
+                        <MudSelectItem Value="item">@item.FullName</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+
+        </MudItem>
+        <MudItem xs="6">
+            @if (Clients is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudAutocomplete T="Client"
+                                 Label="--- Clientes ---"
+                                 SearchFunc="SearchCountry"
+                                 Value="SelectedClient"
+                                 ValueChanged="ClientChanged"
+                                 MinCharacters="3"
+                                 ToStringFunc="@(e=> e==null?null : $"{e.FullName}")">
+                    <ItemTemplate Context="itemContext">
+                        @itemContext.FullName
+                    </ItemTemplate>
+                </MudAutocomplete>
+            }
+
+
+
+        </MudItem>
+        <MudItem xs="12">
+            <div style="border-top: 2px solid ; margin: auto;"></div>
+        </MudItem>
+        <MudItem xs="8">
+            <!-- Contenedor para unir Document y DocumentType -->
+            <div class="mb-4" style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
+
+                <MudTextField Label="País"
+                              Placeholder="(+??)"
+                              @bind-Value="@ContractClient.CodeCountry"
+                              For="@(() => ContractClient.CodeCountry)"
+                              Class="mb-4"
+                              Style="flex: 1;" />
+
+                <MudTextField Label="Área"
+                              Placeholder="( ___ )"
+                              @bind-Value="@ContractClient.CodeNumber"
+                              For="@(() => ContractClient.CodeNumber)"
+                              Class="mb-4"
+                              Style="flex: 1;" />
+
+                <MudTextField Label="Teléfono"
+                              Placeholder="( _______ )"
+                              @bind-Value="@ContractClient.PhoneNumber"
+                              For="@(() => ContractClient.PhoneNumber)"
+                              Class="mb-4"
+                              Style="flex: 2;" />
+            </div>
+        </MudItem>
+        <MudItem xs="4">
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField Label="Direeccion"
+                          @bind-Value="@ContractClient.Address"
+                          For="@(() => ContractClient.Address)"
+                          Class="mb-4"
+                          Style="flex: 2;" />
+        </MudItem>
+        <MudItem xs="4">
+            @if (States is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="State" Class="mb-4"
+                           Label="--- Estado/Departamento ---"
+                           Value="SelectedSate"
+                           ValueChanged="StateChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.Name}")">
+                    @foreach (var item in States!)
+                    {
+                        <MudSelectItem Value="item">@item.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+        </MudItem>
+        <MudItem xs="4">
+
+            @if (Cities is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="City" Class="mb-4"
+                           Label="--- Ciudad ---"
+                           Value="SelectedCity"
+                           ValueChanged="CityChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.Name}")">
+                    @foreach (var item in Cities!)
+                    {
+                        <MudSelectItem Value="item">@item.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+
+        </MudItem>
+        <MudItem xs="4">
+            @if (Zones is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="Zone" Class="mb-4"
+                           Label="--- Zonas ---"
+                           Value="SelectedZone"
+                           ValueChanged="ZoneChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.ZoneName}")">
+                    @foreach (var item in Zones!)
+                    {
+                        <MudSelectItem Value="item">@item.ZoneName</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+
+        </MudItem>
+        <MudItem xs="12">
+            <div style="border-top: 2px solid ; margin: auto;"></div>
+        </MudItem>
+        <MudItem xs="6">
+            @if (ServiceCategories is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="ServiceCategory" Class="mb-4"
+                           Label="--- Categoria ---"
+                           Value="SelectedServiceCategory"
+                           ValueChanged="ServiceCategoryChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.Name}")"
+                           ReadOnly="@((ContractClient.StateType == StateType.Procesando) ? true : false)">
+                    @foreach (var item in ServiceCategories!)
+                    {
+                        <MudSelectItem Value="item">@item.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            <MudTextField Label="Impuesto"
+                          @bind-Value="@ContractClient.Impuesto"
+                          For="@(() => ContractClient.Impuesto)"
+                          Class="mb-4"
+                          Style="flex: 2;" ReadOnly="true" />
+        </MudItem>
+        <MudItem xs="6">
+
+            @if (ServiceClients is null)
+            {
+                <Loading />
+            }
+            else
+            {
+                <MudSelect T="ServiceClient" Class="mb-4"
+                           Label="--- Servicio ---"
+                           Value="SelectedServiceClient"
+                           ValueChanged="ServiceClientChanged"
+                           ToStringFunc="@(e=> e==null?null : $"{e.ServiceName}")"
+                           ReadOnly="@((ContractClient.StateType == StateType.Procesando) ? true : false)">
+                    @foreach (var item in ServiceClients!)
+                    {
+                        <MudSelectItem Value="item">@item.ServiceName</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            <MudTextField Label="Precio"
+                          @bind-Value="@ContractClient.Price"
+                          For="@(() => ContractClient.Price)"
+                          Class="mb-4"
+                          Style="flex: 2;" ReadOnly="true"/>
+        </MudItem>
+        <MudItem xs=6>
+            <MudSwitch Label="@GetDisplayName(() => ContractClient.EquipoEmpres)"
+                       @bind-Value="@ContractClient.EquipoEmpres"
+                       For="@(() => ContractClient.EquipoEmpres)"
+                       Class="mb-4" ThumbIcon="@(ContractClient.EquipoEmpres == true ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)" ThumbIconColor="@(ContractClient.EquipoEmpres == true ? Color.Success : Color.Error)" />
+        </MudItem>
+        <MudItem xs=6>
+            <MudSwitch Label="@GetDisplayName(() => ContractClient.EnvoiceClient)"
+                       @bind-Value="@ContractClient.EnvoiceClient"
+                       For="@(() => ContractClient.EnvoiceClient)"
+                       Class="mb-4" ThumbIcon="@(ContractClient.EnvoiceClient == true ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)" ThumbIconColor="@(ContractClient.EnvoiceClient == true ? Color.Success : Color.Error)" />
+        </MudItem>
+    </MudGrid>
+
+    <br />
+    <div class="mb-4" style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
+        <MudButton Variant="Variant.Filled"
+                   StartIcon="@Icons.Material.Filled.ArrowBack"
+                   Color="Color.Surface"
+                   OnClick="ReturnAction">
+            Volver
+        </MudButton>
+        <MudButton Variant="Variant.Filled"
+                   StartIcon="@Icons.Material.Filled.Save"
+                   Color="Color.Dark"
+                   ButtonType="ButtonType.Submit">
+            Guardar
+        </MudButton>
+        @if (IsEditControl)
+        {
+            @if(ContractClient.StateType == StateType.Creando)
+            { 
+                <MudButton Variant="Variant.Filled"
+                StartIcon="@Icons.Material.Filled.SyncAlt"
+                           Color="Color.Success"
+                           OnClick="PrecesarAction">
+                    Procesar
+                </MudButton>
+            }
+        }
+    </div>
+</EditForm>

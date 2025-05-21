@@ -42,11 +42,9 @@ public partial class FormUsuarioRole
     {
         if (modelo.Name == "Usuario") { UsuarioRole.UserType = UserType.Usuario; }
         if (modelo.Name == "Auxiliar") { UsuarioRole.UserType = UserType.Auxiliar; }
-        if (modelo.Name == "Cliente") { UsuarioRole.UserType = UserType.Cliente; }
         if (modelo.Name == "Cajero") { UsuarioRole.UserType = UserType.Cajero; }
         if (modelo.Name == "Tecnico") { UsuarioRole.UserType = UserType.Tecnico; }
         if (modelo.Name == "Cobrador") { UsuarioRole.UserType = UserType.Cobrador; }
-        if (modelo.Name == "Contratista") { UsuarioRole.UserType = UserType.Contratista; }
         SelectedUserType = modelo;
     }
 }

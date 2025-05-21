@@ -9,6 +9,7 @@ using Spix.Infrastructure;
 using Spix.Services.InterfacesEntitiesGen;
 using Spix.Helper.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 
 namespace Spix.Services.ImplementEntitiesGen;
 
@@ -28,6 +29,35 @@ public class ServiceClientService : IServiceClientService
         _transactionManager = transactionManager;
         _userHelper = userHelper;
         _httpErrorHandler = new HttpErrorHandler();
+    }
+
+    public async Task<ActionResponse<IEnumerable<ServiceClient>>> ComboAsync(string email, Guid id)
+    {
+        try
+        {
+            var user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                return new ActionResponse<IEnumerable<ServiceClient>>
+                {
+                    WasSuccess = false,
+                    Message = "Problemas de Validacion de Usuario"
+                };
+            }
+            var ListModel = await _context.ServiceClients
+                .Where(x => x.Active && x.CorporationId == user.CorporationId && x.ServiceCategoryId == id)
+                .ToListAsync();
+
+            return new ActionResponse<IEnumerable<ServiceClient>>
+            {
+                WasSuccess = true,
+                Result = ListModel
+            };
+        }
+        catch (Exception ex)
+        {
+            return await _httpErrorHandler.HandleErrorAsync<IEnumerable<ServiceClient>>(ex); // ✅ Manejo de errores automático
+        }
     }
 
     public async Task<ActionResponse<IEnumerable<ServiceClient>>> GetAsync(PaginationDTO pagination, string email)
@@ -70,7 +100,9 @@ public class ServiceClientService : IServiceClientService
     {
         try
         {
-            var modelo = await _context.ServiceClients.FindAsync(id);
+            var modelo = await _context.ServiceClients
+                .Include(x => x.Tax)
+                .FirstOrDefaultAsync(x => x.ServiceClientId == id);
             if (modelo == null)
             {
                 return new ActionResponse<ServiceClient>

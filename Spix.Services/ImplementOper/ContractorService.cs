@@ -16,6 +16,7 @@ using Spix.Infrastructure;
 using Spix.Services.InterfacesOper;
 using Microsoft.EntityFrameworkCore;
 using Spix.Helper.Extensions;
+using Spix.Core.EntitiesGen;
 
 namespace Spix.Services.ImplementOper;
 
@@ -44,6 +45,33 @@ public class ContractorService : IContractorService
         _emailHelper = emailHelper;
         _imgOption = ImgOption.Value;
         _httpErrorHandler = new HttpErrorHandler();
+    }
+
+    public async Task<ActionResponse<IEnumerable<Contractor>>> ComboAsync(string email)
+    {
+        try
+        {
+            var user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                return new ActionResponse<IEnumerable<Contractor>>
+                {
+                    WasSuccess = false,
+                    Message = "Problemas de Validacion de Usuario"
+                };
+            }
+            var ListModel = await _context.Contractors.Where(x => x.Active && x.CorporationId == user.CorporationId).ToListAsync();
+
+            return new ActionResponse<IEnumerable<Contractor>>
+            {
+                WasSuccess = true,
+                Result = ListModel
+            };
+        }
+        catch (Exception ex)
+        {
+            return await _httpErrorHandler.HandleErrorAsync<IEnumerable<Contractor>>(ex); // ✅ Manejo de errores automático
+        }
     }
 
     public async Task<ActionResponse<IEnumerable<Contractor>>> GetAsync(PaginationDTO pagination, string email)

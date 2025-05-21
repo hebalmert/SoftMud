@@ -15,6 +15,8 @@ public class ServiceCategoryUnitOfWork : IServiceCategoryUnitOfWork
         _serviceCategoryService = serviceCategoryService;
     }
 
+    public async Task<ActionResponse<IEnumerable<ServiceCategory>>> ComboAsync(string email) => await _serviceCategoryService.ComboAsync(email);
+
     public async Task<ActionResponse<IEnumerable<ServiceCategory>>> GetAsync(PaginationDTO pagination, string email) => await _serviceCategoryService.GetAsync(pagination, email);
 
     public async Task<ActionResponse<ServiceCategory>> GetAsync(Guid id) => await _serviceCategoryService.GetAsync(id);

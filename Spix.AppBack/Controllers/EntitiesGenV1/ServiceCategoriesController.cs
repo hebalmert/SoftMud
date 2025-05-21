@@ -22,6 +22,23 @@ public class ServiceCategoriesController : ControllerBase
         _serviceCategoryUnitOfWork = serviceCategoryUnitOfWork;
     }
 
+    [HttpGet("loadCombo")]
+    public async Task<ActionResult<IEnumerable<ServiceCategory>>> GetComboAsync()
+    {
+        string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+        if (email == null)
+        {
+            return BadRequest("Erro en el sistema de Usuarios");
+        }
+
+        var response = await _serviceCategoryUnitOfWork.ComboAsync(email);
+        if (!response.WasSuccess)
+        {
+            return BadRequest(response.Message);
+        }
+        return Ok(response.Result);
+    }
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ServiceCategory>>> GetAll([FromQuery] PaginationDTO pagination)
     {

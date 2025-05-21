@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using Spix.Core.EntitiesContratos;
 using Spix.Core.EntitiesNet;
 using Spix.Core.EntitiesOper;
 
@@ -36,5 +37,12 @@ public static class MapsterConfig
         config.NewConfig<Contractor, Contractor>()
             .Ignore(dest => dest.Corporation!)
             .Ignore(dest => dest.DocumentType!);
+
+        config.NewConfig<ContractClient, ContractClient>()
+            .Ignore(dest => dest.Corporation!)
+            .Ignore(dest => dest.Client!)
+            .Ignore(dest => dest.ServiceClient!)
+            .Ignore(dest => dest.Zone!)
+            .Ignore(dest => dest.ServiceCategory!);
     }
 }
