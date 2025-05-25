@@ -14,6 +14,15 @@ public class Register
     [Display(Name = "Solicitudes")]
     public int Solicitudes { get; set; }
 
+    [Display(Name = "Compra")]
+    public int RegPurchase { get; set; }
+
+    [Display(Name = "Venta")]
+    public int RegSells { get; set; }
+
+    [Display(Name = "transferencia")]
+    public int RegTransfer { get; set; }
+
     [Display(Name = "Cargue Inventario")]
     public int Cargue { get; set; }
 

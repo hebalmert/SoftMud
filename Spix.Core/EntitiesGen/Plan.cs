@@ -1,4 +1,5 @@
 ﻿using Spix.Core.Entities;
+using Spix.Core.EntitiesContratos;
 using Spix.CoreShared.Enum;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -58,4 +59,9 @@ public class Plan
     public PlanCategory? PlanCategory { get; set; }
 
     public Tax? Tax { get; set; }
+
+    //Relaciones en dos vias
+    public ICollection<ContractPlan>? ContractPlans { get; set; }
+
+    public ICollection<ContractQue>? ContractQues { get; set; }
 }

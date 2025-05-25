@@ -623,6 +623,242 @@ namespace Spix.AppBack.Migrations
                     b.ToTable("UserRoleDetails");
                 });
 
+            modelBuilder.Entity("Spix.Core.EntitiesContratos.ContractClient", b =>
+                {
+                    b.Property<Guid>("ContractClientId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CodeCountry")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
+                    b.Property<string>("CodeNumber")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<Guid>("ContractorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ControlContrato")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CorporationId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreado")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("EnvoiceClient")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("EquipoEmpres")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal?>("Impuesto")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
+                    b.Property<decimal?>("Price")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ServiceCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ServiceClientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ServiceName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("StateType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ZoneId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ContractClientId");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("ContractorId");
+
+                    b.HasIndex("ServiceCategoryId");
+
+                    b.HasIndex("ServiceClientId");
+
+                    b.HasIndex("ZoneId");
+
+                    b.HasIndex("CorporationId", "ControlContrato")
+                        .IsUnique()
+                        .HasFilter("[ControlContrato] IS NOT NULL");
+
+                    b.ToTable("ContractClients");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesContratos.ContractIp", b =>
+                {
+                    b.Property<Guid>("ContractIpId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ContractClientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IpNetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ContractIpId");
+
+                    b.HasIndex("IpNetId");
+
+                    b.HasIndex("ContractClientId", "IpNetId")
+                        .IsUnique();
+
+                    b.ToTable("ContractIps");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesContratos.ContractNode", b =>
+                {
+                    b.Property<Guid>("ContractNodeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ContractClientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("NodeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ContractNodeId");
+
+                    b.HasIndex("NodeId");
+
+                    b.HasIndex("ContractClientId", "NodeId")
+                        .IsUnique();
+
+                    b.ToTable("ContractNodes");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesContratos.ContractPlan", b =>
+                {
+                    b.Property<int>("ContractPlanId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContractPlanId"));
+
+                    b.Property<Guid>("ContractClientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ContractPlanId");
+
+                    b.HasIndex("PlanId");
+
+                    b.HasIndex("ContractClientId", "PlanId")
+                        .IsUnique();
+
+                    b.ToTable("ContractPlans");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesContratos.ContractQue", b =>
+                {
+                    b.Property<Guid>("ContractQueId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ContractClientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("IpCliente")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("IpNetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("IpServer")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("MikrotikId")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<Guid>("PlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PlanName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("ServerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ServerName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TotalVelocidad")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ContractQueId");
+
+                    b.HasIndex("IpNetId");
+
+                    b.HasIndex("PlanId");
+
+                    b.HasIndex("ServerId");
+
+                    b.HasIndex("ContractClientId", "IpNetId")
+                        .IsUnique();
+
+                    b.ToTable("ContractQues");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesContratos.ContractServer", b =>
+                {
+                    b.Property<Guid>("ContractServerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ContractClientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ServerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ContractServerId");
+
+                    b.HasIndex("ServerId");
+
+                    b.HasIndex("ContractClientId", "ServerId")
+                        .IsUnique();
+
+                    b.ToTable("ContractServers");
+                });
+
             modelBuilder.Entity("Spix.Core.EntitiesData.ChainType", b =>
                 {
                     b.Property<int>("ChainTypeId")
@@ -1247,6 +1483,245 @@ namespace Spix.AppBack.Migrations
                     b.ToTable("Zones");
                 });
 
+            modelBuilder.Entity("Spix.Core.EntitiesInven.ProductStock", b =>
+                {
+                    b.Property<Guid>("ProductStockId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CorporationId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductStorageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Stock")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ProductStockId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductStorageId");
+
+                    b.HasIndex("CorporationId", "ProductId", "ProductStorageId")
+                        .IsUnique();
+
+                    b.ToTable("ProductStocks");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesInven.ProductStorage", b =>
+                {
+                    b.Property<Guid>("ProductStorageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CorporationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StateId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StorageName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("ProductStorageId");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("CorporationId", "StorageName")
+                        .IsUnique();
+
+                    b.ToTable("ProductStorages");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesInven.Purchase", b =>
+                {
+                    b.Property<Guid>("PurchaseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CorporationId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FacuraDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("NroFactura")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("NroPurchase")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ProductStorageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("PurchaseDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SupplierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("PurchaseId");
+
+                    b.HasIndex("ProductStorageId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.HasIndex("CorporationId", "NroPurchase")
+                        .IsUnique();
+
+                    b.HasIndex("CorporationId", "SupplierId", "NroFactura")
+                        .IsUnique();
+
+                    b.ToTable("Purchases");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesInven.PurchaseDetail", b =>
+                {
+                    b.Property<Guid>("PurchaseDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CorporationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NameProduct")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("PlanCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProductCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PurchaseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("RateTax")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("UnitCost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("PurchaseDetailId");
+
+                    b.HasIndex("ProductCategoryId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("PurchaseId");
+
+                    b.HasIndex("CorporationId", "ProductId", "PurchaseId")
+                        .IsUnique();
+
+                    b.ToTable("PurchaseDetails");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesInven.Supplier", b =>
+                {
+                    b.Property<Guid>("SupplierId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CodeCountry")
+                        .IsRequired()
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
+
+                    b.Property<string>("CodeNumber")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("ContactName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("CorporationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Document")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<Guid>("DocumentTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StateId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("SupplierId");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("CorporationId", "Name")
+                        .IsUnique();
+
+                    b.HasIndex("CorporationId", "Document", "DocumentTypeId")
+                        .IsUnique();
+
+                    b.ToTable("Suppliers");
+                });
+
             modelBuilder.Entity("Spix.Core.EntitiesNet.IpNet", b =>
                 {
                     b.Property<Guid>("IpNetId")
@@ -1561,96 +2036,6 @@ namespace Spix.AppBack.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("Spix.Core.EntitiesOper.ContractClient", b =>
-                {
-                    b.Property<Guid>("ContractClientId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CodeCountry")
-                        .IsRequired()
-                        .HasMaxLength(7)
-                        .HasColumnType("nvarchar(7)");
-
-                    b.Property<string>("CodeNumber")
-                        .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
-
-                    b.Property<Guid>("ContractorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ControlContrato")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CorporationId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreado")
-                        .HasColumnType("date");
-
-                    b.Property<bool>("EnvoiceClient")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("EquipoEmpres")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal?>("Impuesto")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(7)
-                        .HasColumnType("nvarchar(7)");
-
-                    b.Property<decimal?>("Price")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("ServiceCategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ServiceClientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ServiceName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("StateType")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("ZoneId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ContractClientId");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("ContractorId");
-
-                    b.HasIndex("ServiceCategoryId");
-
-                    b.HasIndex("ServiceClientId");
-
-                    b.HasIndex("ZoneId");
-
-                    b.HasIndex("CorporationId", "ControlContrato")
-                        .IsUnique()
-                        .HasFilter("[ControlContrato] IS NOT NULL");
-
-                    b.ToTable("ContractClients");
-                });
-
             modelBuilder.Entity("Spix.Core.EntitiesOper.Contractor", b =>
                 {
                     b.Property<Guid>("ContractorId")
@@ -1894,6 +2279,168 @@ namespace Spix.AppBack.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Spix.Core.EntitiesContratos.ContractClient", b =>
+                {
+                    b.HasOne("Spix.Core.EntitiesOper.Client", "Client")
+                        .WithMany("ContractClients")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesOper.Contractor", "Contractor")
+                        .WithMany("ContractClients")
+                        .HasForeignKey("ContractorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
+                        .WithMany()
+                        .HasForeignKey("CorporationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesGen.ServiceCategory", "ServiceCategory")
+                        .WithMany("ContractClients")
+                        .HasForeignKey("ServiceCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesGen.ServiceClient", "ServiceClient")
+                        .WithMany("ContractClients")
+                        .HasForeignKey("ServiceClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesGen.Zone", "Zone")
+                        .WithMany("ContractClients")
+                        .HasForeignKey("ZoneId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Contractor");
+
+                    b.Navigation("Corporation");
+
+                    b.Navigation("ServiceCategory");
+
+                    b.Navigation("ServiceClient");
+
+                    b.Navigation("Zone");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesContratos.ContractIp", b =>
+                {
+                    b.HasOne("Spix.Core.EntitiesContratos.ContractClient", "ContractClient")
+                        .WithMany("ContractIps")
+                        .HasForeignKey("ContractClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesNet.IpNet", "IpNet")
+                        .WithMany("ContractIps")
+                        .HasForeignKey("IpNetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ContractClient");
+
+                    b.Navigation("IpNet");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesContratos.ContractNode", b =>
+                {
+                    b.HasOne("Spix.Core.EntitiesContratos.ContractClient", "ContractClient")
+                        .WithMany("ContractNodes")
+                        .HasForeignKey("ContractClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesNet.Node", "Node")
+                        .WithMany("ContractNodes")
+                        .HasForeignKey("NodeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ContractClient");
+
+                    b.Navigation("Node");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesContratos.ContractPlan", b =>
+                {
+                    b.HasOne("Spix.Core.EntitiesContratos.ContractClient", "ContractClient")
+                        .WithMany("ContractPlans")
+                        .HasForeignKey("ContractClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesGen.Plan", "Plan")
+                        .WithMany("ContractPlans")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ContractClient");
+
+                    b.Navigation("Plan");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesContratos.ContractQue", b =>
+                {
+                    b.HasOne("Spix.Core.EntitiesContratos.ContractClient", "ContractClient")
+                        .WithMany("ContractQues")
+                        .HasForeignKey("ContractClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesNet.IpNet", "IpNet")
+                        .WithMany("ContractQues")
+                        .HasForeignKey("IpNetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesGen.Plan", "Plan")
+                        .WithMany("ContractQues")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesNet.Server", "Server")
+                        .WithMany("ContractQues")
+                        .HasForeignKey("ServerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ContractClient");
+
+                    b.Navigation("IpNet");
+
+                    b.Navigation("Plan");
+
+                    b.Navigation("Server");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesContratos.ContractServer", b =>
+                {
+                    b.HasOne("Spix.Core.EntitiesContratos.ContractClient", "ContractClient")
+                        .WithMany("ContractServers")
+                        .HasForeignKey("ContractClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesNet.Server", "Server")
+                        .WithMany("ContractServers")
+                        .HasForeignKey("ServerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ContractClient");
+
+                    b.Navigation("Server");
+                });
+
             modelBuilder.Entity("Spix.Core.EntitiesData.Frecuency", b =>
                 {
                     b.HasOne("Spix.Core.EntitiesData.FrecuencyType", "FrecuencyType")
@@ -2109,6 +2656,156 @@ namespace Spix.AppBack.Migrations
                     b.Navigation("state");
                 });
 
+            modelBuilder.Entity("Spix.Core.EntitiesInven.ProductStock", b =>
+                {
+                    b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
+                        .WithMany()
+                        .HasForeignKey("CorporationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesGen.Product", "Product")
+                        .WithMany("ProductStocks")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesInven.ProductStorage", "ProductStorage")
+                        .WithMany("ProductStocks")
+                        .HasForeignKey("ProductStorageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Corporation");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ProductStorage");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesInven.ProductStorage", b =>
+                {
+                    b.HasOne("Spix.Core.Entities.City", "City")
+                        .WithMany("ProductStorages")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
+                        .WithMany()
+                        .HasForeignKey("CorporationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.Entities.State", "State")
+                        .WithMany("ProductStorages")
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("Corporation");
+
+                    b.Navigation("State");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesInven.Purchase", b =>
+                {
+                    b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
+                        .WithMany()
+                        .HasForeignKey("CorporationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesInven.ProductStorage", "ProductStorage")
+                        .WithMany("Purchases")
+                        .HasForeignKey("ProductStorageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesInven.Supplier", "Supplier")
+                        .WithMany("Purchases")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Corporation");
+
+                    b.Navigation("ProductStorage");
+
+                    b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesInven.PurchaseDetail", b =>
+                {
+                    b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
+                        .WithMany()
+                        .HasForeignKey("CorporationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesGen.ProductCategory", "ProductCategory")
+                        .WithMany("PurchaseDetails")
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Spix.Core.EntitiesGen.Product", "Product")
+                        .WithMany("PurchaseDetails")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesInven.Purchase", "Purchase")
+                        .WithMany("PurchaseDetails")
+                        .HasForeignKey("PurchaseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Corporation");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ProductCategory");
+
+                    b.Navigation("Purchase");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesInven.Supplier", b =>
+                {
+                    b.HasOne("Spix.Core.Entities.City", "City")
+                        .WithMany("Supplier")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
+                        .WithMany()
+                        .HasForeignKey("CorporationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.EntitiesGen.DocumentType", "DocumentType")
+                        .WithMany("Suppliers")
+                        .HasForeignKey("DocumentTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Spix.Core.Entities.State", "State")
+                        .WithMany("Supplier")
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("Corporation");
+
+                    b.Navigation("DocumentType");
+
+                    b.Navigation("State");
+                });
+
             modelBuilder.Entity("Spix.Core.EntitiesNet.IpNet", b =>
                 {
                     b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
@@ -2272,57 +2969,6 @@ namespace Spix.AppBack.Migrations
                     b.Navigation("DocumentType");
                 });
 
-            modelBuilder.Entity("Spix.Core.EntitiesOper.ContractClient", b =>
-                {
-                    b.HasOne("Spix.Core.EntitiesOper.Client", "Client")
-                        .WithMany("ContractClients")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Spix.Core.EntitiesOper.Contractor", "Contractor")
-                        .WithMany("ContractClients")
-                        .HasForeignKey("ContractorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
-                        .WithMany()
-                        .HasForeignKey("CorporationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Spix.Core.EntitiesGen.ServiceCategory", "ServiceCategory")
-                        .WithMany("ContractClients")
-                        .HasForeignKey("ServiceCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Spix.Core.EntitiesGen.ServiceClient", "ServiceClient")
-                        .WithMany("ContractClients")
-                        .HasForeignKey("ServiceClientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Spix.Core.EntitiesGen.Zone", "Zone")
-                        .WithMany("ContractClients")
-                        .HasForeignKey("ZoneId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Client");
-
-                    b.Navigation("Contractor");
-
-                    b.Navigation("Corporation");
-
-                    b.Navigation("ServiceCategory");
-
-                    b.Navigation("ServiceClient");
-
-                    b.Navigation("Zone");
-                });
-
             modelBuilder.Entity("Spix.Core.EntitiesOper.Contractor", b =>
                 {
                     b.HasOne("Spix.Core.Entities.Corporation", "Corporation")
@@ -2349,6 +2995,10 @@ namespace Spix.AppBack.Migrations
 
             modelBuilder.Entity("Spix.Core.Entities.City", b =>
                 {
+                    b.Navigation("ProductStorages");
+
+                    b.Navigation("Supplier");
+
                     b.Navigation("Zones");
                 });
 
@@ -2377,12 +3027,29 @@ namespace Spix.AppBack.Migrations
                 {
                     b.Navigation("Cities");
 
+                    b.Navigation("ProductStorages");
+
+                    b.Navigation("Supplier");
+
                     b.Navigation("Zones");
                 });
 
             modelBuilder.Entity("Spix.Core.Entities.User", b =>
                 {
                     b.Navigation("UserRoleDetails");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesContratos.ContractClient", b =>
+                {
+                    b.Navigation("ContractIps");
+
+                    b.Navigation("ContractNodes");
+
+                    b.Navigation("ContractPlans");
+
+                    b.Navigation("ContractQues");
+
+                    b.Navigation("ContractServers");
                 });
 
             modelBuilder.Entity("Spix.Core.EntitiesData.Channel", b =>
@@ -2417,6 +3084,8 @@ namespace Spix.AppBack.Migrations
                     b.Navigation("Clients");
 
                     b.Navigation("Contractors");
+
+                    b.Navigation("Suppliers");
                 });
 
             modelBuilder.Entity("Spix.Core.EntitiesGen.Mark", b =>
@@ -2435,14 +3104,30 @@ namespace Spix.AppBack.Migrations
                     b.Navigation("Servers");
                 });
 
+            modelBuilder.Entity("Spix.Core.EntitiesGen.Plan", b =>
+                {
+                    b.Navigation("ContractPlans");
+
+                    b.Navigation("ContractQues");
+                });
+
             modelBuilder.Entity("Spix.Core.EntitiesGen.PlanCategory", b =>
                 {
                     b.Navigation("Plans");
                 });
 
+            modelBuilder.Entity("Spix.Core.EntitiesGen.Product", b =>
+                {
+                    b.Navigation("ProductStocks");
+
+                    b.Navigation("PurchaseDetails");
+                });
+
             modelBuilder.Entity("Spix.Core.EntitiesGen.ProductCategory", b =>
                 {
                     b.Navigation("Products");
+
+                    b.Navigation("PurchaseDetails");
                 });
 
             modelBuilder.Entity("Spix.Core.EntitiesGen.ServiceCategory", b =>
@@ -2475,11 +3160,47 @@ namespace Spix.AppBack.Migrations
                     b.Navigation("Servers");
                 });
 
+            modelBuilder.Entity("Spix.Core.EntitiesInven.ProductStorage", b =>
+                {
+                    b.Navigation("ProductStocks");
+
+                    b.Navigation("Purchases");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesInven.Purchase", b =>
+                {
+                    b.Navigation("PurchaseDetails");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesInven.Supplier", b =>
+                {
+                    b.Navigation("Purchases");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesNet.IpNet", b =>
+                {
+                    b.Navigation("ContractIps");
+
+                    b.Navigation("ContractQues");
+                });
+
             modelBuilder.Entity("Spix.Core.EntitiesNet.IpNetwork", b =>
                 {
                     b.Navigation("Nodes");
 
                     b.Navigation("Servers");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesNet.Node", b =>
+                {
+                    b.Navigation("ContractNodes");
+                });
+
+            modelBuilder.Entity("Spix.Core.EntitiesNet.Server", b =>
+                {
+                    b.Navigation("ContractQues");
+
+                    b.Navigation("ContractServers");
                 });
 
             modelBuilder.Entity("Spix.Core.EntitiesOper.Client", b =>

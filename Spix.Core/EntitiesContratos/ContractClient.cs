@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Spix.Core.Entities;
+﻿using Spix.Core.Entities;
 using Spix.Core.EntitiesGen;
 using Spix.Core.EntitiesOper;
 using Spix.CoreShared.Enum;
@@ -133,4 +132,12 @@ public class ContractClient
     public Client? Client { get; set; }
 
     public Zone? Zone { get; set; }
+
+    //Relaciones en dos vias
+
+    public ICollection<ContractIp>? ContractIps { get; set; }
+    public ICollection<ContractServer>? ContractServers { get; set; }
+    public ICollection<ContractPlan>? ContractPlans { get; set; }
+    public ICollection<ContractNode>? ContractNodes { get; set; }
+    public ICollection<ContractQue>? ContractQues { get; set; }
 }

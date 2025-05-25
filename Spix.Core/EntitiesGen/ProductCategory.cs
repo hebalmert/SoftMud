@@ -1,4 +1,5 @@
 ﻿using Spix.Core.Entities;
+using Spix.Core.EntitiesInven;
 using System.ComponentModel.DataAnnotations;
 
 namespace Spix.Core.EntitiesGen;
@@ -26,4 +27,6 @@ public class ProductCategory
     public Corporation? Corporation { get; set; }
 
     public ICollection<Product>? Products { get; set; }
+
+    public ICollection<PurchaseDetail>? PurchaseDetails { get; set; }
 }

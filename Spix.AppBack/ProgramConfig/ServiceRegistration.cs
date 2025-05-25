@@ -3,6 +3,7 @@ using Spix.Services.ImplementEntities;
 using Spix.Services.ImplementEntitiesData;
 using Spix.Services.ImplementEntitiesGen;
 using Spix.Services.ImplementEntitiesNet;
+using Spix.Services.ImplementInven;
 using Spix.Services.ImplementOper;
 using Spix.Services.ImplementSecure;
 using Spix.Services.InterfaceEntitiesNet;
@@ -10,6 +11,7 @@ using Spix.Services.InterfacesContratos;
 using Spix.Services.InterfacesEntities;
 using Spix.Services.InterfacesEntitiesData;
 using Spix.Services.InterfacesEntitiesGen;
+using Spix.Services.InterfacesInven;
 using Spix.Services.InterfacesOper;
 using Spix.Services.InterfacesSecure;
 using Spix.UnitOfWork.ImplementContratos;
@@ -17,6 +19,7 @@ using Spix.UnitOfWork.ImplementEntities;
 using Spix.UnitOfWork.ImplementEntitiesData;
 using Spix.UnitOfWork.ImplementEntitiesGen;
 using Spix.UnitOfWork.ImplementEntitiesNet;
+using Spix.UnitOfWork.ImplementInven;
 using Spix.UnitOfWork.ImplementOper;
 using Spix.UnitOfWork.ImplementSecure;
 using Spix.UnitOfWork.InterfaceContratos;
@@ -24,6 +27,7 @@ using Spix.UnitOfWork.InterfaceEntitiesNet;
 using Spix.UnitOfWork.InterfacesEntities;
 using Spix.UnitOfWork.InterfacesEntitiesData;
 using Spix.UnitOfWork.InterfacesEntitiesGen;
+using Spix.UnitOfWork.InterfacesInven;
 using Spix.UnitOfWork.InterfacesOper;
 using Spix.UnitOfWork.InterfacesSecure;
 
@@ -109,5 +113,10 @@ public static class ServiceRegistration
         services.AddScoped<IContractorService, ContractorService>();
         services.AddScoped<IContractClientUnitOfWork, ContractClientUnitOfWork>();
         services.AddScoped<IContractClientService, ContractClientService>();
+        //EntitiesInven
+        services.AddScoped<ISupplierUnitOfWork, SupplierUnitOfWork>();
+        services.AddScoped<ISupplierServices, SupplierService>();
+        services.AddScoped<IProductStorageUnitOfWork, ProductStorageUnitOfWork>();
+        services.AddScoped<IProductStorageService, ProductStorageService>();
     }
 }

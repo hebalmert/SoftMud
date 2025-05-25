@@ -1,4 +1,5 @@
 ﻿using Spix.Core.Entities;
+using Spix.Core.EntitiesContratos;
 using Spix.Core.EntitiesData;
 using Spix.Core.EntitiesGen;
 using System.ComponentModel;
@@ -123,4 +124,8 @@ public class Node
     public Channel? Channel { get; set; }
 
     public Security? Security { get; set; }
+
+    //Relaciones en dos vias
+
+    public ICollection<ContractNode>? ContractNodes { get; set; }
 }

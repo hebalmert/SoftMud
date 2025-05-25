@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
-using Spix.Core.Entities;
+﻿using Spix.Core.Entities;
+using Spix.Core.EntitiesContratos;
 using Spix.Core.EntitiesGen;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Spix.Core.EntitiesNet;
 
@@ -77,4 +78,9 @@ public class Server
     public MarkModel? MarkModel { get; set; }
 
     public Zone? Zone { get; set; }
+
+    //Relaciones en dos vias
+    public ICollection<ContractServer>? ContractServers { get; set; }
+
+    public ICollection<ContractQue>? ContractQues { get; set; }
 }

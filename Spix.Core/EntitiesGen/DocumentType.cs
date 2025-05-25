@@ -1,4 +1,5 @@
 ﻿using Spix.Core.Entities;
+using Spix.Core.EntitiesInven;
 using Spix.Core.EntitiesOper;
 using System.ComponentModel.DataAnnotations;
 
@@ -30,4 +31,6 @@ public class DocumentType
     public ICollection<Client>? Clients { get; set; }
 
     public ICollection<Contractor>? Contractors { get; set; }
+
+    public ICollection<Supplier>? Suppliers { get; set; }
 }

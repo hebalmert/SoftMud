@@ -1,0 +1,20 @@
+﻿@page "/productstorages/edit/{Id:guid}"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (ProductStorage is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormPStorage ProductStorage="ProductStorage"
+                          IsEditControl="true"
+                          OnSubmit="Edit"
+                          ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+
+

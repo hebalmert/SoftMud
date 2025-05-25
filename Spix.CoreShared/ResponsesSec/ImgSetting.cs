@@ -12,6 +12,8 @@ public class ImgSetting
 
     public string ImgClient { get; set; } = null!;
 
+    public string ImgSuppliers { get; set; } = null!;
+
     public string LogoSoftware { get; set; } = null!;
 
     public string ImgNoImage { get; set; } = null!;

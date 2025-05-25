@@ -26,7 +26,7 @@ namespace Spix.AppBack.Controllers.EntitiesV1
         }
 
         [HttpGet("loadCombo")]
-        public async Task<ActionResult<IEnumerable<Zone>>> GetComboAsync(int id)
+        public async Task<ActionResult<IEnumerable<Client>>> GetComboAsync(int id)
         {
             string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
             if (email == null)

@@ -1,4 +1,5 @@
 ﻿using Spix.Core.Entities;
+using Spix.Core.EntitiesContratos;
 using System.ComponentModel.DataAnnotations;
 
 namespace Spix.Core.EntitiesNet;
@@ -31,4 +32,9 @@ public class IpNet
     public int CorporationId { get; set; }
 
     public Corporation? Corporation { get; set; }
+
+    //Relaciones en dos vias
+    public ICollection<ContractIp>? ContractIps { get; set; }
+
+    public ICollection<ContractQue>? ContractQues { get; set; }
 }

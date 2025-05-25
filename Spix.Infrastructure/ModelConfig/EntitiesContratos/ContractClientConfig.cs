@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Spix.Core.EntitiesContratos;
 
-namespace Spix.Infrastructure.ModelConfig.EntitiesOper;
+namespace Spix.Infrastructure.ModelConfig.EntitiesContratos;
 
 public class ContractClientConfig : IEntityTypeConfiguration<ContractClient>
 {

@@ -8,6 +8,8 @@ using Spix.Core.EntitiesGen;
 using System.Reflection;
 using Spix.Core.EntitiesOper;
 using Spix.Core.EntitiesContratos;
+using Spix.Core.EntitiesInven;
+using Spix.Infrastructure.ModelConfig.EntitiesInven;
 
 namespace Spix.Infrastructure;
 
@@ -55,6 +57,14 @@ public class DataContext : IdentityDbContext<User>
     public DbSet<PlanCategory> PlanCategories => Set<PlanCategory>();
     public DbSet<Plan> Plans => Set<Plan>();
 
+    //EntitiesInven
+
+    public DbSet<Supplier> Suppliers => Set<Supplier>();
+    public DbSet<ProductStorage> ProductStorages => Set<ProductStorage>();
+    public DbSet<ProductStock> ProductStocks => Set<ProductStock>();
+    public DbSet<Purchase> Purchases => Set<Purchase>();
+    public DbSet<PurchaseDetail> PurchaseDetails => Set<PurchaseDetail>();
+
     //EntitiesNet
 
     public DbSet<IpNetwork> IpNetworks => Set<IpNetwork>();
@@ -62,11 +72,19 @@ public class DataContext : IdentityDbContext<User>
     public DbSet<Node> Nodes => Set<Node>();
     public DbSet<Server> Servers => Set<Server>();
 
+    //EntitiesContratos
+
+    public DbSet<ContractIp> ContractIps => Set<ContractIp>();
+    public DbSet<ContractServer> ContractServers => Set<ContractServer>();
+    public DbSet<ContractPlan> ContractPlans => Set<ContractPlan>();
+    public DbSet<ContractNode> ContractNodes => Set<ContractNode>();
+    public DbSet<ContractQue> ContractQues => Set<ContractQue>();
+    public DbSet<ContractClient> ContractClients => Set<ContractClient>();
+
     //EntitiesOper
 
     public DbSet<Contractor> Contractors => Set<Contractor>();
     public DbSet<Client> Clients => Set<Client>();
-    public DbSet<ContractClient> ContractClients => Set<ContractClient>();
 
     //EntitiesSoftSec
 

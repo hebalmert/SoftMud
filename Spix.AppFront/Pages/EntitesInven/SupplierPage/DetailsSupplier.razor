@@ -1,0 +1,101 @@
+﻿@page "/suppliers/details/{Id:guid}"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (Supplier is null)
+{
+    <Loading />
+}
+else
+{
+    ﻿<MudDialog>
+        <DialogContent>
+            <MudGrid>
+                <MudItem xs="12" Class="d-flex justify-center align-center">
+                    <MudImage Src="@Supplier!.ImageFullPath" Width="90" Height="60" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField Label="@GetDisplayName(() => Supplier.Name)"
+                                  @bind-Value="@Supplier.Name"
+                                  For="@(() => Supplier.Name)"
+                                  Class="mb-4" Style="flex: 1;" ReadOnly="true" />
+                    <MudTextField Label="@GetDisplayName(() => Supplier.ContactName)"
+                                  @bind-Value="@Supplier.ContactName"
+                                  For="@(() => Supplier.ContactName)"
+                                  Class="mb-4" Style="flex: 1;" ReadOnly="true" />
+                </MudItem>
+                <MudItem xs="6">
+                    <!-- Contenedor para unir Document y DocumentType -->
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <MudTextField Label="@GetDisplayName(() => Supplier.Document)"
+                                      @bind-Value="@Supplier.Document"
+                                      For="@(() => Supplier.Document)"
+                                      Class="mb-4" Style="flex: 1;" ReadOnly="true" />
+
+                        <MudTextField Label="@GetDisplayName(() => Supplier.DocumentType!.DocumentName)"
+                                      @bind-Value="@Supplier.DocumentType!.DocumentName"
+                                      For="@(() => Supplier.DocumentType!.DocumentName)"
+                                      Class="mb-4" Style="flex: 1;" ReadOnly="true" />
+                    </div>
+                </MudItem>
+                <MudItem xs="6">
+                    <!-- Contenedor para unir Document y DocumentType -->
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <MudTextField Label="País"
+                                      @bind-Value="@Supplier.CodeCountry"
+                                      For="@(() => Supplier.CodeCountry)"
+                                      Class="mb-4"
+                                      Style="flex: 1;" ReadOnly="true" />
+
+                        <MudTextField Label="Área"
+                                      @bind-Value="@Supplier.CodeNumber"
+                                      For="@(() => Supplier.CodeNumber)"
+                                      Class="mb-4"
+                                      Style="flex: 1;" ReadOnly="true" />
+
+                        <MudTextField Label="Teléfono"
+                                      @bind-Value="@Supplier.PhoneNumber"
+                                      For="@(() => Supplier.PhoneNumber)"
+                                      Class="mb-4"
+                                      Style="flex: 2;" ReadOnly="true" />
+                    </div>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField Label="@GetDisplayName(() => Supplier.Address)"
+                                  @bind-Value="@Supplier.Address"
+                                  For="@(() => Supplier.Address)"
+                                  Class="mb-4" ReadOnly="true" />
+                </MudItem>
+                <MudItem xs="6">
+                    <MudTextField Label="@GetDisplayName(() => Supplier.State!.Name)"
+                                  @bind-Value="@Supplier.State!.Name"
+                                  For="@(() => Supplier.State!.Name)"
+                                  Class="mb-4" Style="flex: 1;" ReadOnly="true" />
+                </MudItem>
+                <MudItem xs="6">
+
+                    <MudTextField Label="@GetDisplayName(() => Supplier.City!.Name)"
+                                  @bind-Value="@Supplier.City!.Name"
+                                  For="@(() => Supplier.City!.Name)"
+                                  Class="mb-4" Style="flex: 1;" ReadOnly="true" />
+
+                </MudItem>
+                <MudItem xs="6">
+                    <MudTextField Label="@GetDisplayName(() => Supplier.UserName)"
+                                  @bind-Value="@Supplier.UserName"
+                                  For="@(() => Supplier.UserName)"
+                                  Class="mb-4" ReadOnly="true" />
+                </MudItem>
+                <MudItem xs="6">
+                    <MudCheckBox Label="@GetDisplayName(() => Supplier.Active)"
+                                 @bind-Value="@Supplier.Active"
+                                 For="@(() => Supplier.Active)"
+                                 Class="mb-4" ReadOnly="true"/>
+                </MudItem>
+                <br />
+            </MudGrid>
+        </DialogContent>
+    </MudDialog>
+}
+
+

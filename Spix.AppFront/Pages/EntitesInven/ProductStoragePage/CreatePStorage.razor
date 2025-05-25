@@ -1,0 +1,19 @@
+﻿@page "/productstorages/create"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (ProductStorage is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormPStorage ProductStorage="ProductStorage"
+                          IsEditControl="false"
+                          OnSubmit="Create"
+                          ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}
+

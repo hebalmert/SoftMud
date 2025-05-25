@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Spix.Core.Entities;
+using Spix.Core.EntitiesInven;
 
 namespace Spix.Core.EntitiesGen;
 
@@ -53,4 +54,10 @@ public class Product
     public ProductCategory? ProductCategory { get; set; }
 
     public Tax? Tax { get; set; }
+
+    //Releaciones en dos vias
+
+    public ICollection<ProductStock>? ProductStocks { get; set; }
+
+    public ICollection<PurchaseDetail>? PurchaseDetails { get; set; }
 }
