@@ -15,6 +15,8 @@ public class ProductCategoryUnitOfWork : IProductCategoryUnitOfWork
         _productCategoryService = productCategoryService;
     }
 
+    public async Task<ActionResponse<IEnumerable<ProductCategory>>> ComboAsync(string email) => await _productCategoryService.ComboAsync(email);
+
     public async Task<ActionResponse<IEnumerable<ProductCategory>>> GetAsync(PaginationDTO pagination, string email) => await _productCategoryService.GetAsync(pagination, email);
 
     public async Task<ActionResponse<ProductCategory>> GetAsync(Guid id) => await _productCategoryService.GetAsync(id);

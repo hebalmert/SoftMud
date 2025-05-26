@@ -35,6 +35,35 @@ public class ProductStorageService : IProductStorageService
         _httpErrorHandler = new HttpErrorHandler();
     }
 
+    public async Task<ActionResponse<IEnumerable<ProductStorage>>> ComboAsync(string email)
+    {
+        try
+        {
+            var user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                return new ActionResponse<IEnumerable<ProductStorage>>
+                {
+                    WasSuccess = false,
+                    Message = "Problemas de Validacion de Usuario"
+                };
+            }
+            var ListModel = await _context.ProductStorages
+                .Where(x => x.Active && x.CorporationId == user.CorporationId)
+                .ToListAsync();
+
+            return new ActionResponse<IEnumerable<ProductStorage>>
+            {
+                WasSuccess = true,
+                Result = ListModel
+            };
+        }
+        catch (Exception ex)
+        {
+            return await _httpErrorHandler.HandleErrorAsync<IEnumerable<ProductStorage>>(ex); // ✅ Manejo de errores automático
+        }
+    }
+
     public async Task<ActionResponse<IEnumerable<ProductStorage>>> GetAsync(PaginationDTO pagination, string email)
     {
         try

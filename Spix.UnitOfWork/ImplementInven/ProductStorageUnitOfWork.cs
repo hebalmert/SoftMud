@@ -15,6 +15,8 @@ public class ProductStorageUnitOfWork : IProductStorageUnitOfWork
         _productStorageService = productStorageService;
     }
 
+    public async Task<ActionResponse<IEnumerable<ProductStorage>>> ComboAsync(string email) => await _productStorageService.ComboAsync(email);
+
     public async Task<ActionResponse<IEnumerable<ProductStorage>>> GetAsync(PaginationDTO pagination, string email) => await _productStorageService.GetAsync(pagination, email);
 
     public async Task<ActionResponse<ProductStorage>> GetAsync(Guid id) => await _productStorageService.GetAsync(id);

@@ -29,4 +29,6 @@ public class ProductCategory
     public ICollection<Product>? Products { get; set; }
 
     public ICollection<PurchaseDetail>? PurchaseDetails { get; set; }
+
+    public ICollection<TransferDetails>? TransferDetails { get; set; }
 }

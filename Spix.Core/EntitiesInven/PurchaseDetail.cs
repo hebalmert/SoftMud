@@ -16,7 +16,7 @@ public class PurchaseDetail
 
     [Required(ErrorMessage = "El campo {0} es obligatorio.")]
     [Display(Name = "Categoria")]
-    public Guid PlanCategoryId { get; set; }
+    public Guid ProductCategoryId { get; set; }
 
     [Required(ErrorMessage = "El campo {0} es obligatorio.")]
     [Display(Name = "Producto")]

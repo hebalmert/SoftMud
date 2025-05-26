@@ -22,6 +22,23 @@ public class ProductCategoriesController : ControllerBase
         _productCategoryUnitOfWork = productCategoryUnitOfWork;
     }
 
+    [HttpGet("loadCombo")]
+    public async Task<ActionResult<IEnumerable<ProductCategory>>> GetComboAsync()
+    {
+        string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+        if (email == null)
+        {
+            return BadRequest("Erro en el sistema de Usuarios");
+        }
+
+        var response = await _productCategoryUnitOfWork.ComboAsync(email);
+        if (!response.WasSuccess)
+        {
+            return BadRequest(response.Message);
+        }
+        return Ok(response.Result);
+    }
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ProductCategory>>> GetAll([FromQuery] PaginationDTO pagination)
     {

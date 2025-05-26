@@ -1,4 +1,5 @@
 ﻿using Spix.Core.Entities;
+using Spix.Core.EntitiesInven;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -75,4 +76,6 @@ public class Usuario
     public Corporation? Corporation { get; set; }
 
     public ICollection<UsuarioRole>? UsuarioRoles { get; set; }
+
+    public ICollection<Transfer>? Transfers { get; set; }
 }

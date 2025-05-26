@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Spix.Core.EntitiesInven;
+using Spix.CoreShared.Enum;
 using Spix.CoreShared.Pagination;
 using Spix.UnitOfWork.InterfacesInven;
 using System.Security.Claims;
 
-namespace Spix.AppBack.Controllers.EntitiesV1
+namespace Spix.AppBack.Controllers.EntitiesInvenV1
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/productstorages")]
@@ -22,6 +23,23 @@ namespace Spix.AppBack.Controllers.EntitiesV1
         {
             _productStorageUnitOfWork = productStorageUnitOfWork;
             _configuration = configuration;
+        }
+
+        [HttpGet("loadCombo")]
+        public async Task<ActionResult<IEnumerable<EnumItemModel>>> GetCombo()
+        {
+            string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+            if (email == null)
+            {
+                return BadRequest("Erro en el sistema de Usuarios");
+            }
+
+            var response = await _productStorageUnitOfWork.ComboAsync(email);
+            if (response.WasSuccess)
+            {
+                return Ok(response.Result);
+            }
+            return BadRequest(response.Message);
         }
 
         [HttpGet]

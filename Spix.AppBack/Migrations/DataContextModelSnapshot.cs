@@ -1309,6 +1309,15 @@ namespace Spix.AppBack.Migrations
                     b.Property<int>("PagoContratista")
                         .HasColumnType("int");
 
+                    b.Property<int>("RegPurchase")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RegSells")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RegTransfer")
+                        .HasColumnType("int");
+
                     b.Property<int>("Solicitudes")
                         .HasColumnType("int");
 
@@ -1608,10 +1617,7 @@ namespace Spix.AppBack.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<Guid>("PlanCategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ProductCategoryId")
+                    b.Property<Guid>("ProductCategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ProductId")
@@ -2748,7 +2754,8 @@ namespace Spix.AppBack.Migrations
                     b.HasOne("Spix.Core.EntitiesGen.ProductCategory", "ProductCategory")
                         .WithMany("PurchaseDetails")
                         .HasForeignKey("ProductCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Spix.Core.EntitiesGen.Product", "Product")
                         .WithMany("PurchaseDetails")

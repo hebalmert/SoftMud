@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Spix.Core.EntitiesGen;
+using Spix.Core.EntitiesInven;
 using Spix.CoreShared.Pagination;
 using Spix.CoreShared.Responses;
-using Spix.Helper.Helpers;
-using Spix.Helper.Transactions;
 using Spix.Helper;
+using Spix.Helper.Extensions;
+using Spix.Helper.Helpers;
+using Spix.Helper.Mappings;
+using Spix.Helper.Transactions;
 using Spix.Infrastructure;
 using Spix.Services.InterfacesEntitiesGen;
-using Spix.Helper.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Spix.Services.ImplementEntitiesGen;
 
@@ -18,16 +20,47 @@ public class ProductService : IProductService
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ITransactionManager _transactionManager;
     private readonly IUserHelper _userHelper;
+    private readonly IMapperService _mapperService;
     private readonly HttpErrorHandler _httpErrorHandler;
 
     public ProductService(DataContext context, IHttpContextAccessor httpContextAccessor,
-        ITransactionManager transactionManager, IUserHelper userHelper)
+        ITransactionManager transactionManager, IUserHelper userHelper, IMapperService mapperService)
     {
         _context = context;
         _httpContextAccessor = httpContextAccessor;
         _transactionManager = transactionManager;
         _userHelper = userHelper;
+        _mapperService = mapperService;
         _httpErrorHandler = new HttpErrorHandler();
+    }
+
+    public async Task<ActionResponse<IEnumerable<Product>>> ComboAsync(string email, Guid id)
+    {
+        try
+        {
+            var user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                return new ActionResponse<IEnumerable<Product>>
+                {
+                    WasSuccess = false,
+                    Message = "Problemas de Validacion de Usuario"
+                };
+            }
+            var ListModel = await _context.Products
+                .Where(x => x.Active && x.CorporationId == user.CorporationId && x.ProductCategoryId == id)
+                .ToListAsync();
+
+            return new ActionResponse<IEnumerable<Product>>
+            {
+                WasSuccess = true,
+                Result = ListModel
+            };
+        }
+        catch (Exception ex)
+        {
+            return await _httpErrorHandler.HandleErrorAsync<IEnumerable<Product>>(ex); // ✅ Manejo de errores automático
+        }
     }
 
     public async Task<ActionResponse<IEnumerable<Product>>> GetAsync(PaginationDTO pagination, string email)
@@ -44,7 +77,10 @@ public class ProductService : IProductService
                 };
             }
 
-            var queryable = _context.Products.Where(x => x.CorporationId == user.CorporationId && x.ProductCategoryId == pagination.GuidId).AsQueryable();
+            var queryable = _context.Products
+                .Include(x => x.ProductStocks)
+                .Include(x => x.Tax)
+                .Where(x => x.CorporationId == user.CorporationId && x.ProductCategoryId == pagination.GuidId).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(pagination.Filter))
             {
@@ -70,7 +106,9 @@ public class ProductService : IProductService
     {
         try
         {
-            var modelo = await _context.Products.FindAsync(id);
+            var modelo = await _context.Products
+                .Include(x => x.Tax).Include(x => x.ProductStocks)
+                .FirstOrDefaultAsync(x => x.ProductId == id);
             if (modelo == null)
             {
                 return new ActionResponse<Product>
@@ -98,7 +136,9 @@ public class ProductService : IProductService
 
         try
         {
-            _context.Products.Update(modelo);
+            Product NewModelo = _mapperService.Map<Product, Product>(modelo);
+
+            _context.Products.Update(NewModelo);
 
             await _transactionManager.SaveChangesAsync();
             await _transactionManager.CommitTransactionAsync();

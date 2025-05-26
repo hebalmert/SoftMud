@@ -7,7 +7,7 @@ using Spix.CoreShared.Pagination;
 using Spix.UnitOfWork.InterfacesInven;
 using System.Security.Claims;
 
-namespace Spix.AppBack.Controllers.EntitiesV1
+namespace Spix.AppBack.Controllers.EntitiesInvenV1
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/suppliers")]
@@ -25,7 +25,7 @@ namespace Spix.AppBack.Controllers.EntitiesV1
         }
 
         [HttpGet("loadCombo")]
-        public async Task<ActionResult<IEnumerable<Supplier>>> GetComboAsync(int id)
+        public async Task<ActionResult<IEnumerable<Supplier>>> GetComboAsync()
         {
             string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
             if (email == null)

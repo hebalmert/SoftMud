@@ -22,6 +22,23 @@ public class ProductsController : ControllerBase
         _productUnitOfWork = productUnitOfWork;
     }
 
+    [HttpGet("loadCombo/{id}")]  //MarkId
+    public async Task<ActionResult<IEnumerable<Product>>> GetComboAsync(Guid id)
+    {
+        string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+        if (email == null)
+        {
+            return BadRequest("Erro en el sistema de Usuarios");
+        }
+
+        var response = await _productUnitOfWork.ComboAsync(email, id);
+        if (!response.WasSuccess)
+        {
+            return BadRequest(response.Message);
+        }
+        return Ok(response.Result);
+    }
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Product>>> GetAll([FromQuery] PaginationDTO pagination)
     {

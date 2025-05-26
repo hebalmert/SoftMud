@@ -118,5 +118,9 @@ public static class ServiceRegistration
         services.AddScoped<ISupplierServices, SupplierService>();
         services.AddScoped<IProductStorageUnitOfWork, ProductStorageUnitOfWork>();
         services.AddScoped<IProductStorageService, ProductStorageService>();
+        services.AddScoped<IPurchaseUnitOfWork, PurchaseUnitOfWork>();
+        services.AddScoped<IPurchaseService, PurchaseService>();
+        services.AddScoped<IPurchaseDetailsUnitOfWork, PurchaseDetailsUnitOfWork>();
+        services.AddScoped<IPurchaseDetailsService, PurchaseDetailsService>();
     }
 }

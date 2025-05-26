@@ -64,6 +64,8 @@ public class DataContext : IdentityDbContext<User>
     public DbSet<ProductStock> ProductStocks => Set<ProductStock>();
     public DbSet<Purchase> Purchases => Set<Purchase>();
     public DbSet<PurchaseDetail> PurchaseDetails => Set<PurchaseDetail>();
+    public DbSet<Transfer> Transfers => Set<Transfer>();
+    public DbSet<TransferDetails> TransferDetails => Set<TransferDetails>();
 
     //EntitiesNet
 

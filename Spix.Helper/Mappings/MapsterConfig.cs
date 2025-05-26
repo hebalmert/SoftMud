@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using Spix.Core.EntitiesContratos;
+using Spix.Core.EntitiesGen;
 using Spix.Core.EntitiesInven;
 using Spix.Core.EntitiesNet;
 using Spix.Core.EntitiesOper;
@@ -55,5 +56,16 @@ public static class MapsterConfig
             .Ignore(dest => dest.Corporation!)
             .Ignore(dest => dest.State!)
             .Ignore(dest => dest.City!);
+        config.NewConfig<Purchase, Purchase>()
+            .Ignore(dest => dest.Corporation!)
+            .Ignore(dest => dest.PurchaseDetails!)
+            .Ignore(dest => dest.Supplier!)
+            .Ignore(dest => dest.ProductStorage!);
+        config.NewConfig<Product, Product>()
+            .Ignore(dest => dest.Corporation!)
+            .Ignore(dest => dest.PurchaseDetails!);
+        config.NewConfig<Transfer, Transfer>()
+            .Ignore(dest => dest.Corporation!)
+            .Ignore(dest => dest.Usuario!);
     }
 }

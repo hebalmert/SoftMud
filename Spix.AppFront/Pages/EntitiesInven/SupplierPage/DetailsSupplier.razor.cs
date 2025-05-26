@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Spix.AppFront.Pages.EntitesInven.SupplierPage;
+namespace Spix.AppFront.Pages.EntitiesInven.SupplierPage;
 
 public partial class DetailsSupplier
 {

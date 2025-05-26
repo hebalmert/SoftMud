@@ -2,14 +2,12 @@ using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Spix.AppFront.Helpers;
-using Spix.Core.EntitiesGen;
 using Spix.Core.EntitiesInven;
 using Spix.HttpServices;
-using System.Net.Http.Headers;
 
-namespace Spix.AppFront.Pages.EntitesInven.ProductStoragePage;
+namespace Spix.AppFront.Pages.EntitiesInven.SupplierPage;
 
-public partial class IndexPStorage
+public partial class IndexSupplier
 {
     [Inject] private IRepository _repository { get; set; } = null!;
     [Inject] private NavigationManager _navigationManager { get; set; } = null!;
@@ -23,8 +21,8 @@ public partial class IndexPStorage
     private int TotalPages;      //Cantidad total de paginas
     private int PageSize = 15;  //Cantidad de registros por pagina
 
-    private const string baseUrl = "api/v1/productstorages";
-    public List<ProductStorage>? ProductStorages { get; set; }
+    private const string baseUrl = "api/v1/suppliers";
+    public List<Supplier>? Suppliers { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -43,26 +41,6 @@ public partial class IndexPStorage
         await Cargar();
     }
 
-    private async Task Cargar(int page = 1)
-    {
-        var url = $"{baseUrl}?page={page}&recordsnumber={PageSize}";
-        if (!string.IsNullOrWhiteSpace(Filter))
-        {
-            url += $"&filter={Filter}";
-        }
-        var responseHttp = await _repository.GetAsync<List<ProductStorage>>(url);
-        // Centralizamos el manejo de errores
-        bool errorHandled = await _responseHandler.HandleErrorAsync(responseHttp);
-        if (errorHandled)
-        {
-            _navigationManager.NavigateTo("/");
-            return;
-        }
-
-        ProductStorages = responseHttp.Response;
-        TotalPages = int.Parse(responseHttp.HttpResponseMessage.Headers.GetValues("Totalpages").FirstOrDefault()!);
-    }
-
     private async Task ShowModalAsync(Guid? id = null, bool isEdit = false)
     {
         var options = new DialogOptions() { CloseOnEscapeKey = true, CloseButton = true };
@@ -73,12 +51,50 @@ public partial class IndexPStorage
             {
                 { "Id", id }
             };
-            dialog = await _dialogService.ShowAsync<EditPStorage>($"Editar Almacen", parameters, options);
+            dialog = await _dialogService.ShowAsync<EditSupplier>($"Editar Proveedor", parameters, options);
         }
         else
         {
-            dialog = await _dialogService.ShowAsync<CreatePStorage>($"Nuevo Almacen", options);
+            dialog = await _dialogService.ShowAsync<CreateSupplier>($"Nuevo Proveedor", options);
         }
+
+        var result = await dialog.Result;
+        if (result!.Canceled)
+        {
+            await Cargar();
+        }
+    }
+
+    private async Task Cargar(int page = 1)
+    {
+        var url = $"{baseUrl}?page={page}&recordsnumber={PageSize}";
+        if (!string.IsNullOrWhiteSpace(Filter))
+        {
+            url += $"&filter={Filter}";
+        }
+        var responseHttp = await _repository.GetAsync<List<Supplier>>(url);
+        // Centralizamos el manejo de errores
+        bool errorHandled = await _responseHandler.HandleErrorAsync(responseHttp);
+        if (errorHandled)
+        {
+            _navigationManager.NavigateTo("/");
+            return;
+        }
+
+        Suppliers = responseHttp.Response;
+        TotalPages = int.Parse(responseHttp.HttpResponseMessage.Headers.GetValues("Totalpages").FirstOrDefault()!);
+    }
+
+    private async Task ShowDetailsAsync(Guid id)
+    {
+        var options = new DialogOptions() { CloseOnEscapeKey = true, CloseButton = true };
+        IDialogReference? dialog;
+
+        var parameters = new DialogParameters
+            {
+                { "Id", id }
+            };
+        dialog = await _dialogService.ShowAsync<DetailsSupplier>($"Detalle Proveedor", parameters, options);
 
         var result = await dialog.Result;
         if (result!.Canceled)

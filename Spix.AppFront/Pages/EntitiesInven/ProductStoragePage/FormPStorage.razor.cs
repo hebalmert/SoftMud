@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Spix.AppFront.Pages.EntitesInven.ProductStoragePage;
+namespace Spix.AppFront.Pages.EntitiesInven.ProductStoragePage;
 
 public partial class FormPStorage
 {

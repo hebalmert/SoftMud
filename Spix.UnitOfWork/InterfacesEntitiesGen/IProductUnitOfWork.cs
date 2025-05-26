@@ -6,6 +6,8 @@ namespace Spix.UnitOfWork.InterfacesEntitiesGen;
 
 public interface IProductUnitOfWork
 {
+    Task<ActionResponse<IEnumerable<Product>>> ComboAsync(string email, Guid id);
+
     Task<ActionResponse<IEnumerable<Product>>> GetAsync(PaginationDTO pagination, string email);
 
     Task<ActionResponse<Product>> GetAsync(Guid id);

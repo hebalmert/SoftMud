@@ -55,9 +55,15 @@ public class Product
 
     public Tax? Tax { get; set; }
 
+    //Propiedades Virtuales
+
+    public decimal TotalInventario => ProductStocks == null ? 0 : ProductStocks.Sum(x => x.Stock);
+
     //Releaciones en dos vias
 
     public ICollection<ProductStock>? ProductStocks { get; set; }
 
     public ICollection<PurchaseDetail>? PurchaseDetails { get; set; }
+
+    public ICollection<TransferDetails>? TransferDetails { get; set; }
 }

@@ -4,7 +4,7 @@ using Spix.AppFront.Helpers;
 using Spix.Core.EntitiesInven;
 using Spix.HttpServices;
 
-namespace Spix.AppFront.Pages.EntitesInven.SupplierPage;
+namespace Spix.AppFront.Pages.EntitiesInven.SupplierPage;
 
 public partial class EditSupplier
 {

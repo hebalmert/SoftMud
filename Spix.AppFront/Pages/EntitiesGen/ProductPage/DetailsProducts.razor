@@ -48,6 +48,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Producto</th>
+                                                <th>Stock</th>
                                                 <th>Activo</th>
                                                 <th></th>
                                                 <th></th>
@@ -59,6 +60,9 @@
                                                 <tr>
                                                     <td>
                                                         @item.ProductName
+                                                    </td>
+                                                     <td>
+                                                        @item.TotalInventario
                                                     </td>
                                                     <td>
                                                         <MudCheckBox @bind-Value="@item.Active" ReadOnly="true"></MudCheckBox>
