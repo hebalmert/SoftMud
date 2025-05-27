@@ -11,10 +11,11 @@ using Spix.Helper.Helpers;
 using Spix.Helper.Mappings;
 using Spix.Helper.Transactions;
 using Spix.Infrastructure;
+using Spix.Services.InterfacesInven;
 
 namespace Spix.Services.ImplementInven;
 
-public class ProductStockService
+public class ProductStockService : IProductStockService
 {
     private readonly DataContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -134,7 +135,7 @@ public class ProductStockService
             return new ActionResponse<TransferStockDTO>
             {
                 WasSuccess = true,
-                Result = modelo
+                Result = NStock
             };
         }
         catch (Exception ex)

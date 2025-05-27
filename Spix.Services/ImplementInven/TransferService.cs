@@ -72,8 +72,7 @@ public class TransferService : ITransferService
                 };
             }
 
-            var queryable = _context.Transfers.Where(x => x.CorporationId == user.CorporationId)
-                .Include(x => x.Usuario).AsQueryable();
+            var queryable = _context.Transfers.Where(x => x.CorporationId == user.CorporationId).AsQueryable();
 
             await _httpContextAccessor.HttpContext!.InsertParameterPagination(queryable, pagination.RecordsNumber);
             var modelo = await queryable.OrderBy(x => x.DateTransfer).Paginate(pagination).ToListAsync();
@@ -94,7 +93,7 @@ public class TransferService : ITransferService
     {
         try
         {
-            var modelo = await _context.Transfers.Include(x => x.Usuario)
+            var modelo = await _context.Transfers
             .FirstOrDefaultAsync(x => x.TransferId == id);
             if (modelo == null)
             {
@@ -104,7 +103,8 @@ public class TransferService : ITransferService
                     Message = "Problemas para Enconstrar el Registro Indicado"
                 };
             }
-
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == modelo!.UserId);
+            modelo!.NombreUsuario = modelo.User!.FullName;
             return new ActionResponse<Transfer>
             {
                 WasSuccess = true,
@@ -167,6 +167,8 @@ public class TransferService : ITransferService
                     Message = "Problemas para Cargar Las Bodegas"
                 };
             }
+
+            modelo.UserId = user.Id;
 
             modelo.CorporationId = Convert.ToInt32(user.CorporationId);
             modelo.FromStorageName = Bodegas.Where(x => x.ProductStorageId == modelo.FromProductStorageId).Select(x => x.StorageName).FirstOrDefault();

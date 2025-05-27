@@ -7,8 +7,6 @@ namespace Spix.UnitOfWork.InterfacesInven;
 
 public interface ITransferDetailsUnitOfWork
 {
-    Task<ActionResponse<IEnumerable<Tax>>> GetCombo();
-
     Task<ActionResponse<IEnumerable<TransferDetails>>> GetAsync(PaginationDTO pagination, string email);
 
     Task<ActionResponse<TransferDetails>> GetAsync(Guid id);

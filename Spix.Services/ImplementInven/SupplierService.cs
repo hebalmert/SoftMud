@@ -25,12 +25,11 @@ public class SupplierService : ISupplierServices
     private readonly HttpErrorHandler _httpErrorHandler;
     private readonly IFileStorage _fileStorage;
     private readonly IUserHelper _userHelper;
-    private readonly IEmailHelper _emailHelper;
     private readonly ImgSetting _imgOption;
 
     public SupplierService(DataContext context, IHttpContextAccessor httpContextAccessor, IMapperService mapperService,
         ITransactionManager transactionManager, IMemoryCache cache, IFileStorage fileStorage,
-        IUserHelper userHelper, IEmailHelper emailHelper, IOptions<ImgSetting> ImgOption)
+        IUserHelper userHelper, IOptions<ImgSetting> ImgOption)
     {
         _context = context;
         _httpContextAccessor = httpContextAccessor;
@@ -38,7 +37,6 @@ public class SupplierService : ISupplierServices
         _transactionManager = transactionManager;
         _fileStorage = fileStorage;
         _userHelper = userHelper;
-        _emailHelper = emailHelper;
         _imgOption = ImgOption.Value;
         _httpErrorHandler = new HttpErrorHandler();
     }

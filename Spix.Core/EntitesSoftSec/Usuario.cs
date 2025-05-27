@@ -76,6 +76,4 @@ public class Usuario
     public Corporation? Corporation { get; set; }
 
     public ICollection<UsuarioRole>? UsuarioRoles { get; set; }
-
-    public ICollection<Transfer>? Transfers { get; set; }
 }

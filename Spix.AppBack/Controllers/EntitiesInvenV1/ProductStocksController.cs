@@ -26,7 +26,7 @@ namespace Spix.AppBack.Controllers.EntitiesInvenV1
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductStorage>>> GetAll([FromQuery] PaginationDTO pagination)
+        public async Task<ActionResult<IEnumerable<ProductStock>>> GetAll([FromQuery] PaginationDTO pagination)
         {
             string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
             if (email == null)

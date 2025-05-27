@@ -116,11 +116,17 @@ public static class ServiceRegistration
         //EntitiesInven
         services.AddScoped<ISupplierUnitOfWork, SupplierUnitOfWork>();
         services.AddScoped<ISupplierServices, SupplierService>();
+        services.AddScoped<IProductStockUnitOfWork, ProductStockUnitOfWork>();
+        services.AddScoped<IProductStockService, ProductStockService>();
         services.AddScoped<IProductStorageUnitOfWork, ProductStorageUnitOfWork>();
         services.AddScoped<IProductStorageService, ProductStorageService>();
         services.AddScoped<IPurchaseUnitOfWork, PurchaseUnitOfWork>();
         services.AddScoped<IPurchaseService, PurchaseService>();
         services.AddScoped<IPurchaseDetailsUnitOfWork, PurchaseDetailsUnitOfWork>();
         services.AddScoped<IPurchaseDetailsService, PurchaseDetailsService>();
+        services.AddScoped<ITransferUnitOfWork, TransferUnitOfWork>();
+        services.AddScoped<ITransferService, TransferService>();
+        services.AddScoped<ITransferDetailsUnitOfWork, TransferDetailsUnitOfWork>();
+        services.AddScoped<ITransferDetailsService, TransferDetailsService>();
     }
 }

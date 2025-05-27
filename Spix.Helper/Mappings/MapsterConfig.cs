@@ -66,6 +66,6 @@ public static class MapsterConfig
             .Ignore(dest => dest.PurchaseDetails!);
         config.NewConfig<Transfer, Transfer>()
             .Ignore(dest => dest.Corporation!)
-            .Ignore(dest => dest.Usuario!);
+            .Ignore(dest => dest.User!);
     }
 }

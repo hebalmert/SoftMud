@@ -2,6 +2,7 @@
 using Spix.Core.Entities;
 using Spix.CoreShared.Enum;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Spix.Core.EntitiesInven;
 
@@ -18,9 +19,8 @@ public class Transfer
     [Display(Name = "Tranferencia#")]
     public int NroTransfer { get; set; }
 
-    [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-    [Display(Name = "Vendedor")]
-    public int UsuarioId { get; set; }
+    [Display(Name = "Usuario")]
+    public string? UserId { get; set; }
 
     [MaxLength(50, ErrorMessage = "El Maximo de caracteres es {0}")]
     [Display(Name = "Desde")]
@@ -37,12 +37,16 @@ public class Transfer
     [Display(Name = "Estado")]
     public TransferType? Status { get; set; }
 
+    [NotMapped]
+    [Display(Name = "Nombre")]
+    public string? NombreUsuario { get; set; }
+
     //Relaciones
     public int CorporationId { get; set; }
 
     public Corporation? Corporation { get; set; }
 
-    public Usuario? Usuario { get; set; }
+    public User? User { get; set; }
 
     public ICollection<TransferDetails>? TransferDetails { get; set; }
 }

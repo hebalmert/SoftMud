@@ -26,7 +26,7 @@ public partial class DetailsProducts
     public ProductCategory? ProductCategory { get; set; }
     public List<Product>? Products { get; set; }
 
-    [Parameter] public Guid Id { get; set; }  //ProductCategoryId
+    [Parameter] public Guid Id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

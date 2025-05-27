@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Spix.Infrastructure;
 
@@ -11,9 +12,11 @@ using Spix.Infrastructure;
 namespace Spix.AppBack.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250526142818_TranferSystem")]
+    partial class TranferSystem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1760,13 +1763,12 @@ namespace Spix.AppBack.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
 
                     b.HasKey("TransferId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UsuarioId");
 
                     b.HasIndex("CorporationId", "NroTransfer")
                         .IsUnique();
@@ -2906,15 +2908,15 @@ namespace Spix.AppBack.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Spix.Core.Entities.User", "User")
+                    b.HasOne("Spix.Core.EntitesSoftSec.Usuario", "Usuario")
                         .WithMany("Transfers")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Corporation");
 
-                    b.Navigation("User");
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Spix.Core.EntitiesInven.TransferDetails", b =>
@@ -3136,6 +3138,8 @@ namespace Spix.AppBack.Migrations
 
             modelBuilder.Entity("Spix.Core.EntitesSoftSec.Usuario", b =>
                 {
+                    b.Navigation("Transfers");
+
                     b.Navigation("UsuarioRoles");
                 });
 
@@ -3182,8 +3186,6 @@ namespace Spix.AppBack.Migrations
 
             modelBuilder.Entity("Spix.Core.Entities.User", b =>
                 {
-                    b.Navigation("Transfers");
-
                     b.Navigation("UserRoleDetails");
                 });
 
