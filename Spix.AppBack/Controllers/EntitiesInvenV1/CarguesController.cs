@@ -2,52 +2,48 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Spix.Core.EntitiesGen;
+using Spix.Core.EntitiesInven;
+using Spix.CoreShared.Enum;
 using Spix.CoreShared.Pagination;
-using Spix.UnitOfWork.InterfacesEntitiesGen;
+using Spix.UnitOfWork.InterfacesInven;
 using System.Security.Claims;
 
 namespace Spix.AppBack.Controllers.EntitiesGenV1;
 
 [ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/products")]
+[Route("api/v{version:apiVersion}/cargues")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Usuario")]
 [ApiController]
-public class ProductsController : ControllerBase
+public class CarguesController : ControllerBase
 {
-    private readonly IProductUnitOfWork _productUnitOfWork;
+    private readonly ICargueUnitOfWork _cargueUnitOfWork;
 
-    public ProductsController(IProductUnitOfWork productUnitOfWork)
+    public CarguesController(ICargueUnitOfWork cargueUnitOfWork)
     {
-        _productUnitOfWork = productUnitOfWork;
+        _cargueUnitOfWork = cargueUnitOfWork;
     }
 
-    [HttpGet("loadCombo/{id}")]  //MarkId
-    public async Task<ActionResult<IEnumerable<Product>>> GetComboAsync(Guid id)
+    [HttpGet("loadComboStatus")]
+    public async Task<ActionResult<IEnumerable<EnumItemModel>>> GetCombo()
     {
-        string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
-        if (email == null)
+        var response = await _cargueUnitOfWork.GetComboStatus();
+        if (response.WasSuccess)
         {
-            return BadRequest("Erro en el sistema de Usuarios");
+            return Ok(response.Result);
         }
-
-        var response = await _productUnitOfWork.ComboAsync(email, id);
-        if (!response.WasSuccess)
-        {
-            return BadRequest(response.Message);
-        }
-        return Ok(response.Result);
+        return BadRequest(response.Message);
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Product>>> GetAll([FromQuery] PaginationDTO pagination)
+    public async Task<ActionResult<IEnumerable<Cargue>>> GetAll([FromQuery] PaginationDTO pagination)
     {
         string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
         if (email == null)
         {
             return BadRequest("Erro en el sistema de Usuarios");
         }
-        var response = await _productUnitOfWork.GetAsync(pagination, email);
+
+        var response = await _cargueUnitOfWork.GetAsync(pagination, email);
         if (!response.WasSuccess)
         {
             return BadRequest(response.Message);
@@ -58,7 +54,7 @@ public class ProductsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAsync(Guid id)
     {
-        var response = await _productUnitOfWork.GetAsync(id);
+        var response = await _cargueUnitOfWork.GetAsync(id);
         if (response.WasSuccess)
         {
             return Ok(response.Result);
@@ -67,9 +63,9 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<ActionResult<Product>> PutAsync(Product modelo)
+    public async Task<ActionResult<Cargue>> PutAsync(Cargue modelo)
     {
-        var response = await _productUnitOfWork.UpdateAsync(modelo);
+        var response = await _cargueUnitOfWork.UpdateAsync(modelo);
         if (response.WasSuccess)
         {
             return Ok(response.Result);
@@ -78,7 +74,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Product>> PostAsync(Product modelo)
+    public async Task<ActionResult<Cargue>> PostAsync(Cargue modelo)
     {
         string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
         if (email == null)
@@ -86,7 +82,7 @@ public class ProductsController : ControllerBase
             return BadRequest("Erro en el sistema de Usuarios");
         }
 
-        var response = await _productUnitOfWork.AddAsync(modelo, email);
+        var response = await _cargueUnitOfWork.AddAsync(modelo, email);
         if (response.WasSuccess)
         {
             return Ok(response.Result);
@@ -97,7 +93,7 @@ public class ProductsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult<bool>> DeleteAsync(Guid id)
     {
-        var response = await _productUnitOfWork.DeleteAsync(id);
+        var response = await _cargueUnitOfWork.DeleteAsync(id);
         if (response.WasSuccess)
         {
             return Ok(response.Result);

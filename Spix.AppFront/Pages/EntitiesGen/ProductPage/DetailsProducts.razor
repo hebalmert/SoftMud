@@ -26,7 +26,7 @@
                                            EndIcon="@Icons.Material.Filled.AddBox"
                                            Color="Color.Dark" style="width:150px"
                                            OnClick="@(()=> ShowModalAsync())">
-                                    Modelo
+                                    Producto
                                 </MudButton>
                             </div>
                         </div>
@@ -49,6 +49,7 @@
                                             <tr>
                                                 <th>Producto</th>
                                                 <th>Stock</th>
+                                                <th>Macs</th>
                                                 <th>Activo</th>
                                                 <th></th>
                                                 <th></th>
@@ -63,6 +64,9 @@
                                                     </td>
                                                      <td>
                                                         @item.TotalInventario
+                                                    </td>
+                                                                                                        <td>
+                                                        <MudCheckBox @bind-Value="@item.WithSerials" ReadOnly="true"></MudCheckBox>
                                                     </td>
                                                     <td>
                                                         <MudCheckBox @bind-Value="@item.Active" ReadOnly="true"></MudCheckBox>

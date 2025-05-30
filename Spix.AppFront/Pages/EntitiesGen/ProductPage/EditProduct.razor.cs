@@ -18,7 +18,7 @@ public partial class EditProduct
     private string BaseUrl = "/api/v1/products";
     private string BaseView = "/products/details";
 
-    [Parameter] public Guid Id { get; set; }
+    [Parameter] public Guid Id { get; set; }  //ProductId
 
     protected override async Task OnInitializedAsync()
     {
@@ -38,7 +38,7 @@ public partial class EditProduct
         bool errorHandler = await _responseHandler.HandleErrorAsync(responseHttp);
         if (errorHandler)
         {
-            _navigationManager.NavigateTo($"{BaseView}/{Id}");
+            _navigationManager.NavigateTo($"{BaseView}/{Product!.ProductCategoryId}");
             return;
         }
         _navigationManager.NavigateTo($"{BaseView}/{Product!.ProductCategoryId}");

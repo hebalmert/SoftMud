@@ -1,0 +1,20 @@
+﻿@page "/cargues/createCarguesDatails/{Id:guid}"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (CargueDetail is null)
+{
+    <Loading />
+}
+else
+{
+    ﻿<MudDialog>
+        <DialogContent>
+            <div class="container" style="width:300px">
+                <FormCargueDetails CargueDetail="CargueDetail"
+                              IsEditControl=false
+                              OnSubmit="Create"
+                              ReturnAction="Return" />
+            </div>
+        </DialogContent>
+    </MudDialog>
+}

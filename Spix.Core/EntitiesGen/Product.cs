@@ -66,4 +66,6 @@ public class Product
     public ICollection<PurchaseDetail>? PurchaseDetails { get; set; }
 
     public ICollection<TransferDetails>? TransferDetails { get; set; }
+
+    public ICollection<Cargue>? Cargue { get; set; }
 }

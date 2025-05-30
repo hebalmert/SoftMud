@@ -1,5 +1,4 @@
-﻿using Spix.Core.EntitiesGen;
-using Spix.Core.EntitiesInven;
+﻿using Spix.Core.EntitiesInven;
 using Spix.CoreShared.Pagination;
 using Spix.CoreShared.Responses;
 

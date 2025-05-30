@@ -52,20 +52,34 @@ public static class MapsterConfig
             .Ignore(dest => dest.DocumentType!)
             .Ignore(dest => dest.State!)
             .Ignore(dest => dest.City!);
+
         config.NewConfig<ProductStorage, ProductStorage>()
             .Ignore(dest => dest.Corporation!)
             .Ignore(dest => dest.State!)
             .Ignore(dest => dest.City!);
+
         config.NewConfig<Purchase, Purchase>()
             .Ignore(dest => dest.Corporation!)
             .Ignore(dest => dest.PurchaseDetails!)
             .Ignore(dest => dest.Supplier!)
             .Ignore(dest => dest.ProductStorage!);
+
         config.NewConfig<Product, Product>()
             .Ignore(dest => dest.Corporation!)
-            .Ignore(dest => dest.PurchaseDetails!);
+            .Ignore(dest => dest.ProductCategory!)
+            .Ignore(dest => dest.Tax!);
+
         config.NewConfig<Transfer, Transfer>()
             .Ignore(dest => dest.Corporation!)
             .Ignore(dest => dest.User!);
+
+        config.NewConfig<Cargue, Cargue>()
+            .Ignore(dest => dest.Corporation!)
+            .Ignore(dest => dest.Product!)
+            .Ignore(dest => dest.PurchaseDetail!)
+            .Ignore(dest => dest.Purchase!);
+
+        config.NewConfig<CargueDetail, CargueDetail>()
+            .Ignore(dest => dest.Cargue!);
     }
 }

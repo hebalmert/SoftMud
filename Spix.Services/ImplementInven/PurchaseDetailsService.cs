@@ -243,6 +243,27 @@ public class PurchaseDetailsService : IPurchaseDetailsService
                 UpdateProduct!.Costo = NewUniCost;
 
                 _context.Products.Update(UpdateProduct);
+
+                //Preguntamos si el equipo va a manejar seriales
+                if (UpdateProduct.WithSerials)
+                {
+                    var IdPurchaseDetails = await _context.PurchaseDetails.FirstOrDefaultAsync(x => x.PurchaseId == modelo.PurchaseId);
+                    var CheckRegister = await _context.Registers.FirstOrDefaultAsync(x => x.CorporationId == modelo.CorporationId);
+                    CheckRegister!.Cargue += 1;
+                    _context.Registers.Update(CheckRegister);
+                    Cargue cargue = new()
+                    {
+                        DateCargue = DateTime.Now,
+                        ControlCargue = Convert.ToString(CheckRegister.Cargue),
+                        PurchaseId = modelo.PurchaseId,
+                        PurchaseDetailId = IdPurchaseDetails!.PurchaseDetailId,
+                        ProductId = IdPurchaseDetails.ProductId,
+                        CantToUp = IdPurchaseDetails.Quantity,
+                        Status = CargueType.Pendiente,
+                        CorporationId = modelo.CorporationId
+                    };
+                    _context.Cargues.Add(cargue);
+                }
             }
             //Cambiamos el estatus del Purchas para ya no se pueda editar o borrar.
             var UpdatePurchase = await _context.Purchases.FirstOrDefaultAsync(x => x.PurchaseId == modelo.PurchaseId);

@@ -128,5 +128,9 @@ public static class ServiceRegistration
         services.AddScoped<ITransferService, TransferService>();
         services.AddScoped<ITransferDetailsUnitOfWork, TransferDetailsUnitOfWork>();
         services.AddScoped<ITransferDetailsService, TransferDetailsService>();
+        services.AddScoped<ICargueUnitOfWork, CargueUnitOfWork>();
+        services.AddScoped<ICargueService, CargueService>();
+        services.AddScoped<ICargueDetailsUnitOfWork, CargueDetailsUnitOfWork>();
+        services.AddScoped<ICargueDetailsService, CargueDetailsService>();
     }
 }

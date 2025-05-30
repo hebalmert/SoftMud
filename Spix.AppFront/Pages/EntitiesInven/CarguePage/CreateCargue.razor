@@ -1,0 +1,20 @@
+﻿@page "/cargues/create"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (Cargue is null)
+{
+    <Loading />
+}
+else
+{
+    ﻿<MudDialog>
+        <DialogContent>
+                <div class="container" style="width:300px">
+                    <FormCargue Cargue="Cargue"
+                                 IsEditControl=false
+                                 OnSubmit="Create"
+                                 ReturnAction="Return"/>
+                </div>
+        </DialogContent>
+    </MudDialog>
+}

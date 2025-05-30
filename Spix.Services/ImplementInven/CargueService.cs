@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using Spix.Core.EntitiesGen;
 using Spix.Core.EntitiesInven;
 using Spix.CoreShared.Enum;
 using Spix.CoreShared.Pagination;
-using Spix.CoreShared.ReportsDTO;
 using Spix.CoreShared.Responses;
 using Spix.Helper;
 using Spix.Helper.Extensions;
@@ -17,7 +15,7 @@ using Spix.Services.InterfacesInven;
 
 namespace Spix.Services.ImplementInven;
 
-public class PurchaseService : IPurchaseService
+public class CargueService : ICargueService
 {
     private readonly DataContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -26,7 +24,7 @@ public class PurchaseService : IPurchaseService
     private readonly HttpErrorHandler _httpErrorHandler;
     private readonly IUserHelper _userHelper;
 
-    public PurchaseService(DataContext context, IHttpContextAccessor httpContextAccessor, IMapperService mapperService,
+    public CargueService(DataContext context, IHttpContextAccessor httpContextAccessor, IMapperService mapperService,
         ITransactionManager transactionManager, IMemoryCache cache,
         IUserHelper userHelper)
     {
@@ -42,7 +40,7 @@ public class PurchaseService : IPurchaseService
     {
         try
         {
-            List<EnumItemModel> list = Enum.GetValues(typeof(PurchaseStatus)).Cast<PurchaseStatus>().Select(c => new EnumItemModel()
+            List<EnumItemModel> list = Enum.GetValues(typeof(SerialStateType)).Cast<SerialStateType>().Select(c => new EnumItemModel()
             {
                 Name = c.ToString(),
                 Value = (int)c
@@ -60,69 +58,28 @@ public class PurchaseService : IPurchaseService
         }
     }
 
-    public async Task<ActionResponse<IEnumerable<Purchase>>> GetReporteSellDates(ReportDataDTO pagination, string email)
+    public async Task<ActionResponse<IEnumerable<Cargue>>> GetAsync(PaginationDTO pagination, string email)
     {
         try
         {
             var user = await _userHelper.GetUserAsync(email);
             if (user == null)
             {
-                return new ActionResponse<IEnumerable<Purchase>>
+                return new ActionResponse<IEnumerable<Cargue>>
                 {
                     WasSuccess = false,
                     Message = "Problemas de Validacion de Usuario"
                 };
             }
 
-            DateTime dateInicio = Convert.ToDateTime(pagination.DateStart);
-            DateTime dateFin = Convert.ToDateTime(pagination.DateEnd);
-
-            var queryable = await _context.Purchases.Where(x => x.CorporationId == user.CorporationId && x.Status == PurchaseStatus.Completado
-            && x.PurchaseDate >= dateInicio && x.PurchaseDate <= dateFin)
-                .Include(x => x.Supplier).Include(x => x.ProductStorage).Include(x => x.PurchaseDetails).ToListAsync();
-
-            return new ActionResponse<IEnumerable<Purchase>>
-            {
-                WasSuccess = true,
-                Result = queryable
-            };
-        }
-        catch (Exception ex)
-        {
-            return await _httpErrorHandler.HandleErrorAsync<IEnumerable<Purchase>>(ex); // ✅ Manejo de errores automático
-        }
-    }
-
-    public async Task<ActionResponse<IEnumerable<Purchase>>> GetAsync(PaginationDTO pagination, string email)
-    {
-        try
-        {
-            var user = await _userHelper.GetUserAsync(email);
-            if (user == null)
-            {
-                return new ActionResponse<IEnumerable<Purchase>>
-                {
-                    WasSuccess = false,
-                    Message = "Problemas de Validacion de Usuario"
-                };
-            }
-
-            var queryable = _context.Purchases
-                .Include(x => x.ProductStorage)
-                .Include(x => x.Supplier)
-                .Include(x => x.ProductStorage)
-                .Include(x => x.PurchaseDetails)
+            var queryable = _context.Cargues
+                .Include(x => x.Purchase).Include(x => x.CargueDetails)
                 .Where(x => x.CorporationId == user.CorporationId).AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(pagination.Filter))
-            {
-                queryable = queryable.Where(x => x.Supplier!.Name!.ToLower().Contains(pagination.Filter.ToLower()));
-            }
-
             await _httpContextAccessor.HttpContext!.InsertParameterPagination(queryable, pagination.RecordsNumber);
-            var modelo = await queryable.OrderBy(x => x.Supplier!.Name).Paginate(pagination).ToListAsync();
+            var modelo = await queryable.OrderBy(x => x.DateCargue).Paginate(pagination).ToListAsync();
 
-            return new ActionResponse<IEnumerable<Purchase>>
+            return new ActionResponse<IEnumerable<Cargue>>
             {
                 WasSuccess = true,
                 Result = modelo
@@ -130,30 +87,28 @@ public class PurchaseService : IPurchaseService
         }
         catch (Exception ex)
         {
-            return await _httpErrorHandler.HandleErrorAsync<IEnumerable<Purchase>>(ex); // ✅ Manejo de errores automático
+            return await _httpErrorHandler.HandleErrorAsync<IEnumerable<Cargue>>(ex); // ✅ Manejo de errores automático
         }
     }
 
-    public async Task<ActionResponse<Purchase>> GetAsync(Guid id)
+    public async Task<ActionResponse<Cargue>> GetAsync(Guid id)
     {
         try
         {
-            var modelo = await _context.Purchases
-                .Include(x => x.PurchaseDetails)
-                .Include(x => x.Supplier)
-                .Include(x => x.ProductStorage)
-                .FirstOrDefaultAsync(x => x.PurchaseId == id);
-
+            var modelo = await _context.Cargues
+                .Include(x => x.Product)
+                .Include(x => x.Purchase)
+                .Include(x => x.CargueDetails)
+            .FirstOrDefaultAsync(x => x.CargueId == id);
             if (modelo == null)
             {
-                return new ActionResponse<Purchase>
+                return new ActionResponse<Cargue>
                 {
                     WasSuccess = false,
                     Message = "Problemas para Enconstrar el Registro Indicado"
                 };
             }
-
-            return new ActionResponse<Purchase>
+            return new ActionResponse<Cargue>
             {
                 WasSuccess = true,
                 Result = modelo
@@ -161,24 +116,24 @@ public class PurchaseService : IPurchaseService
         }
         catch (Exception ex)
         {
-            return await _httpErrorHandler.HandleErrorAsync<Purchase>(ex); // ✅ Manejo de errores automático
+            return await _httpErrorHandler.HandleErrorAsync<Cargue>(ex); // ✅ Manejo de errores automático
         }
     }
 
-    public async Task<ActionResponse<Purchase>> UpdateAsync(Purchase modelo)
+    public async Task<ActionResponse<Cargue>> UpdateAsync(Cargue modelo)
     {
         await _transactionManager.BeginTransactionAsync();
 
         try
         {
-            Purchase NewModelo = _mapperService.Map<Purchase, Purchase>(modelo);
-            _context.Purchases.Update(NewModelo);
+            Cargue NewModelo = _mapperService.Map<Cargue, Cargue>(modelo);
 
+            _context.Cargues.Update(NewModelo);
             await _transactionManager.SaveChangesAsync();
 
             await _transactionManager.CommitTransactionAsync();
 
-            return new ActionResponse<Purchase>
+            return new ActionResponse<Cargue>
             {
                 WasSuccess = true,
                 Result = modelo
@@ -187,11 +142,11 @@ public class PurchaseService : IPurchaseService
         catch (Exception ex)
         {
             await _transactionManager.RollbackTransactionAsync();
-            return await _httpErrorHandler.HandleErrorAsync<Purchase>(ex); // ✅ Manejo de errores automático
+            return await _httpErrorHandler.HandleErrorAsync<Cargue>(ex); // ✅ Manejo de errores automático
         }
     }
 
-    public async Task<ActionResponse<Purchase>> AddAsync(Purchase modelo, string email)
+    public async Task<ActionResponse<Cargue>> AddAsync(Cargue modelo, string email)
     {
         await _transactionManager.BeginTransactionAsync();
         try
@@ -199,41 +154,21 @@ public class PurchaseService : IPurchaseService
             var user = await _userHelper.GetUserAsync(email);
             if (user == null)
             {
-                return new ActionResponse<Purchase>
+                return new ActionResponse<Cargue>
                 {
                     WasSuccess = false,
                     Message = "Problemas de Validacion de Usuario"
                 };
             }
-            modelo.CorporationId = Convert.ToInt32(user.CorporationId);
-            //Para LLevar el control de Consecutivos de Compra
-            int ControlCompra = 0;
-            var CheckRegister = await _context.Registers.FirstOrDefaultAsync(x => x.CorporationId == modelo.CorporationId);
-            if (CheckRegister == null)
-            {
-                Register nReg = new()
-                {
-                    RegPurchase = 1,
-                    CorporationId = modelo.CorporationId
-                };
-                ControlCompra = 1;
-                _context.Registers.Add(nReg);
-            }
-            else
-            {
-                CheckRegister.RegPurchase += 1;
-                ControlCompra = CheckRegister.RegPurchase;
-                _context.Registers.Update(CheckRegister);
-            }
-            await _context.SaveChangesAsync();
-            //Fin...
-            modelo.NroPurchase = ControlCompra;
 
-            _context.Purchases.Add(modelo);
+            modelo.CorporationId = Convert.ToInt32(user.CorporationId);
+            modelo.DateCargue = DateTime.Now;
+            _context.Cargues.Add(modelo);
+
             await _transactionManager.SaveChangesAsync();
             await _transactionManager.CommitTransactionAsync();
 
-            return new ActionResponse<Purchase>
+            return new ActionResponse<Cargue>
             {
                 WasSuccess = true,
                 Result = modelo
@@ -242,7 +177,7 @@ public class PurchaseService : IPurchaseService
         catch (Exception ex)
         {
             await _transactionManager.RollbackTransactionAsync();
-            return await _httpErrorHandler.HandleErrorAsync<Purchase>(ex); // ✅ Manejo de errores automático
+            return await _httpErrorHandler.HandleErrorAsync<Cargue>(ex); // ✅ Manejo de errores automático
         }
     }
 
@@ -251,7 +186,7 @@ public class PurchaseService : IPurchaseService
         await _transactionManager.BeginTransactionAsync();
         try
         {
-            var DataRemove = await _context.Purchases.FindAsync(id);
+            var DataRemove = await _context.Cargues.FindAsync(id);
             if (DataRemove == null)
             {
                 return new ActionResponse<bool>
@@ -261,7 +196,7 @@ public class PurchaseService : IPurchaseService
                 };
             }
 
-            _context.Purchases.Remove(DataRemove);
+            _context.Cargues.Remove(DataRemove);
 
             await _transactionManager.SaveChangesAsync();
             await _transactionManager.CommitTransactionAsync();

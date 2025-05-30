@@ -1,0 +1,18 @@
+﻿@page "/cargues/editCarguesDatails/{Id:guid}"
+@attribute [Authorize(Roles = "Usuario")]
+
+@if (CargueDetail is null)
+{
+    <Loading />
+}
+else
+{
+    <MudDialog>
+        <DialogContent>
+            <FormCargueDetails CargueDetail="CargueDetail"
+                             IsEditControl="true"
+                             OnSubmit="Edit"
+                             ReturnAction="Return" />
+        </DialogContent>
+    </MudDialog>
+}

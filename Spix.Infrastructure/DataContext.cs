@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Spix.Core.EntitiesNet;
 using Spix.Core.EntitesSoftSec;
 using Spix.Core.Entities;
+using Spix.Core.EntitiesContratos;
 using Spix.Core.EntitiesData;
 using Spix.Core.EntitiesGen;
-using System.Reflection;
-using Spix.Core.EntitiesOper;
-using Spix.Core.EntitiesContratos;
 using Spix.Core.EntitiesInven;
-using Spix.Infrastructure.ModelConfig.EntitiesInven;
+using Spix.Core.EntitiesNet;
+using Spix.Core.EntitiesOper;
+using System.Reflection;
 
 namespace Spix.Infrastructure;
 
@@ -66,6 +65,8 @@ public class DataContext : IdentityDbContext<User>
     public DbSet<PurchaseDetail> PurchaseDetails => Set<PurchaseDetail>();
     public DbSet<Transfer> Transfers => Set<Transfer>();
     public DbSet<TransferDetails> TransferDetails => Set<TransferDetails>();
+    public DbSet<Cargue> Cargues => Set<Cargue>();
+    public DbSet<CargueDetail> CargueDetails => Set<CargueDetail>();
 
     //EntitiesNet
 

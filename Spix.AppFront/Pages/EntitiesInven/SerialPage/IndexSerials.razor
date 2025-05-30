@@ -1,0 +1,101 @@
+﻿@page "/Serials"
+@attribute [Authorize(Roles = "Usuario")]
+
+<MudCardContent>
+    <div class="shadow-lg mb-5">
+        <MudCard Outlined="true">
+            <MudCardContent>
+                <h3>General Macs</h3>
+
+                <div class="col-sm-12">
+                    <div class="row align-items-center">
+                        <!-- Columna para el botón -->
+                        <div class="col-md-3 d-flex justify-content-start">
+                        </div>
+                        <!-- Columna para el filtro -->
+                        <div class="col-md-9 d-flex justify-content-end">
+                            <FilterComponent ApplyFilter="SetFilterValue" />
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <hr style="height:2px;border:none;color:#333;background-color:#333;" />
+                <div class="row">
+                    <div class="col-md-12 table-responsive">
+                        @if (CargueDetails is null)
+                        {
+                            <Loading />
+                        }
+                        else
+                        {
+                            <GenericList MyList="CargueDetails">
+                                <Body>
+                                    <MudSimpleTable Dense="true" Hover="true" Striped="true" Style="overflow-x: auto;">
+                                        <thead>
+                                            <tr>
+                                                <th>Mac</th>
+                                                <th>Comentario</th>
+                                                <th>Estatus</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in CargueDetails!)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @item.MacWlan
+                                                    </td>
+                                                    <td>
+                                                        @item.Comment
+                                                    </td>
+                                                    <td>
+                                                        @switch (item.Status.ToString())
+                                                        {
+                                                            case "Disponible":
+                                                                <strong style="color : orangered">@item.Status</strong>
+                                                                break;
+                                                            case "Averiado":
+                                                                <strong style="color : red">@item.Status</strong>
+                                                                break;
+                                                            case "Operativo":
+                                                                <strong style="color : forestgreen">@item.Status</strong>
+                                                                break;
+                                                        }
+                                                    </td>
+                                                    <td style="width:1px; padding-left:1px; padding-right:4px;">
+                                                        @if (item.Status != SerialStateType.Operativo)
+                                                        {
+                                                            <MudFab Size="Size.Small"
+                                                            EndIcon="@Icons.Material.Filled.Edit"
+                                                            Color="Color.Dark"
+                                                            OnClick="@(()=> ShowModalAsync(item.CargueDetailId, true))">
+                                                            </MudFab>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </MudSimpleTable>
+                                </Body>
+                            </GenericList>
+                        }
+
+                    </div>
+                </div>
+                <hr style="height:2px;border:none;color:#333;background-color:#333;" />
+                @if (CargueDetails is null)
+                {
+                    <Loading />
+                }
+                else
+                {
+                    <Pagination CurrentPage="CurrentPage"
+                                SelectedPage="SelectedPage"
+                                TotalPages="TotalPages">
+                    </Pagination>
+                }
+            </MudCardContent>
+        </MudCard>
+    </div>
+</MudCardContent>

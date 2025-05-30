@@ -2,28 +2,28 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Spix.Core.EntitiesGen;
+using Spix.Core.EntitiesInven;
 using Spix.CoreShared.Pagination;
-using Spix.UnitOfWork.InterfacesEntitiesGen;
+using Spix.UnitOfWork.InterfacesInven;
 using System.Security.Claims;
 
 namespace Spix.AppBack.Controllers.EntitiesGenV1;
 
 [ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/products")]
+[Route("api/v{version:apiVersion}/cargueDetails")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Usuario")]
 [ApiController]
-public class ProductsController : ControllerBase
+public class CargueDetailsController : ControllerBase
 {
-    private readonly IProductUnitOfWork _productUnitOfWork;
+    private readonly ICargueDetailsUnitOfWork _cargueDetailsUnitOfWork;
 
-    public ProductsController(IProductUnitOfWork productUnitOfWork)
+    public CargueDetailsController(ICargueDetailsUnitOfWork cargueDetailsUnitOfWork)
     {
-        _productUnitOfWork = productUnitOfWork;
+        _cargueDetailsUnitOfWork = cargueDetailsUnitOfWork;
     }
 
-    [HttpGet("loadCombo/{id}")]  //MarkId
-    public async Task<ActionResult<IEnumerable<Product>>> GetComboAsync(Guid id)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<CargueDetail>>> GetAll([FromQuery] PaginationDTO pagination)
     {
         string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
         if (email == null)
@@ -31,7 +31,7 @@ public class ProductsController : ControllerBase
             return BadRequest("Erro en el sistema de Usuarios");
         }
 
-        var response = await _productUnitOfWork.ComboAsync(email, id);
+        var response = await _cargueDetailsUnitOfWork.GetAsync(pagination, email);
         if (!response.WasSuccess)
         {
             return BadRequest(response.Message);
@@ -39,15 +39,16 @@ public class ProductsController : ControllerBase
         return Ok(response.Result);
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Product>>> GetAll([FromQuery] PaginationDTO pagination)
+    [HttpGet("GetSerials")]
+    public async Task<ActionResult<IEnumerable<CargueDetail>>> GetSerialsAll([FromQuery] PaginationDTO pagination)
     {
         string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
         if (email == null)
         {
             return BadRequest("Erro en el sistema de Usuarios");
         }
-        var response = await _productUnitOfWork.GetAsync(pagination, email);
+
+        var response = await _cargueDetailsUnitOfWork.GetSerialsAsync(pagination, email);
         if (!response.WasSuccess)
         {
             return BadRequest(response.Message);
@@ -58,7 +59,7 @@ public class ProductsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAsync(Guid id)
     {
-        var response = await _productUnitOfWork.GetAsync(id);
+        var response = await _cargueDetailsUnitOfWork.GetAsync(id);
         if (response.WasSuccess)
         {
             return Ok(response.Result);
@@ -67,9 +68,9 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<ActionResult<Product>> PutAsync(Product modelo)
+    public async Task<ActionResult<CargueDetail>> PutAsync(CargueDetail modelo)
     {
-        var response = await _productUnitOfWork.UpdateAsync(modelo);
+        var response = await _cargueDetailsUnitOfWork.UpdateAsync(modelo);
         if (response.WasSuccess)
         {
             return Ok(response.Result);
@@ -78,7 +79,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Product>> PostAsync(Product modelo)
+    public async Task<ActionResult<CargueDetail>> PostAsync(CargueDetail modelo)
     {
         string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
         if (email == null)
@@ -86,7 +87,24 @@ public class ProductsController : ControllerBase
             return BadRequest("Erro en el sistema de Usuarios");
         }
 
-        var response = await _productUnitOfWork.AddAsync(modelo, email);
+        var response = await _cargueDetailsUnitOfWork.AddAsync(modelo, email);
+        if (response.WasSuccess)
+        {
+            return Ok(response.Result);
+        }
+        return BadRequest(response.Message);
+    }
+
+    [HttpGet("CerrarTrans/{id}")]
+    public async Task<ActionResult<Cargue>> PostCerrarTransAsyncAsync(Guid id)
+    {
+        string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
+        if (email == null)
+        {
+            return BadRequest("Erro en el sistema de Usuarios");
+        }
+
+        var response = await _cargueDetailsUnitOfWork.CerrarCargueAsync(id, email);
         if (response.WasSuccess)
         {
             return Ok(response.Result);
@@ -97,7 +115,7 @@ public class ProductsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult<bool>> DeleteAsync(Guid id)
     {
-        var response = await _productUnitOfWork.DeleteAsync(id);
+        var response = await _cargueDetailsUnitOfWork.DeleteAsync(id);
         if (response.WasSuccess)
         {
             return Ok(response.Result);

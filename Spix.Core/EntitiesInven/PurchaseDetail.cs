@@ -65,4 +65,6 @@ public class PurchaseDetail
     public ProductCategory? ProductCategory { get; set; }
 
     public Product? Product { get; set; }
+
+    public ICollection<Cargue>? Cargue { get; set; }
 }
